@@ -1,16 +1,33 @@
 ﻿from __future__ import annotations
 
 from dataclasses import dataclass
-import base64
-import ctypes
 from hashlib import sha256
 import json
-import os
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
+from services.credential_protection import (
+    CredentialProtectionError,
+    WindowsMachineCredentialProtector,
+)
 from services.image_service import DATA_ROOT, safe_path
+
+
+__all__ = [
+    'AUTH_SCHEMES',
+    'CONFIG_VERSION',
+    'CredentialProtectionError',
+    'DEFAULT_CONFIG_PATH',
+    'DEFAULT_PROVIDER',
+    'DEFAULT_TIMEOUT_SECONDS',
+    'PROVIDER_LABELS',
+    'TOKEN_PLACEHOLDER',
+    'WhatsAppConfig',
+    'WhatsAppConfigService',
+    'WhatsAppConfigStatus',
+    'WindowsMachineCredentialProtector',
+]
 
 
 CONFIG_VERSION = 2
@@ -22,10 +39,6 @@ AUTH_SCHEMES = {'bearer', 'api_key_header'}
 PROVIDER_LABELS = {
     'generic_json': 'API generica JSON',
 }
-
-
-class CredentialProtectionError(RuntimeError):
-    pass
 
 
 @dataclass(slots=True)
@@ -64,58 +77,6 @@ class WhatsAppConfigStatus:
     valid: bool
     message: str
     missing_fields: list[str]
-
-
-class _Blob(ctypes.Structure):
-    _fields_ = [
-        ('cbData', ctypes.c_uint),
-        ('pbData', ctypes.POINTER(ctypes.c_byte)),
-    ]
-
-
-class WindowsMachineCredentialProtector:
-    CRYPTPROTECT_LOCAL_MACHINE = 0x4
-
-    def protect(self, value: str) -> str:
-        if os.name != 'nt':
-            raise CredentialProtectionError('Protecao DPAPI esta disponivel apenas no Windows.')
-        data = value.encode('utf-8')
-        input_blob, _ = self._blob_from_bytes(data)
-        output_blob = _Blob()
-        ok = ctypes.windll.crypt32.CryptProtectData(
-            ctypes.byref(input_blob), None, None, None, None,
-            self.CRYPTPROTECT_LOCAL_MACHINE, ctypes.byref(output_blob),
-        )
-        if not ok:
-            raise CredentialProtectionError('Nao foi possivel proteger o token.')
-        try:
-            protected = ctypes.string_at(output_blob.pbData, output_blob.cbData)
-            return base64.b64encode(protected).decode('ascii')
-        finally:
-            ctypes.windll.kernel32.LocalFree(output_blob.pbData)
-
-    def unprotect(self, value: str) -> str:
-        if os.name != 'nt':
-            raise CredentialProtectionError('Protecao DPAPI esta disponivel apenas no Windows.')
-        protected = base64.b64decode(value.encode('ascii'), validate=True)
-        input_blob, _ = self._blob_from_bytes(protected)
-        output_blob = _Blob()
-        ok = ctypes.windll.crypt32.CryptUnprotectData(
-            ctypes.byref(input_blob), None, None, None, None, 0,
-            ctypes.byref(output_blob),
-        )
-        if not ok:
-            raise CredentialProtectionError('Nao foi possivel recuperar o token.')
-        try:
-            return ctypes.string_at(output_blob.pbData, output_blob.cbData).decode('utf-8')
-        finally:
-            ctypes.windll.kernel32.LocalFree(output_blob.pbData)
-
-    @staticmethod
-    def _blob_from_bytes(data: bytes) -> tuple[_Blob, ctypes.Array]:
-        buffer = ctypes.create_string_buffer(data)
-        blob = _Blob(len(data), ctypes.cast(buffer, ctypes.POINTER(ctypes.c_byte)))
-        return blob, buffer
 
 
 class WhatsAppConfigService:

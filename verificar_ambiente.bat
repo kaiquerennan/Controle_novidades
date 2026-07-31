@@ -9,6 +9,8 @@ if exist "%VENV_PYTHON%" (
   "%VENV_PYTHON%" -c "import sys; print('Interpretador:', sys.executable)"
   "%VENV_PYTHON%" -c "import openai; from openai import OpenAI; print('OpenAI:', openai.__version__); print('Modulo:', openai.__file__)"
   if errorlevel 1 echo OpenAI SDK: AUSENTE OU INCOMPATIVEL
+  "%VENV_PYTHON%" -c "import pyodbc; print('pyodbc:', pyodbc.version); print('Drivers ODBC SQL Server:', [d for d in pyodbc.drivers() if 'SQL Server' in d])"
+  if errorlevel 1 echo pyodbc: AUSENTE
 ) else (
   echo .venv: nao existente
   echo Versao: indisponivel ate a criacao da .venv

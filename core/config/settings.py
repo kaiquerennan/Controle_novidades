@@ -42,6 +42,21 @@ API_KEY_ENVIRONMENTS = {
     'openai': 'OPENAI_API_KEY',
 }
 
+# Banco de ocorrências (SQL Server, via pyodbc). O processo lê as ocorrências
+# para sugerir novidades; nada é gravado por esta aplicação.
+OCCURRENCE_DB_ENVIRONMENTS = {
+    'host': 'EMC_DB_HOST',
+    'port': 'EMC_DB_PORT',
+    'database': 'EMC_DB_NAME',
+    'user': 'EMC_DB_USER',
+    'password': 'EMC_DB_PASSWORD',
+    'odbc_driver': 'EMC_DB_ODBC_DRIVER',
+}
+
+OCCURRENCE_DB_DEFAULT_PORT = 1433
+OCCURRENCE_DB_CONNECT_TIMEOUT_SECONDS = 10
+OCCURRENCE_DB_QUERY_LIMIT = 500
+
 WHATSAPP_GRAPH_API_VERSION = 'v25.0'
 WHATSAPP_TEMPLATE_NAME = 'emc_novidade_eddie'
 WHATSAPP_TEMPLATE_LANGUAGE = 'pt_BR'
