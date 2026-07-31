@@ -40,6 +40,7 @@ from components.advanced_image_adjuster import AdvancedImageAdjuster
 from components.composition_builder import CompositionBuilder
 from components.image_editor import ImageEditor
 from components.novelty_preview import render_novelty_preview
+from components.occurrence_menu import render_occurrence_menu
 from core.config import (
     API_KEY_ENVIRONMENTS,
     IMAGE_MODELS,
@@ -72,6 +73,7 @@ from services.whatsapp_service import (
     mask_recipient,
 )
 from services.generation_control_service import GENERATION_REGISTRY
+from services.occurrence_query_service import OccurrenceSummary
 from services.providers import ProviderError, ProviderFactory
 from services.providers.exceptions import sanitize_technical_detail
 from services.screen_state_service import ScreenStateStore
@@ -339,10 +341,58 @@ def index() -> None:
             ).props('outline color=white')
 
     with ui.column().classes('w-full max-w-6xl mx-auto p-5 gap-4'):
-        ui.label('Criar novidade').classes('text-3xl font-bold')
-        ui.label(
-            'Adicione o conteúdo. A aplicação organiza o texto, posiciona as imagens '
-            'selecionadas e monta a publicação.'
+
+        def show_creation(visible: bool) -> None:
+            """A tela inicial é só o painel; o fluxo de criação aparece na seleção."""
+            occurrence_panel.set_visibility(not visible)
+            for element in creation_elements:
+                element.set_visibility(visible)
+
+        def launch_from_occurrence(occurrence: OccurrenceSummary) -> None:
+            """Carrega o contexto da ocorrência no fluxo de criação já existente."""
+            texto = occurrence.as_raw_text().strip()
+            if not texto:
+                ui.notify(
+                    f'A ocorrência #{occurrence.number} não tem contexto registrado.',
+                    type='warning',
+                )
+                return
+            controls['raw_text'].value = texto
+            state.update(generated=False, approved=False, exports={})
+            persist_screen_state(step='Adicionar conteúdo')
+            stepper.set_value('Adicionar conteúdo')
+            show_creation(True)
+            ui.notify(
+                f'Ocorrência #{occurrence.number} carregada. Revise o texto e gere a novidade.',
+                type='positive',
+            )
+
+        def back_to_occurrences() -> None:
+            show_creation(False)
+
+        with ui.column().classes('w-full gap-4') as occurrence_panel:
+            with ui.row().classes('w-full justify-end') as resume_row:
+                ui.button(
+                    'Continuar novidade em andamento',
+                    icon='play_arrow',
+                    on_click=lambda: show_creation(True),
+                ).props('flat color=primary')
+            render_occurrence_menu(launch_from_occurrence)
+        # A sessão anterior fica acessível por um botão, sem roubar a tela inicial.
+        resume_row.set_visibility(
+            bool(str(saved.get('raw_text') or '').strip())
+            or bool(state['images'])
+            or bool(state['generated'])
+        )
+
+        with ui.row().classes('w-full items-center justify-between') as creation_header:
+            ui.label('Criar novidade').classes('text-3xl font-bold')
+            ui.button(
+                'Voltar para as ocorrências', icon='arrow_back', on_click=back_to_occurrences
+            ).props('flat color=primary')
+        creation_subtitle = ui.label(
+            'Revise o conteúdo da ocorrência e complemente com as imagens. A aplicação '
+            'organiza o texto, posiciona as imagens e monta a publicação.'
         ).classes('muted')
 
         generation_status = persisted_generation_status()
@@ -1490,6 +1540,10 @@ def index() -> None:
                             'Enviar pelo WhatsApp', icon='send',
                             on_click=open_whatsapp_flow,
                         ).props('outline color=green')
+
+        creation_elements = [creation_header, creation_subtitle, stepper]
+        # A tela inicial é sempre o painel de ocorrências.
+        show_creation(False)
 
     def sync_generation_from_store() -> None:
         stored = state_store.load() or {}
