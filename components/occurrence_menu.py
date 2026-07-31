@@ -98,7 +98,10 @@ def render_occurrence_menu(
             ).classes('muted p-4')
             return
 
-        with ui.column().classes('w-full gap-2 max-h-[28rem] overflow-y-auto pr-1'):
+        # Ocupa a altura restante da janela em vez de uma faixa fixa.
+        with ui.column().classes(
+            'w-full gap-2 max-h-[calc(100vh-20rem)] min-h-[24rem] overflow-y-auto pr-1'
+        ):
             for occurrence in visible:
                 _occurrence_row(occurrence)
 

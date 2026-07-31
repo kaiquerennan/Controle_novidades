@@ -41,6 +41,7 @@ from components.composition_builder import CompositionBuilder
 from components.image_editor import ImageEditor
 from components.novelty_preview import render_novelty_preview
 from components.occurrence_menu import render_occurrence_menu
+from components.novelty_history_panel import render_novelty_history
 from core.config import (
     API_KEY_ENVIRONMENTS,
     IMAGE_MODELS,
@@ -73,6 +74,7 @@ from services.whatsapp_service import (
     mask_recipient,
 )
 from services.generation_control_service import GENERATION_REGISTRY
+from services.occurrence_db_config_service import OccurrenceDatabaseConfigService
 from services.occurrence_query_service import OccurrenceSummary
 from services.providers import ProviderError, ProviderFactory
 from services.providers.exceptions import sanitize_technical_detail
@@ -329,24 +331,62 @@ def index() -> None:
         </style>
     ''')
 
+    occurrence_db_config = OccurrenceDatabaseConfigService().load()
+    current_view: dict[str, str] = {'name': 'ocorrencias'}
+    drawer_items: dict[str, Any] = {}
+    MENU_ENTRIES = (
+        ('ocorrencias', 'Ocorrências de mudança', 'fact_check'),
+        ('novidades', 'Novidades lançadas', 'auto_stories'),
+        ('configuracoes', 'Configurações', 'settings'),
+    )
+
+    with ui.left_drawer(value=True).props('bordered width=260').classes(
+        'bg-white p-2'
+    ) as navigation_drawer:
+        ui.label('NAVEGAÇÃO').classes('text-xs font-bold muted px-3 pt-2 tracking-wide')
+        with ui.list().props('padding').classes('w-full'):
+            for view_name, menu_label, menu_icon in MENU_ENTRIES:
+                def _navigate(name: str = view_name) -> None:
+                    show_view(name)
+
+                menu_item = ui.item(on_click=_navigate).props('clickable').classes('rounded-lg')
+                with menu_item:
+                    with ui.item_section().props('avatar'):
+                        ui.icon(menu_icon)
+                    with ui.item_section():
+                        ui.item_label(menu_label)
+                drawer_items[view_name] = menu_item
+
     with ui.header().classes('bg-slate-900 text-white px-6 py-4'):
         with ui.row().classes('w-full items-center justify-between'):
-            with ui.column().classes('gap-0'):
-                ui.label(APP_NAME).classes('text-xl font-bold')
-                ui.label('Crie uma novidade pronta a partir de imagens e texto bruto.').classes(
-                    'text-sm text-slate-300'
-                )
+            with ui.row().classes('items-center gap-3 no-wrap'):
+                ui.button(
+                    icon='menu', on_click=navigation_drawer.toggle
+                ).props('flat round color=white')
+                with ui.column().classes('gap-0'):
+                    ui.label(APP_NAME).classes('text-xl font-bold')
+                    ui.label(
+                        'Crie uma novidade pronta a partir de imagens e texto bruto.'
+                    ).classes('text-sm text-slate-300')
             ui.button(
                 'Nova Novidade', icon='note_add', on_click=new_novelty_dialog.open
             ).props('outline color=white')
 
-    with ui.column().classes('w-full max-w-6xl mx-auto p-5 gap-4'):
+    with ui.column().classes('w-full px-6 py-5 gap-4'):
+
+        def show_view(name: str) -> None:
+            """Alterna entre as áreas do menu lateral, escondendo as demais."""
+            current_view['name'] = name
+            occurrence_panel.set_visibility(name == 'ocorrencias')
+            novelty_panel.set_visibility(name == 'novidades')
+            settings_panel.set_visibility(name == 'configuracoes')
+            for element in creation_elements:
+                element.set_visibility(name == 'criar')
+            for view, item in drawer_items.items():
+                item.props(f'active={str(view == name).lower()}')
 
         def show_creation(visible: bool) -> None:
-            """A tela inicial é só o painel; o fluxo de criação aparece na seleção."""
-            occurrence_panel.set_visibility(not visible)
-            for element in creation_elements:
-                element.set_visibility(visible)
+            show_view('criar' if visible else 'ocorrencias')
 
         def launch_from_occurrence(occurrence: OccurrenceSummary) -> None:
             """Carrega o contexto da ocorrência no fluxo de criação já existente."""
@@ -384,6 +424,94 @@ def index() -> None:
             or bool(state['images'])
             or bool(state['generated'])
         )
+
+        with ui.column().classes('w-full gap-4') as novelty_panel:
+            render_novelty_history()
+
+        with ui.column().classes('w-full gap-4') as settings_panel:
+            with ui.card().classes('simple-card w-full p-5 gap-3'):
+                ui.label('Configurações').classes('text-2xl font-bold')
+                ui.label(
+                    'Provedor de IA, chave de acesso e modelos usados na geração.'
+                ).classes('muted text-sm')
+                restored_provider = str(saved_settings.get('provider') or 'gemini')
+                if restored_provider not in PROVIDER_LABELS:
+                    restored_provider = 'gemini'
+                provider_name = ui.select(
+                    PROVIDER_LABELS, value=restored_provider, label='Provedor'
+                ).classes('w-52')
+                session_keys = {
+                    name: os.getenv(environment, '')
+                    for name, environment in API_KEY_ENVIRONMENTS.items()
+                }
+                api_key = ui.input(
+                    'Chave da API',
+                    value=session_keys[restored_provider],
+                    password=True,
+                    password_toggle_button=True,
+                ).props('autocomplete=off').classes('w-full max-w-2xl')
+                ui.label(
+                    'A chave não é gravada em disco: vale para esta sessão do servidor. '
+                    'Para não digitar toda vez, defina a variável de ambiente '
+                    'GEMINI_API_KEY ou OPENAI_API_KEY antes de iniciar.'
+                ).classes('muted text-xs')
+                model_values = {
+                    name: {'text': TEXT_MODELS[name], 'image': IMAGE_MODELS[name]}
+                    for name in PROVIDER_LABELS
+                }
+                model_values[restored_provider] = {
+                    'text': str(
+                        saved_settings.get('text_model')
+                        or TEXT_MODELS[restored_provider]
+                    ),
+                    'image': str(
+                        saved_settings.get('image_model')
+                        or (
+                            saved_settings.get('model')
+                            if 'image' in str(saved_settings.get('model') or '').lower()
+                            else ''
+                        )
+                        or IMAGE_MODELS[restored_provider]
+                    ),
+                }
+                with ui.row().classes('w-full gap-3 no-wrap'):
+                    text_model = ui.input(
+                        'Modelo de Texto', value=model_values[restored_provider]['text'],
+                    ).props('debounce=500').classes('w-96')
+                    image_model = ui.input(
+                        'Modelo de Imagem', value=model_values[restored_provider]['image'],
+                    ).props('debounce=500').classes('w-96')
+                selected_provider = {'name': restored_provider}
+
+                def change_provider(event: events.ValueChangeEventArguments) -> None:
+                    previous = selected_provider['name']
+                    session_keys[previous] = api_key.value or ''
+                    model_values[previous] = {
+                        'text': str(text_model.value or TEXT_MODELS[previous]),
+                        'image': str(image_model.value or IMAGE_MODELS[previous]),
+                    }
+                    current = str(event.value)
+                    selected_provider['name'] = current
+                    api_key.value = session_keys[current]
+                    text_model.value = model_values[current]['text']
+                    image_model.value = model_values[current]['image']
+                    api_key.update()
+                    text_model.update()
+                    image_model.update()
+                    persist_screen_state()
+
+                provider_name.on_value_change(change_provider)
+
+            with ui.card().classes('simple-card w-full p-5 gap-3'):
+                ui.label('Banco de ocorrências').classes('text-xl font-bold')
+                ui.label(
+                    f'{occurrence_db_config.describe()} · usuário '
+                    f'{occurrence_db_config.user or "não informado"} · somente leitura'
+                ).classes('muted text-sm')
+                ui.label(
+                    'Alterado por linha de comando: '
+                    '.venv\\Scripts\\python.exe configurar_banco.py configurar'
+                ).classes('muted text-xs')
 
         with ui.row().classes('w-full items-center justify-between') as creation_header:
             ui.label('Criar novidade').classes('text-3xl font-bold')
@@ -520,71 +648,10 @@ def index() -> None:
                         value=bool(saved_settings.get('cover_requested', False)),
                     )
 
-                    with ui.expansion('Configuração de IA', icon='settings').classes('w-full'):
-                        ui.label(
-                            'Use somente se precisar alterar o provedor ou informar a chave.'
-                        ).classes('text-sm muted')
-                        restored_provider = str(saved_settings.get('provider') or 'gemini')
-                        if restored_provider not in PROVIDER_LABELS:
-                            restored_provider = 'gemini'
-                        provider_name = ui.select(
-                            PROVIDER_LABELS, value=restored_provider, label='Provedor'
-                        ).classes('w-52')
-                        session_keys = {
-                            name: os.getenv(environment, '')
-                            for name, environment in API_KEY_ENVIRONMENTS.items()
-                        }
-                        api_key = ui.input(
-                            'Chave da API',
-                            value=session_keys[restored_provider],
-                            password=True,
-                            password_toggle_button=True,
-                        ).props('autocomplete=off').classes('w-full')
-                        model_values = {
-                            name: {'text': TEXT_MODELS[name], 'image': IMAGE_MODELS[name]}
-                            for name in PROVIDER_LABELS
-                        }
-                        model_values[restored_provider] = {
-                            'text': str(
-                                saved_settings.get('text_model')
-                                or TEXT_MODELS[restored_provider]
-                            ),
-                            'image': str(
-                                saved_settings.get('image_model')
-                                or (
-                                    saved_settings.get('model')
-                                    if 'image' in str(saved_settings.get('model') or '').lower()
-                                    else ''
-                                )
-                                or IMAGE_MODELS[restored_provider]
-                            ),
-                        }
-                        text_model = ui.input(
-                            'Modelo de Texto', value=model_values[restored_provider]['text'],
-                        ).props('debounce=500').classes('w-96')
-                        image_model = ui.input(
-                            'Modelo de Imagem', value=model_values[restored_provider]['image'],
-                        ).props('debounce=500').classes('w-96')
-                        selected_provider = {'name': restored_provider}
-
-                        def change_provider(event: events.ValueChangeEventArguments) -> None:
-                            previous = selected_provider['name']
-                            session_keys[previous] = api_key.value or ''
-                            model_values[previous] = {
-                                'text': str(text_model.value or TEXT_MODELS[previous]),
-                                'image': str(image_model.value or IMAGE_MODELS[previous]),
-                            }
-                            current = str(event.value)
-                            selected_provider['name'] = current
-                            api_key.value = session_keys[current]
-                            text_model.value = model_values[current]['text']
-                            image_model.value = model_values[current]['image']
-                            api_key.update()
-                            text_model.update()
-                            image_model.update()
-                            persist_screen_state()
-
-                        provider_name.on_value_change(change_provider)
+                    ui.label(
+                        'O provedor de IA, a chave e os modelos ficam em Configurações, '
+                        'no menu lateral.'
+                    ).classes('text-sm muted')
 
                     controls.update(
                         raw_text=raw_text, provider=provider_name,
@@ -1543,7 +1610,7 @@ def index() -> None:
 
         creation_elements = [creation_header, creation_subtitle, stepper]
         # A tela inicial é sempre o painel de ocorrências.
-        show_creation(False)
+        show_view('ocorrencias')
 
     def sync_generation_from_store() -> None:
         stored = state_store.load() or {}
