@@ -3117,3 +3117,18 @@ Traceback (most recent call last):
   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\element.py", line 150, in parent_slot
     raise RuntimeError(f'The parent slot of {name}(id={self.id}{markers}) has been deleted.')
 RuntimeError: The parent slot of Timer(id=65) has been deleted.
+2026-07-31 15:21:15,220 ERROR 'Session is disconnected' hTQ6_ZrmBUsALvicAAAA (further occurrences of this error will be logged with level INFO)
+2026-07-31 15:24:02,173 ERROR The parent slot of Timer(id=65) has been deleted.
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\background_tasks.py", line 152, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 76, in _run_once
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\elements\timer.py", line 15, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\element.py", line 150, in parent_slot
+    raise RuntimeError(f'The parent slot of {name}(id={self.id}{markers}) has been deleted.')
+RuntimeError: The parent slot of Timer(id=65) has been deleted.

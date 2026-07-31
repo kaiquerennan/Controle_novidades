@@ -81,4 +81,3 @@ Declaradas em `requirements.txt`:
 - `ScreenStateStore` remove campos sensiveis antes de salvar;
 - `ProviderFactory` escolhe o provider por nome;
 - `model_routing.py` impede uso cruzado de modelos de texto e imagem.
-

@@ -56,7 +56,6 @@ Estruturas de dominio:
 Camada funcional do sistema:
 
 - `editorial_orchestration_service.py`: fluxo principal editorial;
-- `novelty_generation_service.py`: aplicacao de marcacoes e fluxo automatico de novidade;
 - `image_service.py`: manipulacao de imagens, desenho com Pillow e exportacoes;
 - `html_export_service.py` e `xml_export_service.py`: geracao dos artefatos finais;
 - `screen_state_service.py`: persistencia do estado da tela;
@@ -66,7 +65,12 @@ Camada funcional do sistema:
 - `text_sanitizer.py`: limpeza de markdown;
 - `system_path_formatter.py`: normalizacao de caminhos do sistema;
 - `image_analysis_cache_service.py`: cache de analise de imagem;
-- `composition_ai_service.py`: servicos auxiliares de revisao e sugestao;
+- `occurrence_database_service.py`: acesso somente leitura ao SQL Server de ocorrencias;
+- `occurrence_db_config_service.py`: configuracao e senha protegida do banco;
+- `occurrence_query_service.py`: consulta a view VW_OCORRENCIAS_MUDANCA;
+- `occurrence_dismissal_service.py`: ocorrencias marcadas para nao virar novidade;
+- `novelty_history_service.py`: novidades ja exportadas pelo aplicativo;
+- `credential_protection.py`: protecao DPAPI compartilhada de credenciais;
 - `providers/`: providers OpenAI e Gemini.
 
 ### `core/config/`

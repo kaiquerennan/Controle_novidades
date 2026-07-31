@@ -1,5 +1,21 @@
+# Credenciais e estado local
 data/whatsapp_config.local.json
 data/occurrence_db.local.json
 data/occurrence_dismissed.local.json
+data/screen_state.json
 realizado.MD
 .claude
+
+# Artefatos de sessao: gerados em execucao, nao pertencem ao repositorio
+data/originals/
+data/processed/
+data/temp/
+data/exports/
+data/image_analysis_cache/
+
+# Ambiente e caches
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+logs/*.log
