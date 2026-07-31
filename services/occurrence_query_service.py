@@ -11,7 +11,6 @@ from services.occurrence_database_service import OccurrenceDatabase
 
 
 # A view ja entrega somente as ocorrencias de mudanca, com todo o contexto
-# necessario para a geracao da novidade dentro de JSON_COMPLETO.
 OCCURRENCE_VIEW = 'VW_OCORRENCIAS_MUDANCA'
 DEFAULT_MONTHS = 3
 DEFAULT_LIMIT = 500

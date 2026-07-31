@@ -23,7 +23,17 @@
 - `GEMINI_API_KEY`
 - `OPENAI_API_KEY`
 
-Essas chaves sao lidas na tela de configuracao de IA e nao sao persistidas no `screen_state.json`.
+Essas chaves sao lidas do arquivo `.env` na raiz do projeto e pre-preenchem o campo
+em **Configuracoes**, no menu lateral. Elas nunca sao persistidas no
+`screen_state.json`.
+
+Copie `.env.example` para `.env` e preencha os valores. Variaveis ja definidas no
+terminal continuam tendo precedencia sobre o arquivo, e a ausencia do `.env` nao
+impede a aplicacao de subir: o campo apenas comeca vazio.
+
+O carregamento acontece em `core/config/environment.py`, chamado por
+`core/config/settings.py`, entao vale tanto para a aplicacao quanto para os
+scripts de linha de comando.
 
 ### Banco de ocorrencias (SQL Server)
 
@@ -42,9 +52,14 @@ Parametros aceitos, com precedencia para as variaveis de ambiente:
 | `EMC_DB_PASSWORD` | `password` | Fica somente em memoria quando vem do ambiente |
 | `EMC_DB_ODBC_DRIVER` | `odbc_driver` | Em branco usa o driver mais recente instalado |
 
-Sem variaveis de ambiente, a configuracao vem de `data/occurrence_db.local.json`,
-gravado por `configurar_banco.py`. A senha e protegida pelo DPAPI da maquina,
-como o token do WhatsApp, e o arquivo esta no `.gitignore`.
+A configuracao em uso vem do `.env` na raiz do projeto. Sem essas variaveis, vale
+`data/occurrence_db.local.json`, gravado por `configurar_banco.py`, onde a senha
+fica protegida pelo DPAPI da maquina.
+
+Atencao ao efeito da precedencia: enquanto o `.env` tiver valores, o
+`occurrence_db.local.json` nao e usado. Se o `.env` for esvaziado, a aplicacao
+volta silenciosamente para o arquivo protegido, que pode apontar para outro
+servidor.
 
 Comandos de apoio (sempre pelo Python da `.venv`):
 

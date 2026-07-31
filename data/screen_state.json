@@ -1,6 +1,6 @@
 {
   "session_id": "fc2ad21b441d485c9ef7e905106d0edb",
-  "raw_text": "OCORRÊNCIA: 97245\nSISTEMA: EMC GESTÃO EMPRESARIAL\n\nCAMINHO: \r\nOperacional / Relatórios / Cashback / Cashback Gerado\r\n\r\nSOLICITAÇÃO: \r\nMelhorar a ordenação do relatório.\n\nQuando o filtro for pela \"Data de Geração\":\nordenar por Dt. Geração + OS (crescente)\n\nQuando o filtro for pela \"Data de Validade\":\nordenar por Validade + OS (crescente)\r\n\r\nJUSTIFICATIVA: \r\nHoje a ordenação é sempre pela Dt. Geração e não considera o número da OS. Os registros com mesma Dt. Geração ficam desordenados.\n\nAlém disso, na busca por Data de Validade é importante que as validades mais antigas sejam apresentadas no topo e os resultados fiquem ordenados por essa coluna.\n\nCOMPLEMENTO:\nTeste realizado na versão 14.01.02.037 do Gestão Empresarial\n\nErro corrigido: no relatório de Cashback Gerado, quando a pesquisa for realizada por\n'Data de Geração', o nome da coluna 'Dt.Geração' fica destacado em outra cor.\n\nQuando a pesquisa for realizada por 'Data de Validade', o nome da coluna 'Validade'\nficará destacado em outra cor.\n\nOBSERVAÇÕES:\n- Nova versão disponível na homologação.\r\nAlteração de status de várias ocorrências.\n- Versão 14.1.02.035 do Gestão Empresarial\n\nMudança Implementada. A ordenação do relatório de Cashback Gerado foi melhorado, passando a ter o seguinte funcionamento:\n\nQuando o filtro for pela \"Data de Geração\":\nordenar por Dt. Geração + OS (crescente)\n\nQuando o filtro for pela \"Data de Validade\":\nordenar por Validade + OS (crescente)\n- Teste realizado na versão 14.01.02.036 do Gestão Empresarial\n\nFavor verificar: com relação a este relatório 'Cashback Gerado', ao selecionar o período\n'Data de Validade', o primeiro campo da grid não deveria mudar para 'Dt.Validade'?\n\nSimulação:\n\n- Acessar 'Operacional | Relatórios | Gerencial | Cashback | Cashback Gerado'.\n- Foram realizadas vendas com cashback hoje (14/07/2026). A data de expiração do \ncashback é de 30 dias (13/08/2026).\n- Ao selecionar o período 'Data de Geração', informando este período, o primeiro campo \napresentado na grid é 'Dt.Geração'.\n- Porém, ao mudar o período para 'Data de Validade', veja que o primeiro campo da grid\ncontinua como 'Dt.Geração'. Não deveria ser trocado para 'Dt.Validade'?\n\nOBS: Bancos e Vídeo em OneDrive (97245-Correção)\n- Não há necessidade de reordenar as colunas.\n\nMas podemos colorir de azul o título da coluna que está ordenando o relatório, conforme padrões de outras telas.\n- Alterado conforme a observação de Edson Jr.\n- Nova versão disponível na homologação\r\nAlteração de status de várias ocorrências.\n- Teste realizado na versão 14.01.02.037 do Gestão Empresarial\n\nErro corrigido: no relatório de Cashback Gerado, quando a pesquisa for realizada por\n'Data de Geração', o nome da coluna 'Dt.Geração' fica destacado em outra cor.\n\nQuando a pesquisa for realizada por 'Data de Validade', o nome da coluna 'Validade'\nficará destacado em outra cor.\n- Teste realizado na versão 14.01.02.037 do Gestão Empresarial\n\nErro corrigido: no relatório de Cashback Gerado, quando a pesquisa for realizada por\n'Data de Geração', o nome da coluna 'Dt.Geração' fica destacado em outra cor.\n\nQuando a pesquisa for realizada por 'Data de Validade', o nome da coluna 'Validade'\nficará destacado em outra cor.",
+  "raw_text": "OCORRÊNCIA: 97005\nSISTEMA: EMC GESTÃO EMPRESARIAL\nMÓDULO: EMC LOJA WEB\n\nCAMINHO: \r\nEMC Loja Web\r\n\r\nSOLICITAÇÃO: \r\nAlteração da cor no menu de departamentos na horizontal. \r\n\r\nJUSTIFICATIVA: \r\nCliente solicita a opção de alteração de cor do menu.\r\n\r\nATENDIMENTO: \r\nSolicitação de mudança:\nAlteração da cor do menu de departamentos na loja web.\n\nOBSERVAÇÕES:\n- Não há risco comercial identificado. Trata-se de uma solicitação da cliente com o objetivo de alinhar a interface ao padrão visual utilizado no site da GMinas.\n\nDessa forma, solicito a análise de viabilidade para implementação da alteração solicitada.\n- Incluso os campos:\n\nMenu horizontal - Departamentos com os campos Cor de fundo e Cor de texto.\n\n- Realizar testes no PC e Smartphones com os seguintes layouts: \nDepartamento 11, Departamento 07, Departamento 04, Departamento 01, Categoria 04, Categoria 01 e Banner Full 02.\n\n- Realizar testes nos seguimentos Varejo e Agência de Veículos\n- Alteração de status de várias ocorrências.\n- ::Teste Realizado na Versão: 0301.00.18::\n\nFavor Verificar.\n\nA mudança não se aplica para Smartphones somente para PC. Gentileza analisar.\n\n::SIMULAÇÃO::\n\n- https://www.websotoresoluction.com.br/\n- Campos Cor de fundo e Cor de texto, aplicado como Rosa e Preto\n- No PC Menu horizontal - Departamentos, as cores definidas são exibidas corretamente\n- No  Smartphones, parmanece na cor padrão\n- Por definição de regra as cores definas para os departamentos (menu horizontal) não se aplicam aos smartphones.\n- Por definição de regra as cores definas para os departamentos (menu horizontal) não se aplicam aos smartphones.",
   "images": [],
   "composition": {
     "origem": "manual",
@@ -22,13 +22,13 @@
     "blocos": [
       {
         "ordem": 1,
-        "id": "bloco_b20957e66e53",
+        "id": "bloco_0662701fa8d9",
         "tipo": "titulo",
         "conteudo": ""
       },
       {
         "ordem": 2,
-        "id": "bloco_803920c6ed41",
+        "id": "bloco_4f56c556a9c8",
         "tipo": "texto",
         "conteudo": ""
       }
@@ -36,16 +36,16 @@
   },
   "generated": false,
   "approved": false,
-  "current_step": "Processamento",
+  "current_step": "Adicionar conteúdo",
   "generation": {
-    "generation_id": "7af11865444548e2a1d145c0152a1784",
-    "idempotency_key": "88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48",
+    "generation_id": "7c086249c3b34e078ee1418143466632",
+    "idempotency_key": "8c4282650031ef2fe8481935af1b5fe87f3f087943f5fcb46a761ffac27dde7d",
     "status": "failed",
     "etapa_atual": "geracao_automatica",
     "percentual": 0.2,
     "mensagem": "Organizando a matéria...",
-    "started_at": "2026-07-31T16:03:56-0300",
-    "finished_at": "2026-07-31T16:03:56-0300",
+    "started_at": "2026-07-31T18:09:11-0300",
+    "finished_at": "2026-07-31T18:09:22-0300",
     "error": "Não foi possível organizar o texto da novidade. O conteúdo original e as imagens foram preservados.",
     "generated": false,
     "document": {},

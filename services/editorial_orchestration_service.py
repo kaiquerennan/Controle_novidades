@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import asyncio
 from collections.abc import Awaitable, Callable
 from hashlib import sha256
 import json
@@ -49,6 +50,18 @@ logger = logging.getLogger('EMC Novidade Visual IA')
 PLAN_MAX_OUTPUT_TOKENS = 10500
 CORRECTION_MAX_OUTPUT_TOKENS = 6800
 REVIEW_MAX_OUTPUT_TOKENS = 6500
+
+
+# O modelo às vezes entra em repetição e devolve JSON truncado, e o provedor
+# responde 503 em picos de demanda. Nos dois casos a chamada seguinte costuma
+# funcionar, então vale repetir antes de perder a geração inteira.
+AI_MAX_ATTEMPTS = 3
+AI_RETRY_DELAY_SECONDS = 2.0
+RETRYABLE_PROVIDER_CODES = frozenset({
+    'invalid_schema_response',
+    'provider_unavailable',
+    'gemini_empty_novelty_plan',
+})
 
 
 COMMON_FIDELITY_RULES = """Use somente fatos fornecidos na entrada.
@@ -1006,6 +1019,33 @@ Use apenas correcoes e trechos_fonte do payload. Não invente informações.
                 on_progress(stage)
 
         async def execute_ai(operation: str, function: Callable[..., Any], **kwargs: Any) -> Any:
+            """Executa uma chamada de IA, repetindo falhas reconhecidamente transitórias.
+
+            O modelo às vezes entra em repetição e devolve um JSON truncado, e o
+            provedor responde 503 em picos de demanda. Nos dois casos a chamada
+            seguinte costuma funcionar, então uma nova tentativa evita perder a
+            geração inteira.
+            """
+            ultimo_erro: ProviderError | None = None
+            for tentativa in range(1, AI_MAX_ATTEMPTS + 1):
+                try:
+                    return await _execute_ai_once(operation, function, tentativa, **kwargs)
+                except ProviderError as exc:
+                    ultimo_erro = exc
+                    if exc.code not in RETRYABLE_PROVIDER_CODES:
+                        raise
+                    if tentativa >= AI_MAX_ATTEMPTS:
+                        raise
+                    logger.warning(
+                        '[PROCESSAMENTO] Tentativa %s de %s falhou em %s (%s); repetindo.',
+                        tentativa, AI_MAX_ATTEMPTS, operation, exc.code,
+                    )
+                    await asyncio.sleep(AI_RETRY_DELAY_SECONDS * tentativa)
+            raise ultimo_erro if ultimo_erro else RuntimeError('Falha inesperada na chamada de IA.')
+
+        async def _execute_ai_once(
+            operation: str, function: Callable[..., Any], attempt: int, **kwargs: Any
+        ) -> Any:
             nonlocal ai_calls
             ai_calls += 1
             endpoint = (
@@ -1029,8 +1069,9 @@ Use apenas correcoes e trechos_fonte do payload. Não invente informações.
             request_started = time.perf_counter()
             logger.info(
                 '[PROCESSAMENTO] Chamada IA %s iniciada; geracao=%s operacao=%s modelo=%s '
-                'endpoint=%s tentativas_maximas=2 texto_bytes=%s imagens_bytes=%s',
-                ai_calls, generation_id, operation, model, endpoint, text_bytes, image_bytes,
+                'endpoint=%s tentativa=%s de %s texto_bytes=%s imagens_bytes=%s',
+                ai_calls, generation_id, operation, model, endpoint,
+                attempt, AI_MAX_ATTEMPTS, text_bytes, image_bytes,
             )
             error: BaseException | None = None
             try:

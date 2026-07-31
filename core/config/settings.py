@@ -1,5 +1,12 @@
 from pathlib import Path
 
+from .environment import load_environment
+
+# O .env do projeto é lido aqui, no unico modulo de configuracao importado por
+# todo o restante, para que a chave de IA e o acesso ao banco fiquem disponiveis
+# tanto na aplicacao quanto nos scripts de linha de comando.
+load_environment()
+
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 PROMPT_IMAGE_PATH = PROJECT_ROOT / 'core' / 'prompts' / 'prompt_imagem.txt'
 PROMPT_NOVELTY_PATH = PROJECT_ROOT / 'core' / 'prompts' / 'prompt_geracao_novidade.txt'

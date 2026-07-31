@@ -48,6 +48,7 @@ from core.config import (
     PROVIDER_LABELS,
     TEXT_MODELS,
 )
+from core.config.environment import ENV_PATH
 from models.annotation import Annotation
 from models.composition import CompositionDocument
 from services.image_service import (
@@ -75,7 +76,6 @@ from services.whatsapp_service import (
     mask_recipient,
 )
 from services.generation_control_service import GENERATION_REGISTRY
-from services.occurrence_db_config_service import OccurrenceDatabaseConfigService
 from services.occurrence_query_service import OccurrenceSummary
 from services.providers import ProviderError, ProviderFactory
 from services.providers.exceptions import sanitize_technical_detail
@@ -334,7 +334,6 @@ def index() -> None:
         </style>
     ''')
 
-    occurrence_db_config = OccurrenceDatabaseConfigService().load()
     current_view: dict[str, str] = {'name': 'ocorrencias'}
     drawer_items: dict[str, Any] = {}
     MENU_ENTRIES = (
@@ -480,17 +479,21 @@ def index() -> None:
                     name: os.getenv(environment, '')
                     for name, environment in API_KEY_ENVIRONMENTS.items()
                 }
+                variavel = API_KEY_ENVIRONMENTS[restored_provider]
+                chave_origem = (
+                    f'Chave carregada de {ENV_PATH.name} ({variavel}). '
+                    'Editar aqui vale apenas para esta sessão.'
+                    if session_keys[restored_provider]
+                    else f'Sem chave no {ENV_PATH.name}. Preencha {variavel} nesse arquivo '
+                    'para não digitar toda vez, ou informe abaixo apenas para esta sessão.'
+                )
                 api_key = ui.input(
                     'Chave da API',
                     value=session_keys[restored_provider],
                     password=True,
                     password_toggle_button=True,
                 ).props('autocomplete=off').classes('w-full max-w-2xl')
-                ui.label(
-                    'A chave não é gravada em disco: vale para esta sessão do servidor. '
-                    'Para não digitar toda vez, defina a variável de ambiente '
-                    'GEMINI_API_KEY ou OPENAI_API_KEY antes de iniciar.'
-                ).classes('muted text-xs')
+                ui.label(chave_origem).classes('muted text-xs')
                 model_values = {
                     name: {'text': TEXT_MODELS[name], 'image': IMAGE_MODELS[name]}
                     for name in PROVIDER_LABELS
@@ -537,17 +540,6 @@ def index() -> None:
                     persist_screen_state()
 
                 provider_name.on_value_change(change_provider)
-
-            with ui.card().classes('simple-card w-full p-5 gap-3'):
-                ui.label('Banco de ocorrências').classes('text-xl font-bold')
-                ui.label(
-                    f'{occurrence_db_config.describe()} · usuário '
-                    f'{occurrence_db_config.user or "não informado"} · somente leitura'
-                ).classes('muted text-sm')
-                ui.label(
-                    'Alterado por linha de comando: '
-                    '.venv\\Scripts\\python.exe configurar_banco.py configurar'
-                ).classes('muted text-xs')
 
         with ui.row().classes('w-full items-center justify-between') as creation_header:
             ui.label('Criar novidade').classes('text-3xl font-bold')
