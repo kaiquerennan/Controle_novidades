@@ -1,0 +1,1707 @@
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 810, in <module>
+    ui.run(
+    ~~~~~~^
+        host='127.0.0.1', port=PORT, title=APP_NAME,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        favicon=PROJECT_ROOT / 'Logo_Emc.ico', reload=False, show=False,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+'Session is disconnected' kK0GVGBJOwKA0OquAAAj (further occurrences of this error will be logged with level INFO)
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 810, in <module>
+    ui.run(
+    ^^^^^^^
+    ...<2 lines>...
+    title=APP_NAME,
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Invalid session Rd0uy-Psj6ldSSD5AAAA (further occurrences of this error will be logged with level INFO)
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 810, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 810, in <module>
+    
+    
+    ...<6 lines>...
+            ).classes('muted')
+    
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+'Session is disconnected' VU8OJ4__SLdn8phiAACh (further occurrences of this error will be logged with level INFO)
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 840, in <module>
+    
+    
+    ...<6 lines>...
+        if not state['generated']:
+    
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+ERROR:    Exception in ASGI application
+  + Exception Group Traceback (most recent call last):
+  |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\_utils.py", line 85, in create_collapsing_task_group
+  |     async with anyio.create_task_group() as tg:
+  |                ~~~~~~~~~~~~~~~~~~~~~~~^^
+  |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\anyio\_backends\_asyncio.py", line 815, in __aexit__
+  |     raise BaseExceptionGroup(
+  |         "unhandled errors in a TaskGroup", self._exceptions
+  |     ) from None
+  | ExceptionGroup: unhandled errors in a TaskGroup (1 sub-exception)
+  +-+---------------- 1 ----------------
+    | Traceback (most recent call last):
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 422, in run_asgi
+    |     result = await app(  # type: ignore[func-returns-value]
+    |              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |         self.scope, self.receive, self.send
+    |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |     )
+    |     ^
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 63, in __call__
+    |     return await self.app(scope, receive, send)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    |     await super().__call__(scope, receive, send)
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\applications.py", line 90, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\errors.py", line 176, in __call__
+    |     response = await self.handler(request, exc)  # type: ignore[assignment, arg-type]
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\nicegui.py", line 189, in _exception_handler_500
+    |     raise exception  # Simply return "Internal Server Error", just like FastAPI would do
+    |     ^^^^^^^^^^^^^^^
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    |     await self.app(scope, receive, _send)
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\middlewares.py", line 23, in dispatch
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    |     raise app_exc from app_exc.__cause__ or app_exc.__context__
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    |     response = await self.dispatch_func(request, call_next)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\middlewares.py", line 13, in dispatch
+    |     response = await call_next(request)
+    |                ^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    |     raise app_exc from app_exc.__cause__ or app_exc.__context__
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    |     await self.app(scope, receive_or_disconnect, send_no_error)
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\gzip.py", line 29, in __call__
+    |     await responder(scope, receive, send)
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\gzip.py", line 130, in __call__
+    |     await super().__call__(scope, receive, send)
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\gzip.py", line 46, in __call__
+    |     await self.app(scope, receive, self.send_with_compression)
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    |     await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    |     raise exc
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    |     await app(scope, receive, sender)
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    |     await self.app(scope, receive, send)
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    |     await self.middleware_stack(scope, receive, send)
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\fastapi\routing.py", line 2689, in app
+    |     await route.handle(scope, receive, send)
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\routing.py", line 448, in handle
+    |     await self.app(scope, receive, send)
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\nicegui.py", line 47, in __call__
+    |     return await super().__call__(scope, receive, send)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\engineio\async_drivers\asgi.py", line 68, in __call__
+    |     await self.engineio_server.handle_request(scope, receive, send)
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\socketio\async_server.py", line 456, in handle_request
+    |     return await self.eio.handle_request(*args, **kwargs)
+    |            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\engineio\async_server.py", line 328, in handle_request
+    |     socket = self._get_socket(sid)
+    |   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\engineio\base_server.py", line 242, in _get_socket
+    |     raise KeyError('Session is disconnected')
+    | KeyError: 'Session is disconnected'
+    +------------------------------------
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 422, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        self.scope, self.receive, self.send
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 63, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\applications.py", line 90, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\errors.py", line 176, in __call__
+    response = await self.handler(request, exc)  # type: ignore[assignment, arg-type]
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\nicegui.py", line 189, in _exception_handler_500
+    raise exception  # Simply return "Internal Server Error", just like FastAPI would do
+    ^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\middlewares.py", line 23, in dispatch
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\base.py", line 193, in __call__
+    response = await self.dispatch_func(request, call_next)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\middlewares.py", line 13, in dispatch
+    response = await call_next(request)
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\base.py", line 168, in call_next
+    raise app_exc from app_exc.__cause__ or app_exc.__context__
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\base.py", line 144, in coro
+    await self.app(scope, receive_or_disconnect, send_no_error)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\gzip.py", line 29, in __call__
+    await responder(scope, receive, send)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\gzip.py", line 130, in __call__
+    await super().__call__(scope, receive, send)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\gzip.py", line 46, in __call__
+    await self.app(scope, receive, self.send_with_compression)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\routing.py", line 660, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\fastapi\routing.py", line 2689, in app
+    await route.handle(scope, receive, send)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\starlette\routing.py", line 448, in handle
+    await self.app(scope, receive, send)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\nicegui.py", line 47, in __call__
+    return await super().__call__(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\engineio\async_drivers\asgi.py", line 68, in __call__
+    await self.engineio_server.handle_request(scope, receive, send)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\socketio\async_server.py", line 456, in handle_request
+    return await self.eio.handle_request(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\engineio\async_server.py", line 328, in handle_request
+    socket = self._get_socket(sid)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\engineio\base_server.py", line 242, in _get_socket
+    raise KeyError('Session is disconnected')
+KeyError: 'Session is disconnected'
+Invalid session 5VlXfxJEEFup5n70AAAA (further occurrences of this error will be logged with level INFO)
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 899, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+'Session is disconnected' YaUtu0BvAagUwBU8AAAA (further occurrences of this error will be logged with level INFO)
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 899, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+'Session is disconnected' 57RPfQcbyAn2xdZqAAAB (further occurrences of this error will be logged with level INFO)
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 899, in <module>
+                            on_click=lambda: export_novelty(True),
+    ...<6 lines>...
+    
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+'Session is disconnected' MU7L6Ps_7vSBzVi0AAAC (further occurrences of this error will be logged with level INFO)
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 917, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 917, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 917, in <module>
+    ).classes('muted')
+    ...<6 lines>...
+    
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 940, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+'Session is disconnected' p7PfJ9Pt1M2XqIHvAAAA (further occurrences of this error will be logged with level INFO)
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+asyncio.exceptions.CancelledError
+
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 940, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+'Session is disconnected' 8_Wy3i1uB48jjtogAAAA (further occurrences of this error will be logged with level INFO)
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 940, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+'Session is disconnected' E6aAFbOJLXvitJbfAAAB (further occurrences of this error will be logged with level INFO)
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 940, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 940, in <module>
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+            logger.error('Inicialização interrompida: porta %s ocupada.', PORT)
+    
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+'Session is disconnected' lule86fDVNiUA2OBAAAA (further occurrences of this error will be logged with level INFO)
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 949, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 949, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 949, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Invalid session vo8thMFepcaTz0g2AAAf (further occurrences of this error will be logged with level INFO)
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 949, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 949, in <module>
+            safe_visual_update('limpeza_visual', clear_progress_ui)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+                on_click=stepper.next,
+    
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+'Session is disconnected' tSEkmrWuLqyuq4f7AAAA (further occurrences of this error will be logged with level INFO)
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1250, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1250, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1250, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1250, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1250, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1250, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1250, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1250, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1250, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1250, in <module>
+    if str(stored.get('session_id') or '') != workspace.session_id:
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ...<6 lines>...
+    if status == 'processing':
+    
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1373, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1373, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1373, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1373, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1373, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1373, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1373, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1373, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1373, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1373, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1373, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt
+'Session is disconnected' 5OhEYrkyYgYn9Y9UAAAA (further occurrences of this error will be logged with level INFO)
+Traceback (most recent call last):
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 118, in run
+    return self._loop.run_until_complete(task)
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\base_events.py", line 725, in run_until_complete
+    return future.result()
+           ~~~~~~~~~~~~~^^
+asyncio.exceptions.CancelledError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1250, in <module>
+        ui.run(
+        ~~~~~~^
+        host='0.0.0.0',
+        ^^^^^^^^^^^^^^^
+    ...<4 lines>...
+        show=False,
+        ^^^^^^^^^^^
+    )
+    ^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+    ~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+    ~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 74, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 195, in run
+    return runner.run(main)
+           ~~~~~~~~~~^^^^^^
+  File "C:\Users\sonara.cotta\AppData\Local\Programs\Python\Python313\Lib\asyncio\runners.py", line 123, in run
+    raise KeyboardInterrupt()
+KeyboardInterrupt

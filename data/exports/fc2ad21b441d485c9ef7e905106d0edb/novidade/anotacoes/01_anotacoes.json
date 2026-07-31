@@ -1,0 +1,32 @@
+[
+  {
+    "kind": "arrow",
+    "points": [
+      [
+        0.111,
+        0.47500000000000003
+      ],
+      [
+        0.256,
+        0.47205882352941175
+      ]
+    ],
+    "color": "#ef4444",
+    "width": 4,
+    "font_size": 28,
+    "text_background": "#ffffff",
+    "opacity": 0.92,
+    "text": "",
+    "number": 1,
+    "border_color": "#ef4444",
+    "fill_color": "#fef08a",
+    "fill_enabled": false,
+    "fill_opacity": 0.25,
+    "arrow_head_size": 18,
+    "arrow_head_style": "filled",
+    "double_arrow": false,
+    "bold": false,
+    "text_background_enabled": true,
+    "id": "09225c7e302349c397a33035be123aaf"
+  }
+]

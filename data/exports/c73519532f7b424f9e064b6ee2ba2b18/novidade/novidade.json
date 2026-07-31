@@ -1,0 +1,197 @@
+{
+  "application": "EMC Novidade Visual IA",
+  "session_id": "c73519532f7b424f9e064b6ee2ba2b18",
+  "created_at": "2026-07-28T20:21:16.703502+00:00",
+  "origem": "manual",
+  "titulo": "Novidade: Cadastro de Perfis Específicos de Destinatário do IBS/CBS",
+  "introducao": "Foi adicionada uma nova funcionalidade para o cadastro de \"Perfis Específicos de Destinatário do IBS/CBS\" no sistema. Essa funcionalidade permitirá que as empresas configurem tributações específicas conforme as características dos destinatários, garantindo conformidade com a legislação.",
+  "texto_novidade": "Foi adicionada uma nova funcionalidade para o cadastro de \"Perfis Específicos de Destinatário do IBS/CBS\" no sistema. Essa funcionalidade permitirá que as empresas configurem tributações específicas conforme as características dos destinatários, garantindo conformidade com a legislação.\n\nAlterações Realizadas\n\n1. **Tela de Cadastro de Perfis**: Uma nova tela foi implementada para cadastrar \"Perfis Específicos de Destinatário do IBS/CBS\", permitindo a inclusão de diferentes perfis como:\n   - Órgão Público\n   - Entidade de Saúde Imune\n   - Produtor Rural Não Contribuinte\n   - Transportador Autônomo de Carga (TAC)\n   - Pessoa com Deficiência (PCD)\n   - Motorista Profissional\n   - Zona Franca de Manaus (ZFM)\n   - Área de Livre Comércio (ALC)\n   - Associado de Cooperativa\n\n2. **Configuração de Tributações**: Cada perfil poderá ter uma seção \"IBS/CBS\" que permite a configuração das tributações específicas aplicáveis a cada um, agrupadas em regras.\n\n3. **Cadastro de Regras**: Será possível cadastrar múltiplas regras para cada perfil, com a definição de condições como por classificação tributária ou NCM/NBS, permitindo flexibilidade no gerenciamento tributário.\n\n4. **Tributação por Condição**: Quando as condições forem atendidas, será possível definir a Classificação Tributária IBS/CBS a ser aplicada, com preenchimento automático dos campos relacionados à tributação.\n\n5. **Integração com Cadastro de Clientes**: Foi adicionado um campo \"Perfil Específico IBS/CBS\" no cadastro de clientes, que estará vazio por padrão e permitirá a associação do cliente a um dos perfis cadastrados.\n\nFuncionamento e Configuração\n\nPara configurar as novas opções de cadastro e regras:\n- Navegue até **Operacional > Cadastros > Tabelas > Fiscal** e acesse a aba \"Dados Adicionais\" no módulo de **Clientes (F2)**.\n- Utilize a nova tela para cadastrar os perfis desejados, seguido do preenchimento das regras tributárias específicas e suas condições conforme a necessidade tributária.\n\nExemplo prático de regras para o perfil \"Órgão Público\":\n- O perfil pode ter regras que transformam a Classificação Tributária conforme o produto ou serviço previsto, como a alteração de 200004 para 200005 e assim por diante.\n\nExemplos de Uso\n\nPor exemplo, um dispositivo médico destinado a um órgão da administração pública poderá ser tributado de forma diferenciada, similar ao que acontece com medicamentos fornecidos a esses órgãos.\n\nEssa flexibilidade permitirá uma melhor adequação às diferentes situações tributárias de acordo com a legislação vigente, trazendo mais eficiência e precisão na emissão de documentos fiscais.\n\nIntegração nos Cadastros\n\nNos cadastros do sistema, será possível visualizar a integração desses perfis também em outras áreas, como no cadastro de CFOP e na estruturação do regime tributário, ampliando a conexão e permitindo um gerenciamento tributário mais integrado e eficiente.\n\nConclusão\n\nCom essas novas implementações, o sistema se torna mais adaptável às necessidades tributárias específicas de cada cliente, permitindo uma gestão fiscal mais assertiva e alinhada às regulamentações atuais.",
+  "blocos": [
+    {
+      "id": "bloco_fc5ac1f7f5e3",
+      "tipo": "titulo",
+      "conteudo": "Novidade: Cadastro de Perfis Específicos de Destinatário do IBS/CBS",
+      "ordem": 1
+    },
+    {
+      "id": "bloco_46fdd7d7d88e",
+      "tipo": "texto",
+      "conteudo": "Foi adicionada uma nova funcionalidade para o cadastro de \"Perfis Específicos de Destinatário do IBS/CBS\" no sistema. Essa funcionalidade permitirá que as empresas configurem tributações específicas conforme as características dos destinatários, garantindo conformidade com a legislação.",
+      "ordem": 2
+    },
+    {
+      "id": "bloco_bb49db3a0509",
+      "tipo": "subtitulo",
+      "conteudo": "Alterações Realizadas",
+      "ordem": 3
+    },
+    {
+      "id": "bloco_2f8e9087205b",
+      "tipo": "texto",
+      "conteudo": "1. **Tela de Cadastro de Perfis**: Uma nova tela foi implementada para cadastrar \"Perfis Específicos de Destinatário do IBS/CBS\", permitindo a inclusão de diferentes perfis como:\n   - Órgão Público\n   - Entidade de Saúde Imune\n   - Produtor Rural Não Contribuinte\n   - Transportador Autônomo de Carga (TAC)\n   - Pessoa com Deficiência (PCD)\n   - Motorista Profissional\n   - Zona Franca de Manaus (ZFM)\n   - Área de Livre Comércio (ALC)\n   - Associado de Cooperativa\n\n2. **Configuração de Tributações**: Cada perfil poderá ter uma seção \"IBS/CBS\" que permite a configuração das tributações específicas aplicáveis a cada um, agrupadas em regras.\n\n3. **Cadastro de Regras**: Será possível cadastrar múltiplas regras para cada perfil, com a definição de condições como por classificação tributária ou NCM/NBS, permitindo flexibilidade no gerenciamento tributário.\n\n4. **Tributação por Condição**: Quando as condições forem atendidas, será possível definir a Classificação Tributária IBS/CBS a ser aplicada, com preenchimento automático dos campos relacionados à tributação.\n\n5. **Integração com Cadastro de Clientes**: Foi adicionado um campo \"Perfil Específico IBS/CBS\" no cadastro de clientes, que estará vazio por padrão e permitirá a associação do cliente a um dos perfis cadastrados.",
+      "ordem": 4
+    },
+    {
+      "id": "bloco_e984e81e5d27",
+      "tipo": "subtitulo",
+      "conteudo": "Funcionamento e Configuração",
+      "ordem": 5
+    },
+    {
+      "id": "bloco_6fdfba5e6766",
+      "tipo": "texto",
+      "conteudo": "Para configurar as novas opções de cadastro e regras:\n- Navegue até **Operacional > Cadastros > Tabelas > Fiscal** e acesse a aba \"Dados Adicionais\" no módulo de **Clientes (F2)**.\n- Utilize a nova tela para cadastrar os perfis desejados, seguido do preenchimento das regras tributárias específicas e suas condições conforme a necessidade tributária.\n\nExemplo prático de regras para o perfil \"Órgão Público\":\n- O perfil pode ter regras que transformam a Classificação Tributária conforme o produto ou serviço previsto, como a alteração de 200004 para 200005 e assim por diante.",
+      "ordem": 6
+    },
+    {
+      "id": "bloco_b5f1568fe927",
+      "tipo": "subtitulo",
+      "conteudo": "Exemplos de Uso",
+      "ordem": 7
+    },
+    {
+      "id": "bloco_50ab9f6823b9",
+      "tipo": "texto",
+      "conteudo": "Por exemplo, um dispositivo médico destinado a um órgão da administração pública poderá ser tributado de forma diferenciada, similar ao que acontece com medicamentos fornecidos a esses órgãos.\n\nEssa flexibilidade permitirá uma melhor adequação às diferentes situações tributárias de acordo com a legislação vigente, trazendo mais eficiência e precisão na emissão de documentos fiscais.",
+      "ordem": 8
+    },
+    {
+      "id": "bloco_39e5a10f805f",
+      "tipo": "subtitulo",
+      "conteudo": "Integração nos Cadastros",
+      "ordem": 9
+    },
+    {
+      "id": "bloco_3ea9e399b798",
+      "tipo": "texto",
+      "conteudo": "Nos cadastros do sistema, será possível visualizar a integração desses perfis também em outras áreas, como no cadastro de CFOP e na estruturação do regime tributário, ampliando a conexão e permitindo um gerenciamento tributário mais integrado e eficiente.",
+      "ordem": 10
+    },
+    {
+      "id": "bloco_0cb42e0c1521",
+      "tipo": "subtitulo",
+      "conteudo": "Conclusão",
+      "ordem": 11
+    },
+    {
+      "id": "bloco_519f6386a26e",
+      "tipo": "texto",
+      "conteudo": "Com essas novas implementações, o sistema se torna mais adaptável às necessidades tributárias específicas de cada cliente, permitindo uma gestão fiscal mais assertiva e alinhada às regulamentações atuais.",
+      "ordem": 12
+    },
+    {
+      "id": "bloco_76723b69748e",
+      "tipo": "imagem",
+      "imagem_id": "imagem_d1c2ee400428",
+      "legenda": "",
+      "modo_exibicao": "normal",
+      "ordem": 13,
+      "arquivo": "imagens/01_final.png"
+    },
+    {
+      "id": "bloco_c6296c15ab11",
+      "tipo": "imagem",
+      "imagem_id": "imagem_81cca0d23ec9",
+      "legenda": "",
+      "modo_exibicao": "normal",
+      "ordem": 14,
+      "arquivo": "imagens/02_final.png"
+    },
+    {
+      "id": "bloco_5a07a653db50",
+      "tipo": "imagem",
+      "imagem_id": "imagem_818ceaac3bf2",
+      "legenda": "",
+      "modo_exibicao": "normal",
+      "ordem": 15,
+      "arquivo": "imagens/03_final.png"
+    }
+  ],
+  "imagens": [
+    {
+      "id": "imagem_d1c2ee400428",
+      "ordem_arquivo": 1,
+      "arquivo_original": "imagens/01_original.png",
+      "arquivo_tratado": "imagens/01_tratada.png",
+      "arquivo_final": "imagens/01_final.png",
+      "anotacoes": "anotacoes/01_anotacoes.json",
+      "nome_original": "2.png",
+      "status": "Preservada sem alterações",
+      "mensagem_erro": "",
+      "bloco_id": "bloco_76723b69748e",
+      "posicao_composicao": 13,
+      "legenda": "",
+      "modo_exibicao": "normal"
+    },
+    {
+      "id": "imagem_81cca0d23ec9",
+      "ordem_arquivo": 2,
+      "arquivo_original": "imagens/02_original.png",
+      "arquivo_tratado": "imagens/02_tratada.png",
+      "arquivo_final": "imagens/02_final.png",
+      "anotacoes": "anotacoes/02_anotacoes.json",
+      "nome_original": "4.png",
+      "status": "Preservada sem alterações",
+      "mensagem_erro": "",
+      "bloco_id": "bloco_c6296c15ab11",
+      "posicao_composicao": 14,
+      "legenda": "",
+      "modo_exibicao": "normal"
+    },
+    {
+      "id": "imagem_818ceaac3bf2",
+      "ordem_arquivo": 3,
+      "arquivo_original": "imagens/03_original.png",
+      "arquivo_tratado": "imagens/03_tratada.png",
+      "arquivo_final": "imagens/03_final.png",
+      "anotacoes": "anotacoes/03_anotacoes.json",
+      "nome_original": "3.png",
+      "status": "Preservada sem alterações",
+      "mensagem_erro": "",
+      "bloco_id": "bloco_5a07a653db50",
+      "posicao_composicao": 15,
+      "legenda": "",
+      "modo_exibicao": "normal"
+    },
+    {
+      "id": "imagem_e87a478e1fc8",
+      "ordem_arquivo": 4,
+      "arquivo_original": "imagens/04_original.png",
+      "arquivo_tratado": "imagens/04_tratada.png",
+      "arquivo_final": "imagens/04_final.png",
+      "anotacoes": "anotacoes/04_anotacoes.json",
+      "nome_original": "5.png",
+      "status": "Preservada sem alterações",
+      "mensagem_erro": ""
+    }
+  ],
+  "imagens_fallback": [
+    "imagem_d1c2ee400428",
+    "imagem_81cca0d23ec9",
+    "imagem_818ceaac3bf2",
+    "imagem_e87a478e1fc8"
+  ],
+  "capa": {
+    "solicitada": true,
+    "status": "gerada",
+    "tema": "Novidade: Cadastro de Perfis Específicos de Destinatário do IBS/CBS",
+    "arquivo": "capa/capa.png",
+    "mensagem": ""
+  },
+  "revisao": {
+    "aprovada": false,
+    "avisos": [
+      "Uma correção automática foi aplicada; revise antes de aprovar."
+    ],
+    "correcoes_necessarias": [
+      "Verificar a ausência de imagens relacionadas às telas de cadastro, que não foram incluídas."
+    ],
+    "imagens_nao_utilizadas": [
+      "imagem_d1c2ee400428"
+    ],
+    "informacoes_possivelmente_inventadas": [],
+    "nomes_tecnicos_alterados": [],
+    "status": "revisao_manual_necessaria",
+    "correcao_automatica_realizada": true
+  }
+}

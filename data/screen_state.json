@@ -1,0 +1,2166 @@
+{
+  "session_id": "fc2ad21b441d485c9ef7e905106d0edb",
+  "raw_text": "Controle de Cashback: muito mais do que desconto, uma ferramenta completa de fidelização\n\n13/07/2026\n\nEntre as principais novidades da versão 14.1 do EMC Gestão Empresarial está o novo Controle de Cashback, desenvolvido para fortalecer o relacionamento entre empresas e clientes, incentivar novas compras e transformar o cashback em um verdadeiro programa de fidelização.\n\nMais do que conceder créditos para compras futuras, a solução permite criar campanhas promocionais inteligentes, automatizar toda a gestão dos benefícios e manter um relacionamento ativo com o consumidor antes, durante e após cada venda.\n\nCampanhas totalmente configuráveis\n\nO sistema permite criar diferentes campanhas de cashback de acordo com a estratégia comercial da empresa.\n\nÉ possível definir:\n\npercentual ou valor do cashback concedido;\nperíodo de vigência da campanha;\nvalor mínimo da compra;\nvalidade dos créditos;\naplicação geral ou específica por grupos, subgrupos ou produtos.\n\nA validade dos créditos pode ser configurada de duas formas:\n\npor uma quantidade de dias após a compra;\npor uma data fixa.\n\nEssa flexibilidade permite criar campanhas para diferentes objetivos comerciais.\n\nExemplos:\n\nGanhe 10% de cashback nas compras de materiais de limpeza para utilizar em até 90 dias.\nA cada R$ 100,00 em compras de Natal, receba R$ 10,00 de cashback para utilizar até 31 de janeiro.\n\nAlém disso, foram realizados diversos aprimoramentos na rotina de cadastro das regras de cashback, tornando sua configuração mais simples e intuitiva.\n\nEntre as melhorias implementadas estão:\n\nalteração do título da tela para Regras de Cashback;\npossibilidade de deixar a Data Término em branco;\nrenomeação do campo Tipo para Tipo Cashback;\nalteração do campo Tipo de Regra para Tipo de Aplicação;\nreorganização da tela, posicionando o campo Tipo Cashback acima da seção de validade;\ninclusão de um botão informativo com orientações sobre os tipos de validade disponíveis;\nrevisão das mensagens de validação e correção de textos apresentados durante o cadastro.\nGeração automática dos créditos\n\nApós a conclusão de cada venda, o EMC Gestão Empresarial verifica automaticamente se a compra atende às regras de cashback cadastradas.\n\nQuando aplicável, o crédito é gerado automaticamente, vinculado ao cliente e armazenado pelo sistema, sem alterar o fluxo operacional da venda.\n\nAo finalizar a operação, o sistema informa que a compra gerou cashback e pode emitir um comprovante contendo:\n\nvalor concedido;\nprazo de validade;\nsaldo atualizado do cliente.\nUtilização simples e totalmente integrada\n\nQuando o cliente retorna para uma nova compra, o sistema identifica automaticamente os créditos disponíveis e permite sua utilização durante a venda.\n\nTodo o processo acontece de forma transparente para o operador.\n\nOs créditos são consumidos automaticamente pelos registros mais antigos, o saldo é atualizado em tempo real e toda a movimentação permanece registrada para consultas futuras.\n\nA funcionalidade também contempla corretamente os aspectos fiscais envolvidos na utilização do cashback, garantindo total integração ao processo de venda.\n\nControle completo e visão gerencial\n\nToda a administração do programa acontece dentro do próprio ERP.\n\nForam disponibilizados novos relatórios que permitem acompanhar toda a movimentação dos créditos.\n\nCashback Gerado\n\nCaminho:\n\nRelatórios > Gerencial > Cashback > Cashback Gerado\n\nO relatório permite consultar todos os créditos gerados, utilizando filtros por:\n\nData de Geração;\nData de Validade;\nCliente;\nRegra de Cashback;\nSituação (Disponível, Utilizado, Expirado ou Todos).\n\nSão apresentadas as seguintes informações:\n\nData de Geração;\nCliente;\nVenda de Origem;\nValor Gerado;\nValor Utilizado;\nSaldo Disponível;\nData de Validade;\nSituação do Cashback.\nCashback Utilizado\n\nCaminho:\n\nRelatórios > Gerencial > Cashback > Cashback Utilizado\n\nTambém foi implementado o relatório de utilização do cashback, permitindo acompanhar todos os resgates realizados pelos clientes.\n\nFiltros disponíveis:\n\nData de Utilização;\nCliente;\nRegra de Cashback.\n\nInformações apresentadas:\n\nData de Utilização;\nCliente;\nOS de Origem;\nOS de Utilização;\nValor Utilizado.\n\nO relatório também apresenta o total geral dos valores utilizados e ordena automaticamente os registros pela data de utilização, facilitando análises e auditorias.\n\nComunicação automática pelo WhatsApp\n\nUm dos grandes diferenciais da solução é sua integração com o WhatsApp, permitindo automatizar toda a comunicação com o consumidor durante o ciclo de vida do cashback.\n\nForam disponibilizados três novos modelos de mensagens totalmente configuráveis.\n\nCashback Gerado\n\nApós uma venda que gera cashback, o cliente pode receber automaticamente uma mensagem contendo:\n\nvalor do cashback;\ndata de validade;\nsaldo disponível.\n\nCampos dinâmicos disponíveis:\n\nApelido do Cliente;\nValor do Cashback;\nData de Validade;\nSaldo de Cashback;\nEmpresa.\nCashback Utilizado\n\nQuando um crédito é utilizado em uma venda, o sistema pode enviar automaticamente uma confirmação contendo:\n\nvalor utilizado;\nsaldo restante.\n\nCampos dinâmicos disponíveis:\n\nApelido do Cliente;\nValor Utilizado;\nSaldo de Cashback;\nEmpresa.\nAviso de Vencimento\n\nAntes do vencimento dos créditos, o Monitor de Tarefas pode enviar automaticamente um lembrete ao cliente, incentivando sua utilização antes da expiração.\n\nCampos dinâmicos disponíveis:\n\nApelido do Cliente;\nSaldo de Cashback;\nValor Expirando;\nData de Validade;\nEmpresa.\n\nEssa automação aproxima a empresa de seus clientes e aumenta significativamente as chances de retorno à loja.\n\nFidelização que acontece naturalmente\n\nCom o novo Programa de Cashback, o EMC Gestão Empresarial passa a oferecer uma solução completa para fidelização de clientes.\n\nEnquanto o ERP administra automaticamente campanhas, geração de créditos, controle de saldos, utilização, relatórios e comunicação com os consumidores, a empresa ganha uma poderosa ferramenta para aumentar a recorrência de compras, fortalecer o relacionamento com seus clientes e criar campanhas promocionais de forma prática, segura e totalmente integrada.",
+  "images": [
+    {
+      "id": "imagem_1168fbd02bfb",
+      "filename": "06_final.png",
+      "original": "C:\\EMC_Novidade_Visual_IA\\data\\originals\\fc2ad21b441d485c9ef7e905106d0edb\\06_final.png",
+      "treated": "C:\\EMC_Novidade_Visual_IA\\data\\originals\\fc2ad21b441d485c9ef7e905106d0edb\\06_final.png",
+      "annotated": "C:\\EMC_Novidade_Visual_IA\\data\\exports\\fc2ad21b441d485c9ef7e905106d0edb\\geradas\\imagem_1168fbd02bfb\\imagem_final.png",
+      "final": "C:\\EMC_Novidade_Visual_IA\\data\\exports\\fc2ad21b441d485c9ef7e905106d0edb\\geradas\\imagem_1168fbd02bfb\\imagem_final.png",
+      "size": [
+        800,
+        648
+      ],
+      "status": "Preservada sem alterações",
+      "error": "",
+      "annotations": [
+        {
+          "kind": "arrow",
+          "points": [
+            [
+              0.111,
+              0.47500000000000003
+            ],
+            [
+              0.256,
+              0.47205882352941175
+            ]
+          ],
+          "color": "#ef4444",
+          "width": 4,
+          "font_size": 28,
+          "text_background": "#ffffff",
+          "opacity": 0.92,
+          "text": "",
+          "number": 1,
+          "border_color": "#ef4444",
+          "fill_color": "#fef08a",
+          "fill_enabled": false,
+          "fill_opacity": 0.25,
+          "arrow_head_size": 18,
+          "arrow_head_style": "filled",
+          "double_arrow": false,
+          "bold": false,
+          "text_background_enabled": true,
+          "id": "09225c7e302349c397a33035be123aaf"
+        }
+      ]
+    },
+    {
+      "id": "imagem_2b92eda1ac92",
+      "filename": "08.png",
+      "original": "C:\\EMC_Novidade_Visual_IA\\data\\originals\\fc2ad21b441d485c9ef7e905106d0edb\\08.png",
+      "treated": "C:\\EMC_Novidade_Visual_IA\\data\\originals\\fc2ad21b441d485c9ef7e905106d0edb\\08.png",
+      "annotated": "",
+      "final": "C:\\EMC_Novidade_Visual_IA\\data\\originals\\fc2ad21b441d485c9ef7e905106d0edb\\08.png",
+      "size": [
+        870,
+        592
+      ],
+      "status": "Preservada sem alterações",
+      "error": "",
+      "annotations": []
+    },
+    {
+      "id": "imagem_ed995295264c",
+      "filename": "07.png",
+      "original": "C:\\EMC_Novidade_Visual_IA\\data\\originals\\fc2ad21b441d485c9ef7e905106d0edb\\07.png",
+      "treated": "C:\\EMC_Novidade_Visual_IA\\data\\originals\\fc2ad21b441d485c9ef7e905106d0edb\\07.png",
+      "annotated": "C:\\EMC_Novidade_Visual_IA\\data\\exports\\fc2ad21b441d485c9ef7e905106d0edb\\geradas\\imagem_ed995295264c\\imagem_final.png",
+      "final": "C:\\EMC_Novidade_Visual_IA\\data\\exports\\fc2ad21b441d485c9ef7e905106d0edb\\geradas\\imagem_ed995295264c\\imagem_final.png",
+      "size": [
+        677,
+        484
+      ],
+      "status": "Preservada sem alterações",
+      "error": "",
+      "annotations": [
+        {
+          "kind": "arrow",
+          "points": [
+            [
+              0.138,
+              0.1073529411764706
+            ],
+            [
+              0.186,
+              0.22794117647058823
+            ]
+          ],
+          "color": "#ef4444",
+          "width": 4,
+          "font_size": 28,
+          "text_background": "#ffffff",
+          "opacity": 0.92,
+          "text": "",
+          "number": 1,
+          "border_color": "#ef4444",
+          "fill_color": "#fef08a",
+          "fill_enabled": false,
+          "fill_opacity": 0.25,
+          "arrow_head_size": 18,
+          "arrow_head_style": "filled",
+          "double_arrow": false,
+          "bold": false,
+          "text_background_enabled": true,
+          "id": "a71294eb1f6443b9b039dba08ddab7c3"
+        }
+      ]
+    },
+    {
+      "id": "imagem_171bd1211533",
+      "filename": "09.png",
+      "original": "C:\\EMC_Novidade_Visual_IA\\data\\originals\\fc2ad21b441d485c9ef7e905106d0edb\\09.png",
+      "treated": "C:\\EMC_Novidade_Visual_IA\\data\\originals\\fc2ad21b441d485c9ef7e905106d0edb\\09.png",
+      "annotated": "",
+      "final": "C:\\EMC_Novidade_Visual_IA\\data\\originals\\fc2ad21b441d485c9ef7e905106d0edb\\09.png",
+      "size": [
+        1200,
+        500
+      ],
+      "status": "Preservada sem alterações",
+      "error": "",
+      "annotations": []
+    }
+  ],
+  "composition": {
+    "origem": "manual",
+    "titulo": "Controle de Cashback: muito mais do que desconto, uma ferramenta completa de fidelização",
+    "imagens_fallback": [
+      "imagem_1168fbd02bfb",
+      "imagem_2b92eda1ac92",
+      "imagem_ed995295264c",
+      "imagem_171bd1211533"
+    ],
+    "capa": {
+      "solicitada": false,
+      "status": "nao_gerada",
+      "tema": "Controle de Cashback: muito mais do que desconto, uma ferramenta completa de fidelização",
+      "arquivo": "",
+      "mensagem": ""
+    },
+    "revisao": {
+      "aprovada": true,
+      "avisos": [],
+      "correcoes_necessarias": [],
+      "blocos_para_corrigir": [],
+      "secoes_para_corrigir": [],
+      "imagens_nao_utilizadas": [],
+      "informacoes_possivelmente_inventadas": [],
+      "nomes_tecnicos_alterados": [],
+      "status": "concluida",
+      "correcao_automatica_realizada": false
+    },
+    "blocos": [
+      {
+        "ordem": 1,
+        "id": "bloco_27aea4ccac2b",
+        "tipo": "titulo",
+        "conteudo": "Controle de Cashback: muito mais do que desconto, uma ferramenta completa de fidelização",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 2,
+        "id": "bloco_c061eac96957",
+        "tipo": "texto",
+        "conteudo": "A versão 14.1 do EMC Gestão Empresarial passa a disponibilizar um Controle de Cashback pensado para administrar campanhas, gerar créditos automaticamente, controlar saldos e comunicar clientes ao longo do ciclo de uso dos benefícios. A solução reúne criação de regras flexíveis, emissão e consumo de créditos integrados ao processo de venda e relatórios gerenciais, além de modelos automáticos de comunicação via WhatsApp.",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 3,
+        "id": "bloco_441a921a1d33",
+        "tipo": "subtitulo",
+        "conteudo": "Regras de Cashback — cadastro e configuração",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 4,
+        "id": "bloco_5fee996e81c7",
+        "tipo": "texto",
+        "conteudo": "A rotina de cadastro das regras de cashback apresenta opções para definir parâmetros comerciais das campanhas e recebeu ajustes na interface e nas mensagens de validação para simplificar a configuração.",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 5,
+        "id": "bloco_9f6617fd06ed",
+        "tipo": "lista",
+        "itens": [
+          {
+            "texto": "Percentual ou valor do cashback concedido",
+            "destaques": [
+              "Percentual ou valor"
+            ]
+          },
+          {
+            "texto": "Período de vigência da campanha",
+            "destaques": [
+              "Período de vigência"
+            ]
+          },
+          {
+            "texto": "Valor mínimo da compra",
+            "destaques": [
+              "Valor mínimo"
+            ]
+          },
+          {
+            "texto": "Validade dos créditos",
+            "destaques": [
+              "Validade dos créditos"
+            ]
+          },
+          {
+            "texto": "Aplicação geral ou específica por grupos, subgrupos ou produtos",
+            "destaques": [
+              "aplicação geral ou específica"
+            ]
+          }
+        ],
+        "papel": "lista",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 6,
+        "id": "bloco_69a35796243f",
+        "tipo": "lista",
+        "itens": [
+          {
+            "texto": "Validade por uma quantidade de dias após a compra",
+            "destaques": [
+              "quantidade de dias"
+            ]
+          },
+          {
+            "texto": "Validade por data fixa",
+            "destaques": [
+              "data fixa"
+            ]
+          }
+        ],
+        "papel": "lista",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 7,
+        "id": "bloco_2f141c1b6bce",
+        "tipo": "lista",
+        "itens": [
+          {
+            "texto": "Alteração do título da tela para Regras de Cashback",
+            "destaques": [
+              "Regras de Cashback"
+            ]
+          },
+          {
+            "texto": "Possibilidade de deixar a Data Término em branco",
+            "destaques": [
+              "Data Término em branco"
+            ]
+          },
+          {
+            "texto": "Renomeação do campo Tipo para Tipo Cashback",
+            "destaques": [
+              "Tipo Cashback"
+            ]
+          },
+          {
+            "texto": "Alteração do campo Tipo de Regra para Tipo de Aplicação",
+            "destaques": [
+              "Tipo de Aplicação"
+            ]
+          },
+          {
+            "texto": "Reorganização da tela posicionando Tipo Cashback acima da seção de validade",
+            "destaques": [
+              "Tipo Cashback acima"
+            ]
+          },
+          {
+            "texto": "Inclusão de um botão informativo sobre os tipos de validade disponíveis",
+            "destaques": [
+              "botão informativo"
+            ]
+          },
+          {
+            "texto": "Revisão das mensagens de validação e correção de textos apresentados durante o cadastro",
+            "destaques": [
+              "mensagens de validação"
+            ]
+          }
+        ],
+        "papel": "lista",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 8,
+        "id": "bloco_5a0906ae4852",
+        "tipo": "subtitulo",
+        "conteudo": "Geração automática dos créditos",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 9,
+        "id": "bloco_dfe66d7f3ba8",
+        "tipo": "texto",
+        "conteudo": "Ao concluir uma venda, o sistema verifica automaticamente as regras cadastradas e, quando aplicável, gera o crédito vinculado ao cliente sem alterar o fluxo operacional da venda. O sistema informa ao operador que a compra gerou cashback e pode emitir um comprovante contendo informações do crédito.",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 10,
+        "id": "bloco_e952df5d2826",
+        "tipo": "lista",
+        "itens": [
+          {
+            "texto": "Valor concedido no cashback",
+            "destaques": [
+              "Valor concedido"
+            ]
+          },
+          {
+            "texto": "Prazo de validade do crédito",
+            "destaques": [
+              "Prazo de validade"
+            ]
+          },
+          {
+            "texto": "Saldo atualizado do cliente",
+            "destaques": [
+              "Saldo atualizado"
+            ]
+          }
+        ],
+        "papel": "lista",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 11,
+        "id": "bloco_0888d029042b",
+        "tipo": "subtitulo",
+        "conteudo": "Utilização e resgate durante a venda",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 12,
+        "id": "bloco_865c53ba6101",
+        "tipo": "texto",
+        "conteudo": "Quando o cliente retorna para uma nova compra, o sistema identifica automaticamente os créditos disponíveis e permite sua utilização na própria venda, de forma transparente para o operador. Os créditos são consumidos pelos registros mais antigos, o saldo é atualizado em tempo real e toda a movimentação fica registrada para consultas futuras. A rotina também contempla os aspectos fiscais envolvidos na utilização do cashback.",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 13,
+        "id": "bloco_24ebe324b801",
+        "tipo": "subtitulo",
+        "conteudo": "Relatório Cashback Gerado",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 14,
+        "id": "bloco_f1e5d8eeabae",
+        "tipo": "texto",
+        "conteudo": "O relatório permite consultar os créditos gerados com filtros por período, validade, cliente, regra e situação. São exibidos detalhes de origem e valores, auxiliando o acompanhamento da emissão de créditos.",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 15,
+        "id": "bloco_d1bbb72d496d",
+        "tipo": "texto",
+        "conteudo": "Acesse através do caminho:\nRelatórios / Gerencial / Cashback / Cashback Gerado",
+        "papel": "caminho",
+        "secao_id": "rotina_001",
+        "caminho": "Relatórios / Gerencial / Cashback / Cashback Gerado"
+      },
+      {
+        "ordem": 16,
+        "id": "bloco_d811bba4f7e9",
+        "tipo": "lista",
+        "itens": [
+          {
+            "texto": "Filtros por Data de Geração e Data de Validade",
+            "destaques": [
+              "Data de Geração"
+            ]
+          },
+          {
+            "texto": "Filtro por Cliente",
+            "destaques": [
+              "Cliente"
+            ]
+          },
+          {
+            "texto": "Filtro por Regra de Cashback",
+            "destaques": [
+              "Regra de Cashback"
+            ]
+          },
+          {
+            "texto": "Filtro por Situação (Disponível, Utilizado, Expirado ou Todos)",
+            "destaques": [
+              "Situação"
+            ]
+          }
+        ],
+        "papel": "lista",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 17,
+        "id": "bloco_0db43cfdb245",
+        "tipo": "lista",
+        "itens": [
+          {
+            "texto": "Data de Geração",
+            "destaques": [
+              "Data de Geração"
+            ]
+          },
+          {
+            "texto": "Cliente",
+            "destaques": [
+              "Cliente"
+            ]
+          },
+          {
+            "texto": "Venda de Origem",
+            "destaques": [
+              "Venda de Origem"
+            ]
+          },
+          {
+            "texto": "Valor Gerado, Valor Utilizado e Saldo Disponível",
+            "destaques": [
+              "Valor Gerado"
+            ]
+          },
+          {
+            "texto": "Data de Validade e Situação do Cashback",
+            "destaques": [
+              "Data de Validade"
+            ]
+          }
+        ],
+        "papel": "lista",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 18,
+        "id": "bloco_b37d925ab5de",
+        "tipo": "subtitulo",
+        "conteudo": "Relatório Cashback Utilizado",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 19,
+        "id": "bloco_2e7a36965fb3",
+        "tipo": "texto",
+        "conteudo": "Este relatório apresenta todos os resgates realizados, com filtros por data de utilização, cliente e regra. Os registros são ordenados automaticamente por data de utilização e o relatório mostra o total geral dos valores utilizados.",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 20,
+        "id": "bloco_03e2dfa0c2af",
+        "tipo": "texto",
+        "conteudo": "Acesse através do caminho:\nRelatórios / Gerencial / Cashback / Cashback Utilizado",
+        "papel": "caminho",
+        "secao_id": "rotina_001",
+        "caminho": "Relatórios / Gerencial / Cashback / Cashback Utilizado"
+      },
+      {
+        "ordem": 21,
+        "id": "bloco_53b6ddcbbaaa",
+        "tipo": "lista",
+        "itens": [
+          {
+            "texto": "Filtros por Data de Utilização",
+            "destaques": [
+              "Data de Utilização"
+            ]
+          },
+          {
+            "texto": "Filtro por Cliente",
+            "destaques": [
+              "Cliente"
+            ]
+          },
+          {
+            "texto": "Filtro por Regra de Cashback",
+            "destaques": [
+              "Regra de Cashback"
+            ]
+          }
+        ],
+        "papel": "lista",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 22,
+        "id": "bloco_e407d9060288",
+        "tipo": "lista",
+        "itens": [
+          {
+            "texto": "Data de Utilização",
+            "destaques": [
+              "Data de Utilização"
+            ]
+          },
+          {
+            "texto": "Cliente",
+            "destaques": [
+              "Cliente"
+            ]
+          },
+          {
+            "texto": "OS de Origem e OS de Utilização",
+            "destaques": [
+              "OS de Origem"
+            ]
+          },
+          {
+            "texto": "Valor Utilizado",
+            "destaques": [
+              "Valor Utilizado"
+            ]
+          }
+        ],
+        "papel": "lista",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 23,
+        "id": "bloco_d7bf7a5a0b30",
+        "tipo": "subtitulo",
+        "conteudo": "Comunicação automática pelo WhatsApp",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 24,
+        "id": "bloco_10e5bce70e59",
+        "tipo": "texto",
+        "conteudo": "A solução integra mensagens automáticas via WhatsApp que podem ser enviadas em três momentos do ciclo do cashback: quando o crédito é gerado, quando é utilizado e antes do vencimento. Os modelos são configuráveis e suportam campos dinâmicos para personalização das mensagens.",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 25,
+        "id": "bloco_d9ccdf506ae0",
+        "tipo": "lista",
+        "itens": [
+          {
+            "texto": "Cashback Gerado — mensagem com valor do cashback, data de validade e saldo disponível",
+            "destaques": [
+              "Cashback Gerado"
+            ]
+          },
+          {
+            "texto": "Cashback Utilizado — confirmação contendo valor utilizado e saldo restante",
+            "destaques": [
+              "Cashback Utilizado"
+            ]
+          },
+          {
+            "texto": "Aviso de Vencimento — lembrete enviado antes do vencimento do crédito",
+            "destaques": [
+              "Aviso de Vencimento"
+            ]
+          }
+        ],
+        "papel": "lista",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 26,
+        "id": "bloco_0008390adc38",
+        "tipo": "lista",
+        "itens": [
+          {
+            "texto": "Campos dinâmicos disponíveis para Cashback Gerado: Apelido do Cliente, Valor do Cashback, Data de Validade, Saldo de Cashback e Empresa",
+            "destaques": [
+              "Apelido do Cliente"
+            ]
+          },
+          {
+            "texto": "Campos dinâmicos disponíveis para Cashback Utilizado: Apelido do Cliente, Valor Utilizado, Saldo de Cashback e Empresa",
+            "destaques": [
+              "Valor Utilizado"
+            ]
+          },
+          {
+            "texto": "Campos dinâmicos disponíveis para Aviso de Vencimento: Apelido do Cliente, Saldo de Cashback, Valor Expirando, Data de Validade e Empresa",
+            "destaques": [
+              "Valor Expirando"
+            ]
+          }
+        ],
+        "papel": "lista",
+        "secao_id": "rotina_001"
+      },
+      {
+        "ordem": 27,
+        "id": "bloco_4121f3e9c250",
+        "tipo": "imagem",
+        "imagem_id": "imagem_1168fbd02bfb",
+        "legenda": "",
+        "modo_exibicao": "normal"
+      },
+      {
+        "ordem": 28,
+        "id": "bloco_5746f9ef2e71",
+        "tipo": "imagem",
+        "imagem_id": "imagem_2b92eda1ac92",
+        "legenda": "",
+        "modo_exibicao": "normal"
+      },
+      {
+        "ordem": 29,
+        "id": "bloco_4c9175d6541c",
+        "tipo": "imagem",
+        "imagem_id": "imagem_ed995295264c",
+        "legenda": "",
+        "modo_exibicao": "normal"
+      },
+      {
+        "ordem": 30,
+        "id": "bloco_79eda7facb3a",
+        "tipo": "imagem",
+        "imagem_id": "imagem_171bd1211533",
+        "legenda": "",
+        "modo_exibicao": "normal"
+      }
+    ]
+  },
+  "generated": true,
+  "approved": true,
+  "current_step": "Visualizar",
+  "generation": {
+    "generation_id": "45d14b804d8342b7ab7790b9d12b7a57",
+    "idempotency_key": "89d6a467c06004c6d3ab051ef834ce5e669c81295dc93311888c43f61f2e17ad",
+    "status": "completed",
+    "etapa_atual": "completed",
+    "percentual": 1,
+    "mensagem": "Novidade gerada com sucesso.",
+    "started_at": "2026-07-30T16:58:54-0300",
+    "finished_at": "2026-07-30T17:02:06-0300",
+    "error": "",
+    "generated": true,
+    "document": {
+      "origem": "manual",
+      "titulo": "Controle de Cashback: muito mais do que desconto, uma ferramenta completa de fidelização",
+      "imagens_fallback": [
+        "imagem_1168fbd02bfb",
+        "imagem_2b92eda1ac92",
+        "imagem_ed995295264c",
+        "imagem_171bd1211533"
+      ],
+      "capa": {
+        "solicitada": false,
+        "status": "nao_gerada",
+        "tema": "Controle de Cashback: muito mais do que desconto, uma ferramenta completa de fidelização",
+        "arquivo": "",
+        "mensagem": ""
+      },
+      "revisao": {
+        "aprovada": true,
+        "avisos": [],
+        "correcoes_necessarias": [],
+        "blocos_para_corrigir": [],
+        "secoes_para_corrigir": [],
+        "imagens_nao_utilizadas": [],
+        "informacoes_possivelmente_inventadas": [],
+        "nomes_tecnicos_alterados": [],
+        "status": "concluida",
+        "correcao_automatica_realizada": false
+      },
+      "blocos": [
+        {
+          "ordem": 1,
+          "id": "bloco_27aea4ccac2b",
+          "tipo": "titulo",
+          "conteudo": "Controle de Cashback: muito mais do que desconto, uma ferramenta completa de fidelização",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 2,
+          "id": "bloco_c061eac96957",
+          "tipo": "texto",
+          "conteudo": "A versão 14.1 do EMC Gestão Empresarial passa a disponibilizar um Controle de Cashback pensado para administrar campanhas, gerar créditos automaticamente, controlar saldos e comunicar clientes ao longo do ciclo de uso dos benefícios. A solução reúne criação de regras flexíveis, emissão e consumo de créditos integrados ao processo de venda e relatórios gerenciais, além de modelos automáticos de comunicação via WhatsApp.",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 3,
+          "id": "bloco_441a921a1d33",
+          "tipo": "subtitulo",
+          "conteudo": "Regras de Cashback — cadastro e configuração",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 4,
+          "id": "bloco_5fee996e81c7",
+          "tipo": "texto",
+          "conteudo": "A rotina de cadastro das regras de cashback apresenta opções para definir parâmetros comerciais das campanhas e recebeu ajustes na interface e nas mensagens de validação para simplificar a configuração.",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 5,
+          "id": "bloco_9f6617fd06ed",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Percentual ou valor do cashback concedido",
+              "destaques": [
+                "Percentual ou valor"
+              ]
+            },
+            {
+              "texto": "Período de vigência da campanha",
+              "destaques": [
+                "Período de vigência"
+              ]
+            },
+            {
+              "texto": "Valor mínimo da compra",
+              "destaques": [
+                "Valor mínimo"
+              ]
+            },
+            {
+              "texto": "Validade dos créditos",
+              "destaques": [
+                "Validade dos créditos"
+              ]
+            },
+            {
+              "texto": "Aplicação geral ou específica por grupos, subgrupos ou produtos",
+              "destaques": [
+                "aplicação geral ou específica"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 6,
+          "id": "bloco_69a35796243f",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Validade por uma quantidade de dias após a compra",
+              "destaques": [
+                "quantidade de dias"
+              ]
+            },
+            {
+              "texto": "Validade por data fixa",
+              "destaques": [
+                "data fixa"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 7,
+          "id": "bloco_2f141c1b6bce",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Alteração do título da tela para Regras de Cashback",
+              "destaques": [
+                "Regras de Cashback"
+              ]
+            },
+            {
+              "texto": "Possibilidade de deixar a Data Término em branco",
+              "destaques": [
+                "Data Término em branco"
+              ]
+            },
+            {
+              "texto": "Renomeação do campo Tipo para Tipo Cashback",
+              "destaques": [
+                "Tipo Cashback"
+              ]
+            },
+            {
+              "texto": "Alteração do campo Tipo de Regra para Tipo de Aplicação",
+              "destaques": [
+                "Tipo de Aplicação"
+              ]
+            },
+            {
+              "texto": "Reorganização da tela posicionando Tipo Cashback acima da seção de validade",
+              "destaques": [
+                "Tipo Cashback acima"
+              ]
+            },
+            {
+              "texto": "Inclusão de um botão informativo sobre os tipos de validade disponíveis",
+              "destaques": [
+                "botão informativo"
+              ]
+            },
+            {
+              "texto": "Revisão das mensagens de validação e correção de textos apresentados durante o cadastro",
+              "destaques": [
+                "mensagens de validação"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 8,
+          "id": "bloco_5a0906ae4852",
+          "tipo": "subtitulo",
+          "conteudo": "Geração automática dos créditos",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 9,
+          "id": "bloco_dfe66d7f3ba8",
+          "tipo": "texto",
+          "conteudo": "Ao concluir uma venda, o sistema verifica automaticamente as regras cadastradas e, quando aplicável, gera o crédito vinculado ao cliente sem alterar o fluxo operacional da venda. O sistema informa ao operador que a compra gerou cashback e pode emitir um comprovante contendo informações do crédito.",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 10,
+          "id": "bloco_e952df5d2826",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Valor concedido no cashback",
+              "destaques": [
+                "Valor concedido"
+              ]
+            },
+            {
+              "texto": "Prazo de validade do crédito",
+              "destaques": [
+                "Prazo de validade"
+              ]
+            },
+            {
+              "texto": "Saldo atualizado do cliente",
+              "destaques": [
+                "Saldo atualizado"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 11,
+          "id": "bloco_0888d029042b",
+          "tipo": "subtitulo",
+          "conteudo": "Utilização e resgate durante a venda",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 12,
+          "id": "bloco_865c53ba6101",
+          "tipo": "texto",
+          "conteudo": "Quando o cliente retorna para uma nova compra, o sistema identifica automaticamente os créditos disponíveis e permite sua utilização na própria venda, de forma transparente para o operador. Os créditos são consumidos pelos registros mais antigos, o saldo é atualizado em tempo real e toda a movimentação fica registrada para consultas futuras. A rotina também contempla os aspectos fiscais envolvidos na utilização do cashback.",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 13,
+          "id": "bloco_24ebe324b801",
+          "tipo": "subtitulo",
+          "conteudo": "Relatório Cashback Gerado",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 14,
+          "id": "bloco_f1e5d8eeabae",
+          "tipo": "texto",
+          "conteudo": "O relatório permite consultar os créditos gerados com filtros por período, validade, cliente, regra e situação. São exibidos detalhes de origem e valores, auxiliando o acompanhamento da emissão de créditos.",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 15,
+          "id": "bloco_d1bbb72d496d",
+          "tipo": "texto",
+          "conteudo": "Acesse através do caminho:\nRelatórios / Gerencial / Cashback / Cashback Gerado",
+          "papel": "caminho",
+          "secao_id": "rotina_001",
+          "caminho": "Relatórios / Gerencial / Cashback / Cashback Gerado"
+        },
+        {
+          "ordem": 16,
+          "id": "bloco_d811bba4f7e9",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Filtros por Data de Geração e Data de Validade",
+              "destaques": [
+                "Data de Geração"
+              ]
+            },
+            {
+              "texto": "Filtro por Cliente",
+              "destaques": [
+                "Cliente"
+              ]
+            },
+            {
+              "texto": "Filtro por Regra de Cashback",
+              "destaques": [
+                "Regra de Cashback"
+              ]
+            },
+            {
+              "texto": "Filtro por Situação (Disponível, Utilizado, Expirado ou Todos)",
+              "destaques": [
+                "Situação"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 17,
+          "id": "bloco_0db43cfdb245",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Data de Geração",
+              "destaques": [
+                "Data de Geração"
+              ]
+            },
+            {
+              "texto": "Cliente",
+              "destaques": [
+                "Cliente"
+              ]
+            },
+            {
+              "texto": "Venda de Origem",
+              "destaques": [
+                "Venda de Origem"
+              ]
+            },
+            {
+              "texto": "Valor Gerado, Valor Utilizado e Saldo Disponível",
+              "destaques": [
+                "Valor Gerado"
+              ]
+            },
+            {
+              "texto": "Data de Validade e Situação do Cashback",
+              "destaques": [
+                "Data de Validade"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 18,
+          "id": "bloco_b37d925ab5de",
+          "tipo": "subtitulo",
+          "conteudo": "Relatório Cashback Utilizado",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 19,
+          "id": "bloco_2e7a36965fb3",
+          "tipo": "texto",
+          "conteudo": "Este relatório apresenta todos os resgates realizados, com filtros por data de utilização, cliente e regra. Os registros são ordenados automaticamente por data de utilização e o relatório mostra o total geral dos valores utilizados.",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 20,
+          "id": "bloco_03e2dfa0c2af",
+          "tipo": "texto",
+          "conteudo": "Acesse através do caminho:\nRelatórios / Gerencial / Cashback / Cashback Utilizado",
+          "papel": "caminho",
+          "secao_id": "rotina_001",
+          "caminho": "Relatórios / Gerencial / Cashback / Cashback Utilizado"
+        },
+        {
+          "ordem": 21,
+          "id": "bloco_53b6ddcbbaaa",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Filtros por Data de Utilização",
+              "destaques": [
+                "Data de Utilização"
+              ]
+            },
+            {
+              "texto": "Filtro por Cliente",
+              "destaques": [
+                "Cliente"
+              ]
+            },
+            {
+              "texto": "Filtro por Regra de Cashback",
+              "destaques": [
+                "Regra de Cashback"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 22,
+          "id": "bloco_e407d9060288",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Data de Utilização",
+              "destaques": [
+                "Data de Utilização"
+              ]
+            },
+            {
+              "texto": "Cliente",
+              "destaques": [
+                "Cliente"
+              ]
+            },
+            {
+              "texto": "OS de Origem e OS de Utilização",
+              "destaques": [
+                "OS de Origem"
+              ]
+            },
+            {
+              "texto": "Valor Utilizado",
+              "destaques": [
+                "Valor Utilizado"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 23,
+          "id": "bloco_d7bf7a5a0b30",
+          "tipo": "subtitulo",
+          "conteudo": "Comunicação automática pelo WhatsApp",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 24,
+          "id": "bloco_10e5bce70e59",
+          "tipo": "texto",
+          "conteudo": "A solução integra mensagens automáticas via WhatsApp que podem ser enviadas em três momentos do ciclo do cashback: quando o crédito é gerado, quando é utilizado e antes do vencimento. Os modelos são configuráveis e suportam campos dinâmicos para personalização das mensagens.",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 25,
+          "id": "bloco_d9ccdf506ae0",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Cashback Gerado — mensagem com valor do cashback, data de validade e saldo disponível",
+              "destaques": [
+                "Cashback Gerado"
+              ]
+            },
+            {
+              "texto": "Cashback Utilizado — confirmação contendo valor utilizado e saldo restante",
+              "destaques": [
+                "Cashback Utilizado"
+              ]
+            },
+            {
+              "texto": "Aviso de Vencimento — lembrete enviado antes do vencimento do crédito",
+              "destaques": [
+                "Aviso de Vencimento"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 26,
+          "id": "bloco_0008390adc38",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Campos dinâmicos disponíveis para Cashback Gerado: Apelido do Cliente, Valor do Cashback, Data de Validade, Saldo de Cashback e Empresa",
+              "destaques": [
+                "Apelido do Cliente"
+              ]
+            },
+            {
+              "texto": "Campos dinâmicos disponíveis para Cashback Utilizado: Apelido do Cliente, Valor Utilizado, Saldo de Cashback e Empresa",
+              "destaques": [
+                "Valor Utilizado"
+              ]
+            },
+            {
+              "texto": "Campos dinâmicos disponíveis para Aviso de Vencimento: Apelido do Cliente, Saldo de Cashback, Valor Expirando, Data de Validade e Empresa",
+              "destaques": [
+                "Valor Expirando"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 27,
+          "id": "bloco_4121f3e9c250",
+          "tipo": "imagem",
+          "imagem_id": "imagem_1168fbd02bfb",
+          "legenda": "",
+          "modo_exibicao": "normal"
+        },
+        {
+          "ordem": 28,
+          "id": "bloco_5746f9ef2e71",
+          "tipo": "imagem",
+          "imagem_id": "imagem_2b92eda1ac92",
+          "legenda": "",
+          "modo_exibicao": "normal"
+        },
+        {
+          "ordem": 29,
+          "id": "bloco_4c9175d6541c",
+          "tipo": "imagem",
+          "imagem_id": "imagem_ed995295264c",
+          "legenda": "",
+          "modo_exibicao": "normal"
+        },
+        {
+          "ordem": 30,
+          "id": "bloco_79eda7facb3a",
+          "tipo": "imagem",
+          "imagem_id": "imagem_171bd1211533",
+          "legenda": "",
+          "modo_exibicao": "normal"
+        }
+      ]
+    },
+    "composition": {
+      "origem": "manual",
+      "titulo": "Controle de Cashback: muito mais do que desconto, uma ferramenta completa de fidelização",
+      "imagens_fallback": [
+        "imagem_1168fbd02bfb",
+        "imagem_2b92eda1ac92",
+        "imagem_ed995295264c",
+        "imagem_171bd1211533"
+      ],
+      "capa": {
+        "solicitada": false,
+        "status": "nao_gerada",
+        "tema": "Controle de Cashback: muito mais do que desconto, uma ferramenta completa de fidelização",
+        "arquivo": "",
+        "mensagem": ""
+      },
+      "revisao": {
+        "aprovada": true,
+        "avisos": [],
+        "correcoes_necessarias": [],
+        "blocos_para_corrigir": [],
+        "secoes_para_corrigir": [],
+        "imagens_nao_utilizadas": [],
+        "informacoes_possivelmente_inventadas": [],
+        "nomes_tecnicos_alterados": [],
+        "status": "concluida",
+        "correcao_automatica_realizada": false
+      },
+      "blocos": [
+        {
+          "ordem": 1,
+          "id": "bloco_27aea4ccac2b",
+          "tipo": "titulo",
+          "conteudo": "Controle de Cashback: muito mais do que desconto, uma ferramenta completa de fidelização",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 2,
+          "id": "bloco_c061eac96957",
+          "tipo": "texto",
+          "conteudo": "A versão 14.1 do EMC Gestão Empresarial passa a disponibilizar um Controle de Cashback pensado para administrar campanhas, gerar créditos automaticamente, controlar saldos e comunicar clientes ao longo do ciclo de uso dos benefícios. A solução reúne criação de regras flexíveis, emissão e consumo de créditos integrados ao processo de venda e relatórios gerenciais, além de modelos automáticos de comunicação via WhatsApp.",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 3,
+          "id": "bloco_441a921a1d33",
+          "tipo": "subtitulo",
+          "conteudo": "Regras de Cashback — cadastro e configuração",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 4,
+          "id": "bloco_5fee996e81c7",
+          "tipo": "texto",
+          "conteudo": "A rotina de cadastro das regras de cashback apresenta opções para definir parâmetros comerciais das campanhas e recebeu ajustes na interface e nas mensagens de validação para simplificar a configuração.",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 5,
+          "id": "bloco_9f6617fd06ed",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Percentual ou valor do cashback concedido",
+              "destaques": [
+                "Percentual ou valor"
+              ]
+            },
+            {
+              "texto": "Período de vigência da campanha",
+              "destaques": [
+                "Período de vigência"
+              ]
+            },
+            {
+              "texto": "Valor mínimo da compra",
+              "destaques": [
+                "Valor mínimo"
+              ]
+            },
+            {
+              "texto": "Validade dos créditos",
+              "destaques": [
+                "Validade dos créditos"
+              ]
+            },
+            {
+              "texto": "Aplicação geral ou específica por grupos, subgrupos ou produtos",
+              "destaques": [
+                "aplicação geral ou específica"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 6,
+          "id": "bloco_69a35796243f",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Validade por uma quantidade de dias após a compra",
+              "destaques": [
+                "quantidade de dias"
+              ]
+            },
+            {
+              "texto": "Validade por data fixa",
+              "destaques": [
+                "data fixa"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 7,
+          "id": "bloco_2f141c1b6bce",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Alteração do título da tela para Regras de Cashback",
+              "destaques": [
+                "Regras de Cashback"
+              ]
+            },
+            {
+              "texto": "Possibilidade de deixar a Data Término em branco",
+              "destaques": [
+                "Data Término em branco"
+              ]
+            },
+            {
+              "texto": "Renomeação do campo Tipo para Tipo Cashback",
+              "destaques": [
+                "Tipo Cashback"
+              ]
+            },
+            {
+              "texto": "Alteração do campo Tipo de Regra para Tipo de Aplicação",
+              "destaques": [
+                "Tipo de Aplicação"
+              ]
+            },
+            {
+              "texto": "Reorganização da tela posicionando Tipo Cashback acima da seção de validade",
+              "destaques": [
+                "Tipo Cashback acima"
+              ]
+            },
+            {
+              "texto": "Inclusão de um botão informativo sobre os tipos de validade disponíveis",
+              "destaques": [
+                "botão informativo"
+              ]
+            },
+            {
+              "texto": "Revisão das mensagens de validação e correção de textos apresentados durante o cadastro",
+              "destaques": [
+                "mensagens de validação"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 8,
+          "id": "bloco_5a0906ae4852",
+          "tipo": "subtitulo",
+          "conteudo": "Geração automática dos créditos",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 9,
+          "id": "bloco_dfe66d7f3ba8",
+          "tipo": "texto",
+          "conteudo": "Ao concluir uma venda, o sistema verifica automaticamente as regras cadastradas e, quando aplicável, gera o crédito vinculado ao cliente sem alterar o fluxo operacional da venda. O sistema informa ao operador que a compra gerou cashback e pode emitir um comprovante contendo informações do crédito.",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 10,
+          "id": "bloco_e952df5d2826",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Valor concedido no cashback",
+              "destaques": [
+                "Valor concedido"
+              ]
+            },
+            {
+              "texto": "Prazo de validade do crédito",
+              "destaques": [
+                "Prazo de validade"
+              ]
+            },
+            {
+              "texto": "Saldo atualizado do cliente",
+              "destaques": [
+                "Saldo atualizado"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 11,
+          "id": "bloco_0888d029042b",
+          "tipo": "subtitulo",
+          "conteudo": "Utilização e resgate durante a venda",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 12,
+          "id": "bloco_865c53ba6101",
+          "tipo": "texto",
+          "conteudo": "Quando o cliente retorna para uma nova compra, o sistema identifica automaticamente os créditos disponíveis e permite sua utilização na própria venda, de forma transparente para o operador. Os créditos são consumidos pelos registros mais antigos, o saldo é atualizado em tempo real e toda a movimentação fica registrada para consultas futuras. A rotina também contempla os aspectos fiscais envolvidos na utilização do cashback.",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 13,
+          "id": "bloco_24ebe324b801",
+          "tipo": "subtitulo",
+          "conteudo": "Relatório Cashback Gerado",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 14,
+          "id": "bloco_f1e5d8eeabae",
+          "tipo": "texto",
+          "conteudo": "O relatório permite consultar os créditos gerados com filtros por período, validade, cliente, regra e situação. São exibidos detalhes de origem e valores, auxiliando o acompanhamento da emissão de créditos.",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 15,
+          "id": "bloco_d1bbb72d496d",
+          "tipo": "texto",
+          "conteudo": "Acesse através do caminho:\nRelatórios / Gerencial / Cashback / Cashback Gerado",
+          "papel": "caminho",
+          "secao_id": "rotina_001",
+          "caminho": "Relatórios / Gerencial / Cashback / Cashback Gerado"
+        },
+        {
+          "ordem": 16,
+          "id": "bloco_d811bba4f7e9",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Filtros por Data de Geração e Data de Validade",
+              "destaques": [
+                "Data de Geração"
+              ]
+            },
+            {
+              "texto": "Filtro por Cliente",
+              "destaques": [
+                "Cliente"
+              ]
+            },
+            {
+              "texto": "Filtro por Regra de Cashback",
+              "destaques": [
+                "Regra de Cashback"
+              ]
+            },
+            {
+              "texto": "Filtro por Situação (Disponível, Utilizado, Expirado ou Todos)",
+              "destaques": [
+                "Situação"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 17,
+          "id": "bloco_0db43cfdb245",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Data de Geração",
+              "destaques": [
+                "Data de Geração"
+              ]
+            },
+            {
+              "texto": "Cliente",
+              "destaques": [
+                "Cliente"
+              ]
+            },
+            {
+              "texto": "Venda de Origem",
+              "destaques": [
+                "Venda de Origem"
+              ]
+            },
+            {
+              "texto": "Valor Gerado, Valor Utilizado e Saldo Disponível",
+              "destaques": [
+                "Valor Gerado"
+              ]
+            },
+            {
+              "texto": "Data de Validade e Situação do Cashback",
+              "destaques": [
+                "Data de Validade"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 18,
+          "id": "bloco_b37d925ab5de",
+          "tipo": "subtitulo",
+          "conteudo": "Relatório Cashback Utilizado",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 19,
+          "id": "bloco_2e7a36965fb3",
+          "tipo": "texto",
+          "conteudo": "Este relatório apresenta todos os resgates realizados, com filtros por data de utilização, cliente e regra. Os registros são ordenados automaticamente por data de utilização e o relatório mostra o total geral dos valores utilizados.",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 20,
+          "id": "bloco_03e2dfa0c2af",
+          "tipo": "texto",
+          "conteudo": "Acesse através do caminho:\nRelatórios / Gerencial / Cashback / Cashback Utilizado",
+          "papel": "caminho",
+          "secao_id": "rotina_001",
+          "caminho": "Relatórios / Gerencial / Cashback / Cashback Utilizado"
+        },
+        {
+          "ordem": 21,
+          "id": "bloco_53b6ddcbbaaa",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Filtros por Data de Utilização",
+              "destaques": [
+                "Data de Utilização"
+              ]
+            },
+            {
+              "texto": "Filtro por Cliente",
+              "destaques": [
+                "Cliente"
+              ]
+            },
+            {
+              "texto": "Filtro por Regra de Cashback",
+              "destaques": [
+                "Regra de Cashback"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 22,
+          "id": "bloco_e407d9060288",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Data de Utilização",
+              "destaques": [
+                "Data de Utilização"
+              ]
+            },
+            {
+              "texto": "Cliente",
+              "destaques": [
+                "Cliente"
+              ]
+            },
+            {
+              "texto": "OS de Origem e OS de Utilização",
+              "destaques": [
+                "OS de Origem"
+              ]
+            },
+            {
+              "texto": "Valor Utilizado",
+              "destaques": [
+                "Valor Utilizado"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 23,
+          "id": "bloco_d7bf7a5a0b30",
+          "tipo": "subtitulo",
+          "conteudo": "Comunicação automática pelo WhatsApp",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 24,
+          "id": "bloco_10e5bce70e59",
+          "tipo": "texto",
+          "conteudo": "A solução integra mensagens automáticas via WhatsApp que podem ser enviadas em três momentos do ciclo do cashback: quando o crédito é gerado, quando é utilizado e antes do vencimento. Os modelos são configuráveis e suportam campos dinâmicos para personalização das mensagens.",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 25,
+          "id": "bloco_d9ccdf506ae0",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Cashback Gerado — mensagem com valor do cashback, data de validade e saldo disponível",
+              "destaques": [
+                "Cashback Gerado"
+              ]
+            },
+            {
+              "texto": "Cashback Utilizado — confirmação contendo valor utilizado e saldo restante",
+              "destaques": [
+                "Cashback Utilizado"
+              ]
+            },
+            {
+              "texto": "Aviso de Vencimento — lembrete enviado antes do vencimento do crédito",
+              "destaques": [
+                "Aviso de Vencimento"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 26,
+          "id": "bloco_0008390adc38",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Campos dinâmicos disponíveis para Cashback Gerado: Apelido do Cliente, Valor do Cashback, Data de Validade, Saldo de Cashback e Empresa",
+              "destaques": [
+                "Apelido do Cliente"
+              ]
+            },
+            {
+              "texto": "Campos dinâmicos disponíveis para Cashback Utilizado: Apelido do Cliente, Valor Utilizado, Saldo de Cashback e Empresa",
+              "destaques": [
+                "Valor Utilizado"
+              ]
+            },
+            {
+              "texto": "Campos dinâmicos disponíveis para Aviso de Vencimento: Apelido do Cliente, Saldo de Cashback, Valor Expirando, Data de Validade e Empresa",
+              "destaques": [
+                "Valor Expirando"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001"
+        },
+        {
+          "ordem": 27,
+          "id": "bloco_4121f3e9c250",
+          "tipo": "imagem",
+          "imagem_id": "imagem_1168fbd02bfb",
+          "legenda": "",
+          "modo_exibicao": "normal"
+        },
+        {
+          "ordem": 28,
+          "id": "bloco_5746f9ef2e71",
+          "tipo": "imagem",
+          "imagem_id": "imagem_2b92eda1ac92",
+          "legenda": "",
+          "modo_exibicao": "normal"
+        },
+        {
+          "ordem": 29,
+          "id": "bloco_4c9175d6541c",
+          "tipo": "imagem",
+          "imagem_id": "imagem_ed995295264c",
+          "legenda": "",
+          "modo_exibicao": "normal"
+        },
+        {
+          "ordem": 30,
+          "id": "bloco_79eda7facb3a",
+          "tipo": "imagem",
+          "imagem_id": "imagem_171bd1211533",
+          "legenda": "",
+          "modo_exibicao": "normal"
+        }
+      ]
+    },
+    "cover_file": "",
+    "dados_visualizacao": {
+      "composition": {
+        "origem": "manual",
+        "titulo": "Controle de Cashback: muito mais do que desconto, uma ferramenta completa de fidelização",
+        "imagens_fallback": [
+          "imagem_1168fbd02bfb",
+          "imagem_2b92eda1ac92",
+          "imagem_ed995295264c",
+          "imagem_171bd1211533"
+        ],
+        "capa": {
+          "solicitada": false,
+          "status": "nao_gerada",
+          "tema": "Controle de Cashback: muito mais do que desconto, uma ferramenta completa de fidelização",
+          "arquivo": "",
+          "mensagem": ""
+        },
+        "revisao": {
+          "aprovada": true,
+          "avisos": [],
+          "correcoes_necessarias": [],
+          "blocos_para_corrigir": [],
+          "secoes_para_corrigir": [],
+          "imagens_nao_utilizadas": [],
+          "informacoes_possivelmente_inventadas": [],
+          "nomes_tecnicos_alterados": [],
+          "status": "concluida",
+          "correcao_automatica_realizada": false
+        },
+        "blocos": [
+          {
+            "ordem": 1,
+            "id": "bloco_27aea4ccac2b",
+            "tipo": "titulo",
+            "conteudo": "Controle de Cashback: muito mais do que desconto, uma ferramenta completa de fidelização",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 2,
+            "id": "bloco_c061eac96957",
+            "tipo": "texto",
+            "conteudo": "A versão 14.1 do EMC Gestão Empresarial passa a disponibilizar um Controle de Cashback pensado para administrar campanhas, gerar créditos automaticamente, controlar saldos e comunicar clientes ao longo do ciclo de uso dos benefícios. A solução reúne criação de regras flexíveis, emissão e consumo de créditos integrados ao processo de venda e relatórios gerenciais, além de modelos automáticos de comunicação via WhatsApp.",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 3,
+            "id": "bloco_441a921a1d33",
+            "tipo": "subtitulo",
+            "conteudo": "Regras de Cashback — cadastro e configuração",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 4,
+            "id": "bloco_5fee996e81c7",
+            "tipo": "texto",
+            "conteudo": "A rotina de cadastro das regras de cashback apresenta opções para definir parâmetros comerciais das campanhas e recebeu ajustes na interface e nas mensagens de validação para simplificar a configuração.",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 5,
+            "id": "bloco_9f6617fd06ed",
+            "tipo": "lista",
+            "itens": [
+              {
+                "texto": "Percentual ou valor do cashback concedido",
+                "destaques": [
+                  "Percentual ou valor"
+                ]
+              },
+              {
+                "texto": "Período de vigência da campanha",
+                "destaques": [
+                  "Período de vigência"
+                ]
+              },
+              {
+                "texto": "Valor mínimo da compra",
+                "destaques": [
+                  "Valor mínimo"
+                ]
+              },
+              {
+                "texto": "Validade dos créditos",
+                "destaques": [
+                  "Validade dos créditos"
+                ]
+              },
+              {
+                "texto": "Aplicação geral ou específica por grupos, subgrupos ou produtos",
+                "destaques": [
+                  "aplicação geral ou específica"
+                ]
+              }
+            ],
+            "papel": "lista",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 6,
+            "id": "bloco_69a35796243f",
+            "tipo": "lista",
+            "itens": [
+              {
+                "texto": "Validade por uma quantidade de dias após a compra",
+                "destaques": [
+                  "quantidade de dias"
+                ]
+              },
+              {
+                "texto": "Validade por data fixa",
+                "destaques": [
+                  "data fixa"
+                ]
+              }
+            ],
+            "papel": "lista",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 7,
+            "id": "bloco_2f141c1b6bce",
+            "tipo": "lista",
+            "itens": [
+              {
+                "texto": "Alteração do título da tela para Regras de Cashback",
+                "destaques": [
+                  "Regras de Cashback"
+                ]
+              },
+              {
+                "texto": "Possibilidade de deixar a Data Término em branco",
+                "destaques": [
+                  "Data Término em branco"
+                ]
+              },
+              {
+                "texto": "Renomeação do campo Tipo para Tipo Cashback",
+                "destaques": [
+                  "Tipo Cashback"
+                ]
+              },
+              {
+                "texto": "Alteração do campo Tipo de Regra para Tipo de Aplicação",
+                "destaques": [
+                  "Tipo de Aplicação"
+                ]
+              },
+              {
+                "texto": "Reorganização da tela posicionando Tipo Cashback acima da seção de validade",
+                "destaques": [
+                  "Tipo Cashback acima"
+                ]
+              },
+              {
+                "texto": "Inclusão de um botão informativo sobre os tipos de validade disponíveis",
+                "destaques": [
+                  "botão informativo"
+                ]
+              },
+              {
+                "texto": "Revisão das mensagens de validação e correção de textos apresentados durante o cadastro",
+                "destaques": [
+                  "mensagens de validação"
+                ]
+              }
+            ],
+            "papel": "lista",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 8,
+            "id": "bloco_5a0906ae4852",
+            "tipo": "subtitulo",
+            "conteudo": "Geração automática dos créditos",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 9,
+            "id": "bloco_dfe66d7f3ba8",
+            "tipo": "texto",
+            "conteudo": "Ao concluir uma venda, o sistema verifica automaticamente as regras cadastradas e, quando aplicável, gera o crédito vinculado ao cliente sem alterar o fluxo operacional da venda. O sistema informa ao operador que a compra gerou cashback e pode emitir um comprovante contendo informações do crédito.",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 10,
+            "id": "bloco_e952df5d2826",
+            "tipo": "lista",
+            "itens": [
+              {
+                "texto": "Valor concedido no cashback",
+                "destaques": [
+                  "Valor concedido"
+                ]
+              },
+              {
+                "texto": "Prazo de validade do crédito",
+                "destaques": [
+                  "Prazo de validade"
+                ]
+              },
+              {
+                "texto": "Saldo atualizado do cliente",
+                "destaques": [
+                  "Saldo atualizado"
+                ]
+              }
+            ],
+            "papel": "lista",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 11,
+            "id": "bloco_0888d029042b",
+            "tipo": "subtitulo",
+            "conteudo": "Utilização e resgate durante a venda",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 12,
+            "id": "bloco_865c53ba6101",
+            "tipo": "texto",
+            "conteudo": "Quando o cliente retorna para uma nova compra, o sistema identifica automaticamente os créditos disponíveis e permite sua utilização na própria venda, de forma transparente para o operador. Os créditos são consumidos pelos registros mais antigos, o saldo é atualizado em tempo real e toda a movimentação fica registrada para consultas futuras. A rotina também contempla os aspectos fiscais envolvidos na utilização do cashback.",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 13,
+            "id": "bloco_24ebe324b801",
+            "tipo": "subtitulo",
+            "conteudo": "Relatório Cashback Gerado",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 14,
+            "id": "bloco_f1e5d8eeabae",
+            "tipo": "texto",
+            "conteudo": "O relatório permite consultar os créditos gerados com filtros por período, validade, cliente, regra e situação. São exibidos detalhes de origem e valores, auxiliando o acompanhamento da emissão de créditos.",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 15,
+            "id": "bloco_d1bbb72d496d",
+            "tipo": "texto",
+            "conteudo": "Acesse através do caminho:\nRelatórios / Gerencial / Cashback / Cashback Gerado",
+            "papel": "caminho",
+            "secao_id": "rotina_001",
+            "caminho": "Relatórios / Gerencial / Cashback / Cashback Gerado"
+          },
+          {
+            "ordem": 16,
+            "id": "bloco_d811bba4f7e9",
+            "tipo": "lista",
+            "itens": [
+              {
+                "texto": "Filtros por Data de Geração e Data de Validade",
+                "destaques": [
+                  "Data de Geração"
+                ]
+              },
+              {
+                "texto": "Filtro por Cliente",
+                "destaques": [
+                  "Cliente"
+                ]
+              },
+              {
+                "texto": "Filtro por Regra de Cashback",
+                "destaques": [
+                  "Regra de Cashback"
+                ]
+              },
+              {
+                "texto": "Filtro por Situação (Disponível, Utilizado, Expirado ou Todos)",
+                "destaques": [
+                  "Situação"
+                ]
+              }
+            ],
+            "papel": "lista",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 17,
+            "id": "bloco_0db43cfdb245",
+            "tipo": "lista",
+            "itens": [
+              {
+                "texto": "Data de Geração",
+                "destaques": [
+                  "Data de Geração"
+                ]
+              },
+              {
+                "texto": "Cliente",
+                "destaques": [
+                  "Cliente"
+                ]
+              },
+              {
+                "texto": "Venda de Origem",
+                "destaques": [
+                  "Venda de Origem"
+                ]
+              },
+              {
+                "texto": "Valor Gerado, Valor Utilizado e Saldo Disponível",
+                "destaques": [
+                  "Valor Gerado"
+                ]
+              },
+              {
+                "texto": "Data de Validade e Situação do Cashback",
+                "destaques": [
+                  "Data de Validade"
+                ]
+              }
+            ],
+            "papel": "lista",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 18,
+            "id": "bloco_b37d925ab5de",
+            "tipo": "subtitulo",
+            "conteudo": "Relatório Cashback Utilizado",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 19,
+            "id": "bloco_2e7a36965fb3",
+            "tipo": "texto",
+            "conteudo": "Este relatório apresenta todos os resgates realizados, com filtros por data de utilização, cliente e regra. Os registros são ordenados automaticamente por data de utilização e o relatório mostra o total geral dos valores utilizados.",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 20,
+            "id": "bloco_03e2dfa0c2af",
+            "tipo": "texto",
+            "conteudo": "Acesse através do caminho:\nRelatórios / Gerencial / Cashback / Cashback Utilizado",
+            "papel": "caminho",
+            "secao_id": "rotina_001",
+            "caminho": "Relatórios / Gerencial / Cashback / Cashback Utilizado"
+          },
+          {
+            "ordem": 21,
+            "id": "bloco_53b6ddcbbaaa",
+            "tipo": "lista",
+            "itens": [
+              {
+                "texto": "Filtros por Data de Utilização",
+                "destaques": [
+                  "Data de Utilização"
+                ]
+              },
+              {
+                "texto": "Filtro por Cliente",
+                "destaques": [
+                  "Cliente"
+                ]
+              },
+              {
+                "texto": "Filtro por Regra de Cashback",
+                "destaques": [
+                  "Regra de Cashback"
+                ]
+              }
+            ],
+            "papel": "lista",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 22,
+            "id": "bloco_e407d9060288",
+            "tipo": "lista",
+            "itens": [
+              {
+                "texto": "Data de Utilização",
+                "destaques": [
+                  "Data de Utilização"
+                ]
+              },
+              {
+                "texto": "Cliente",
+                "destaques": [
+                  "Cliente"
+                ]
+              },
+              {
+                "texto": "OS de Origem e OS de Utilização",
+                "destaques": [
+                  "OS de Origem"
+                ]
+              },
+              {
+                "texto": "Valor Utilizado",
+                "destaques": [
+                  "Valor Utilizado"
+                ]
+              }
+            ],
+            "papel": "lista",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 23,
+            "id": "bloco_d7bf7a5a0b30",
+            "tipo": "subtitulo",
+            "conteudo": "Comunicação automática pelo WhatsApp",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 24,
+            "id": "bloco_10e5bce70e59",
+            "tipo": "texto",
+            "conteudo": "A solução integra mensagens automáticas via WhatsApp que podem ser enviadas em três momentos do ciclo do cashback: quando o crédito é gerado, quando é utilizado e antes do vencimento. Os modelos são configuráveis e suportam campos dinâmicos para personalização das mensagens.",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 25,
+            "id": "bloco_d9ccdf506ae0",
+            "tipo": "lista",
+            "itens": [
+              {
+                "texto": "Cashback Gerado — mensagem com valor do cashback, data de validade e saldo disponível",
+                "destaques": [
+                  "Cashback Gerado"
+                ]
+              },
+              {
+                "texto": "Cashback Utilizado — confirmação contendo valor utilizado e saldo restante",
+                "destaques": [
+                  "Cashback Utilizado"
+                ]
+              },
+              {
+                "texto": "Aviso de Vencimento — lembrete enviado antes do vencimento do crédito",
+                "destaques": [
+                  "Aviso de Vencimento"
+                ]
+              }
+            ],
+            "papel": "lista",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 26,
+            "id": "bloco_0008390adc38",
+            "tipo": "lista",
+            "itens": [
+              {
+                "texto": "Campos dinâmicos disponíveis para Cashback Gerado: Apelido do Cliente, Valor do Cashback, Data de Validade, Saldo de Cashback e Empresa",
+                "destaques": [
+                  "Apelido do Cliente"
+                ]
+              },
+              {
+                "texto": "Campos dinâmicos disponíveis para Cashback Utilizado: Apelido do Cliente, Valor Utilizado, Saldo de Cashback e Empresa",
+                "destaques": [
+                  "Valor Utilizado"
+                ]
+              },
+              {
+                "texto": "Campos dinâmicos disponíveis para Aviso de Vencimento: Apelido do Cliente, Saldo de Cashback, Valor Expirando, Data de Validade e Empresa",
+                "destaques": [
+                  "Valor Expirando"
+                ]
+              }
+            ],
+            "papel": "lista",
+            "secao_id": "rotina_001"
+          },
+          {
+            "ordem": 27,
+            "id": "bloco_4121f3e9c250",
+            "tipo": "imagem",
+            "imagem_id": "imagem_1168fbd02bfb",
+            "legenda": "",
+            "modo_exibicao": "normal"
+          },
+          {
+            "ordem": 28,
+            "id": "bloco_5746f9ef2e71",
+            "tipo": "imagem",
+            "imagem_id": "imagem_2b92eda1ac92",
+            "legenda": "",
+            "modo_exibicao": "normal"
+          },
+          {
+            "ordem": 29,
+            "id": "bloco_4c9175d6541c",
+            "tipo": "imagem",
+            "imagem_id": "imagem_ed995295264c",
+            "legenda": "",
+            "modo_exibicao": "normal"
+          },
+          {
+            "ordem": 30,
+            "id": "bloco_79eda7facb3a",
+            "tipo": "imagem",
+            "imagem_id": "imagem_171bd1211533",
+            "legenda": "",
+            "modo_exibicao": "normal"
+          }
+        ]
+      }
+    }
+  },
+  "settings": {
+    "provider": "openai",
+    "text_model": "gpt-5-mini",
+    "image_model": "gpt-image-1.5",
+    "cover_requested": false,
+    "whatsapp_public_link": ""
+  },
+  "version": 1
+}

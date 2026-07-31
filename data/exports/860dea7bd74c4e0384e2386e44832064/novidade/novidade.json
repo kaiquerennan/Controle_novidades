@@ -1,0 +1,80 @@
+{
+  "application": "EMC Novidade Visual IA",
+  "session_id": "860dea7bd74c4e0384e2386e44832064",
+  "created_at": "2026-07-28T13:58:11.173042+00:00",
+  "origem": "manual",
+  "titulo": "",
+  "texto_novidade": "CAMINHO:\nOperacional / Cadastros / Tabelas / Fiscal\nClientes (F2) / aba Dados Adicionais\n\nSOLICITAÇÃO:\n1.\nCriar uma tela para cadastrar \"Perfis Específicos de Destinatário do IBS/CBS\".\n\n2. Alimentar a tabela com os seguintes perfis, por padrão:\n---\nÓrgão Público\nEntidade de Saúde Imune\nProdutor Rural Não Contribuinte\nTransportador Autônomo de Carga (TAC)\nPessoa com Deficiência (PCD)\nMotorista Profissional\nZona Franca de Manaus (ZFM)\nÁrea de Livre Comércio (ALC)\nAssociado de Cooperativa\n\n3.\nNo cadastro do perfil, criar uma seção (quadro ou aba) denominada \"IBS/CBS\" para configuração das tributações específicas aplicáveis a cada perfil de destinatário.\n\n4.\nPermitir o cadastro de múltiplas regras dentro de cada perfil.\n\nCada regra deve possuir uma seção \"Condições\", onde o usuário definirá quais produtos ou serviços serão alcançados pela tributação específica.\n\nAs condições podem ser:\n\n-> Por Classificação Tributária\nO usuário deve informar uma Classificação Tributária IBS/CBS de origem para aplicação da regra.\n\n-> Por NCM/NBS\nO usuário deve informar um ou mais códigos NCM (produtos) ou NBS (serviços) para aplicação da regra.\n\n5.\nEm seguida, deve existir a parte da \"Tributação\", onde o usuário definirá a Classificação Tributária IBS/CBS que será aplicada quando as condições da regra forem atendidas.\n\nA partir da classificação informada, o sistema deve apresentar os demais campos relacionados à tributação de IBS/CBS, tais como CST e alíquotas.\n\n6.\nCriar o campo \"Perfil Específico IBS/CBS\" no cadastro de clientes.\n\n7.\nO campo deverá ser apresentado vazio por padrão, permitindo que o usuário associe o cliente a um dos perfis cadastrados.\n\nJUSTIFICATIVA:\nDeterminadas classificações tributárias do IBS/CBS possuem tratamento diferenciado conforme as características do destinatário da operação.\n\nUm mesmo produto ou serviço pode possuir uma Classificação Tributária IBS/CBS padrão para vendas em geral, mas utilizar uma classificação distinta quando o destinatário se enquadrar em uma situação específica prevista na legislação.\n\nExemplos:\n- Dispositivos médicos destinados a órgãos da administração pública ou entidades de saúde imunes;\n- Medicamentos destinados a órgãos da administração pública;\n- Produtos destinados à Zona Franca de Manaus (ZFM);\n- Operações destinadas a pessoas com deficiência (PCD);\n- Operações destinadas a produtores rurais não contribuintes ou transportadores autônomos de carga.\n\nDessa forma, torna-se necessária a criação de um mecanismo que permita configurar tributações específicas vinculadas ao perfil do destinatário, possibilitando a correta emissão dos documentos fiscais.\n\nCada perfil pode possuir múltiplas regras.\n\nO perfil \"Órgão Público\", por exemplo, terá as regras abaixo:\n\nClass Trib original -> Class Trib do perfil\n\n200004 -> 200005\n200007 -> 200008\n200009 -> 200010\n200033 -> 200011\n\nOutros perfis terão regras que se aplicam apenas a determinados NCM/NBS. E por aí vai.\n\nOBSERVAÇÃO:\nApós a criação dos campos, faremos a adequação do módulo NF-e por meio de outra OC.\n\n\nCAMINHO:\nOperacional / Cadastros / Tabelas / Fiscal / Naturezas de Operação (CFOP)\n\nSOLICITAÇÃO:\nGravar automaticamente os códigos de Classificação Tributária do IBS/CBS das operações não onerosas, que não possuem incidência dos novos tributos.\n\nJUSTIFICATIVA:\nAs \"operações não onerosas\" são aquelas em que não há cobrança ou contraprestação financeira direta. A Lei Complementar 214/2025, em regras gerais, determina que os novos tributos incidem apenas nas operações com pagamento (embora existam algumas exceções).\n\nSendo assim, há diversas naturezas de operação que devem receber códigos de Classificação Tributária do IBS/CBS específicos, que concedam esta condição de não incidência.\n\nOBSERVAÇÃO:\nExemplos de classificações que devem ser atribuídas no cadastro das naturezas de operação.\n\n- 410001 Fornecimento de bonificações quando constem no documento fiscal e que não dependam de evento posterior\n- 410002 Transferências entre estabelecimentos pertencentes ao mesmo contribuinte\n- 410003 Doações sem contraprestação em benefício do doador\n- 410004 Exportações de bens e serviços\n- 410013 Exportações de combustíveis\n- 410027 Exportação de serviço ou de bem imaterial\n- 410030 Estorno de crédito por perecimento, deteriorização, roubo, furto ou extravio.\n- 410999 Operações não onerosas sem previsão de tributação, não especificadas anteriormente\n\nA relação completa de classificações aplicáveis a cada CFOP será criada posteriormente.\n\n\nAMINHO:\nOperacional / Cadastros / Produtos (F3)\nOperacional / Cadastros / Serviços\nOperacional / Cadastros / Tabelas / Fiscal / Naturezas de Operação\n\n\n\n\nSOLICITAÇÃO:\nRemover a lógica que preenche os campos do IBS/CBS com um conteúdo padrão quando estão nulos.\n\nJUSTIFICATIVA:\nAtualmente, o sistema mostra nas telas, para o CRT 3\nClassificação Trib.: 000001 e CST: 000\nsempre que esses campos estão nulos no banco de dados.\n\nNo entanto, agora os campos serão gravados no banco de dados, e a tela pode refletir exatamente o conteúdo que está no banco, eliminando a necessidade dessa lógica.\n\n\nCAMINHO:\nOperacional / Cadastros / Produtos / F2 - Inserir\n\nSOLICITAÇÃO:\n1. Ao teclar Enter, passar o foco pelos campos editáveis da aba IBS/CBS.\n\n2. Na inserção de produto, alimentar os campos do IBS/CBS automaticamente com o conteúdo\nClassificação Trib.: 000001 e CST: 000\n\nJUSTIFICATIVA:\n1. Atualmente o foco não passa pela aba IBS/CBS ao navegar pelos campos teclando Enter.\n\n2. Hoje existe uma lógica que preenche os campos virtualmente (que está sendo removida conforme a OC 97290). Porém essa lógica apenas mostra o conteúdo na tela e não alimenta os campos verdadeiramente.\n\nCom a mudança, essa conteúdo padrão será alimentado nos campos para que seja gravado no cadastro do produto.\n\n\nCAMINHO:\nOperacional / Cadastros / Tabelas / Fiscal / Naturezas de Operação (CFOP)\n\nSOLICITAÇÃO:\nCriar um quadro IBS/CBS para que o usuário configure um código de \"Classificação Trib.\" específico da operação. E apresentar os demais campos (CST e alíquotas) conforme essa classificação informada.\n\nJUSTIFICATIVA:\nDeterminados CFOP exigem o uso de uma classificação tributária diferente da que foi configurada no cadastro dos produtos. Operações que não são consideradas \"onerosas\" não possuem incidência de IBS e CBS, e possuem códigos específicos. Por exemplo:\n\n410002 - Transferências entre estabeleciemntos pertencentes ao mesmo contribuinte\n\nEsse código deve ser associado às operações de transferência, em vez de usar os códigos presentes no cadastro dos produtos.",
+  "blocos": [
+    {
+      "id": "bloco_9366d9bb275c",
+      "tipo": "titulo",
+      "conteudo": "",
+      "ordem": 1
+    },
+    {
+      "id": "bloco_b54e1a069a31",
+      "tipo": "texto",
+      "conteudo": "CAMINHO:\nOperacional / Cadastros / Tabelas / Fiscal\nClientes (F2) / aba Dados Adicionais\n\nSOLICITAÇÃO:\n1.\nCriar uma tela para cadastrar \"Perfis Específicos de Destinatário do IBS/CBS\".\n\n2. Alimentar a tabela com os seguintes perfis, por padrão:\n---\nÓrgão Público\nEntidade de Saúde Imune\nProdutor Rural Não Contribuinte\nTransportador Autônomo de Carga (TAC)\nPessoa com Deficiência (PCD)\nMotorista Profissional\nZona Franca de Manaus (ZFM)\nÁrea de Livre Comércio (ALC)\nAssociado de Cooperativa\n\n3.\nNo cadastro do perfil, criar uma seção (quadro ou aba) denominada \"IBS/CBS\" para configuração das tributações específicas aplicáveis a cada perfil de destinatário.\n\n4.\nPermitir o cadastro de múltiplas regras dentro de cada perfil.\n\nCada regra deve possuir uma seção \"Condições\", onde o usuário definirá quais produtos ou serviços serão alcançados pela tributação específica.\n\nAs condições podem ser:\n\n-> Por Classificação Tributária\nO usuário deve informar uma Classificação Tributária IBS/CBS de origem para aplicação da regra.\n\n-> Por NCM/NBS\nO usuário deve informar um ou mais códigos NCM (produtos) ou NBS (serviços) para aplicação da regra.\n\n5.\nEm seguida, deve existir a parte da \"Tributação\", onde o usuário definirá a Classificação Tributária IBS/CBS que será aplicada quando as condições da regra forem atendidas.\n\nA partir da classificação informada, o sistema deve apresentar os demais campos relacionados à tributação de IBS/CBS, tais como CST e alíquotas.\n\n6.\nCriar o campo \"Perfil Específico IBS/CBS\" no cadastro de clientes.\n\n7.\nO campo deverá ser apresentado vazio por padrão, permitindo que o usuário associe o cliente a um dos perfis cadastrados.\n\nJUSTIFICATIVA:\nDeterminadas classificações tributárias do IBS/CBS possuem tratamento diferenciado conforme as características do destinatário da operação.\n\nUm mesmo produto ou serviço pode possuir uma Classificação Tributária IBS/CBS padrão para vendas em geral, mas utilizar uma classificação distinta quando o destinatário se enquadrar em uma situação específica prevista na legislação.\n\nExemplos:\n- Dispositivos médicos destinados a órgãos da administração pública ou entidades de saúde imunes;\n- Medicamentos destinados a órgãos da administração pública;\n- Produtos destinados à Zona Franca de Manaus (ZFM);\n- Operações destinadas a pessoas com deficiência (PCD);\n- Operações destinadas a produtores rurais não contribuintes ou transportadores autônomos de carga.\n\nDessa forma, torna-se necessária a criação de um mecanismo que permita configurar tributações específicas vinculadas ao perfil do destinatário, possibilitando a correta emissão dos documentos fiscais.\n\nCada perfil pode possuir múltiplas regras.\n\nO perfil \"Órgão Público\", por exemplo, terá as regras abaixo:\n\nClass Trib original -> Class Trib do perfil\n\n200004 -> 200005\n200007 -> 200008\n200009 -> 200010\n200033 -> 200011\n\nOutros perfis terão regras que se aplicam apenas a determinados NCM/NBS. E por aí vai.\n\nOBSERVAÇÃO:\nApós a criação dos campos, faremos a adequação do módulo NF-e por meio de outra OC.\n\n\nCAMINHO:\nOperacional / Cadastros / Tabelas / Fiscal / Naturezas de Operação (CFOP)\n\nSOLICITAÇÃO:\nGravar automaticamente os códigos de Classificação Tributária do IBS/CBS das operações não onerosas, que não possuem incidência dos novos tributos.\n\nJUSTIFICATIVA:\nAs \"operações não onerosas\" são aquelas em que não há cobrança ou contraprestação financeira direta. A Lei Complementar 214/2025, em regras gerais, determina que os novos tributos incidem apenas nas operações com pagamento (embora existam algumas exceções).\n\nSendo assim, há diversas naturezas de operação que devem receber códigos de Classificação Tributária do IBS/CBS específicos, que concedam esta condição de não incidência.\n\nOBSERVAÇÃO:\nExemplos de classificações que devem ser atribuídas no cadastro das naturezas de operação.\n\n- 410001 Fornecimento de bonificações quando constem no documento fiscal e que não dependam de evento posterior\n- 410002 Transferências entre estabelecimentos pertencentes ao mesmo contribuinte\n- 410003 Doações sem contraprestação em benefício do doador\n- 410004 Exportações de bens e serviços\n- 410013 Exportações de combustíveis\n- 410027 Exportação de serviço ou de bem imaterial\n- 410030 Estorno de crédito por perecimento, deteriorização, roubo, furto ou extravio.\n- 410999 Operações não onerosas sem previsão de tributação, não especificadas anteriormente\n\nA relação completa de classificações aplicáveis a cada CFOP será criada posteriormente.\n\n\nAMINHO:\nOperacional / Cadastros / Produtos (F3)\nOperacional / Cadastros / Serviços\nOperacional / Cadastros / Tabelas / Fiscal / Naturezas de Operação\n\n\n\n\nSOLICITAÇÃO:\nRemover a lógica que preenche os campos do IBS/CBS com um conteúdo padrão quando estão nulos.\n\nJUSTIFICATIVA:\nAtualmente, o sistema mostra nas telas, para o CRT 3\nClassificação Trib.: 000001 e CST: 000\nsempre que esses campos estão nulos no banco de dados.\n\nNo entanto, agora os campos serão gravados no banco de dados, e a tela pode refletir exatamente o conteúdo que está no banco, eliminando a necessidade dessa lógica.\n\n\nCAMINHO:\nOperacional / Cadastros / Produtos / F2 - Inserir\n\nSOLICITAÇÃO:\n1. Ao teclar Enter, passar o foco pelos campos editáveis da aba IBS/CBS.\n\n2. Na inserção de produto, alimentar os campos do IBS/CBS automaticamente com o conteúdo\nClassificação Trib.: 000001 e CST: 000\n\nJUSTIFICATIVA:\n1. Atualmente o foco não passa pela aba IBS/CBS ao navegar pelos campos teclando Enter.\n\n2. Hoje existe uma lógica que preenche os campos virtualmente (que está sendo removida conforme a OC 97290). Porém essa lógica apenas mostra o conteúdo na tela e não alimenta os campos verdadeiramente.\n\nCom a mudança, essa conteúdo padrão será alimentado nos campos para que seja gravado no cadastro do produto.\n\n\nCAMINHO:\nOperacional / Cadastros / Tabelas / Fiscal / Naturezas de Operação (CFOP)\n\nSOLICITAÇÃO:\nCriar um quadro IBS/CBS para que o usuário configure um código de \"Classificação Trib.\" específico da operação. E apresentar os demais campos (CST e alíquotas) conforme essa classificação informada.\n\nJUSTIFICATIVA:\nDeterminados CFOP exigem o uso de uma classificação tributária diferente da que foi configurada no cadastro dos produtos. Operações que não são consideradas \"onerosas\" não possuem incidência de IBS e CBS, e possuem códigos específicos. Por exemplo:\n\n410002 - Transferências entre estabeleciemntos pertencentes ao mesmo contribuinte\n\nEsse código deve ser associado às operações de transferência, em vez de usar os códigos presentes no cadastro dos produtos.\n\n",
+      "ordem": 2
+    },
+    {
+      "id": "bloco_5e50f989ed9e",
+      "tipo": "subtitulo",
+      "conteudo": "",
+      "ordem": 3
+    },
+    {
+      "id": "bloco_af96861998f4",
+      "tipo": "titulo",
+      "conteudo": "",
+      "ordem": 4
+    }
+  ],
+  "imagens": [
+    {
+      "id": "63d8f77f13d34a5da05064f8cada2906",
+      "ordem_arquivo": 1,
+      "arquivo_original": "imagens/01_original.png",
+      "arquivo_tratado": "imagens/01_tratada.png",
+      "arquivo_final": "imagens/01_final.png",
+      "anotacoes": "anotacoes/01_anotacoes.json",
+      "nome_original": "2.png",
+      "status": "Exportada",
+      "mensagem_erro": ""
+    },
+    {
+      "id": "02a2def30bb7444db86494d8c7a80c0c",
+      "ordem_arquivo": 2,
+      "arquivo_original": "imagens/02_original.png",
+      "arquivo_tratado": "imagens/02_tratada.png",
+      "arquivo_final": "imagens/02_final.png",
+      "anotacoes": "anotacoes/02_anotacoes.json",
+      "nome_original": "3.png",
+      "status": "Exportada",
+      "mensagem_erro": ""
+    },
+    {
+      "id": "70453ecd46f24215a917604af8f0474b",
+      "ordem_arquivo": 3,
+      "arquivo_original": "imagens/03_original.png",
+      "arquivo_tratado": "imagens/03_tratada.png",
+      "arquivo_final": "imagens/03_final.png",
+      "anotacoes": "anotacoes/03_anotacoes.json",
+      "nome_original": "4.png",
+      "status": "Exportada",
+      "mensagem_erro": ""
+    },
+    {
+      "id": "1d8cfb9c2b3f49b5a04315cea472de64",
+      "ordem_arquivo": 4,
+      "arquivo_original": "imagens/04_original.png",
+      "arquivo_tratado": "imagens/04_tratada.png",
+      "arquivo_final": "imagens/04_final.png",
+      "anotacoes": "anotacoes/04_anotacoes.json",
+      "nome_original": "5.png",
+      "status": "Exportada",
+      "mensagem_erro": ""
+    }
+  ]
+}
