@@ -388,6 +388,36 @@ def index() -> None:
         def show_creation(visible: bool) -> None:
             show_view('criar' if visible else 'ocorrencias')
 
+        def reset_novelty_draft() -> None:
+            """Zera imagens e matéria da sessão anterior.
+
+            Os arquivos em disco não são apagados: a exclusão definitiva continua
+            sendo do botão "Nova Novidade", que limpa a área da sessão.
+            """
+            state['images'] = []
+            composition.blocks = []
+            composition.source = 'manual'
+            composition.fallback_image_ids = []
+            composition.cover = {}
+            composition.review = {}
+            composition._undo.clear()
+            composition._redo.clear()
+            state.update(
+                generated=False,
+                approved=False,
+                exports={},
+                generation={},
+                generation_error='',
+                generation_error_details={},
+                generation_in_progress=False,
+                active_generation_id='',
+                active_idempotency_key='',
+                placement_suggestions=[],
+                annotation_image_id=None,
+            )
+            thumbnails.refresh()
+            resume_row.set_visibility(False)
+
         def launch_from_occurrence(occurrence: OccurrenceSummary) -> None:
             """Carrega o contexto da ocorrência no fluxo de criação já existente."""
             texto = occurrence.as_raw_text().strip()
@@ -397,13 +427,15 @@ def index() -> None:
                     type='warning',
                 )
                 return
+            # Cada novidade começa do zero: sem imagens nem matéria da anterior.
+            reset_novelty_draft()
             controls['raw_text'].value = texto
-            state.update(generated=False, approved=False, exports={})
+            controls['cover'].value = False
             persist_screen_state(step='Adicionar conteúdo')
             stepper.set_value('Adicionar conteúdo')
             show_creation(True)
             ui.notify(
-                f'Ocorrência #{occurrence.number} carregada. Revise o texto e gere a novidade.',
+                f'Ocorrência #{occurrence.number} carregada. Adicione as imagens e gere a novidade.',
                 type='positive',
             )
 
