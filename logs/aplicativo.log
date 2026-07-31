@@ -3132,3 +3132,493 @@ Traceback (most recent call last):
   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\element.py", line 150, in parent_slot
     raise RuntimeError(f'The parent slot of {name}(id={self.id}{markers}) has been deleted.')
 RuntimeError: The parent slot of Timer(id=65) has been deleted.
+2026-07-31 15:37:54,235 ERROR The parent slot of Timer(id=65) has been deleted.
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\background_tasks.py", line 152, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 76, in _run_once
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\elements\timer.py", line 15, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\element.py", line 150, in parent_slot
+    raise RuntimeError(f'The parent slot of {name}(id={self.id}{markers}) has been deleted.')
+RuntimeError: The parent slot of Timer(id=65) has been deleted.
+2026-07-31 15:40:59,121 INFO [PROCESSAMENTO] Interface iniciada; sessao=fc2ad21b441d485c9ef7e905106d0edb
+2026-07-31 15:41:01,062 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T18:41:01.062+00:00","generation":"f5ab09d980164f08a06815577e8a4da6","stage":"preparacao","endpoint":"local","duration_seconds":0.003474,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 15:41:01,063 INFO [PROCESSAMENTO] Início; geracao=f5ab09d980164f08a06815577e8a4da6 idempotencia=8ec51d2d122b391e8f97037e652491544de3b1e329ae2f328d44942e50438069 sessao=fc2ad21b441d485c9ef7e905106d0edb provider=gemini texto_bytes=10967 imagens=0 capa=False
+2026-07-31 15:41:01,063 INFO [MODELOS] Texto: Modelo: gemini-2.5-pro
+2026-07-31 15:41:01,063 INFO [MODELOS] Imagem: Modelo: gemini-3.1-flash-image
+2026-07-31 15:41:01,065 INFO [PROCESSAMENTO] organizacao iniciada
+2026-07-31 15:41:01,077 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=f5ab09d980164f08a06815577e8a4da6 operacao=organizacao modelo=gemini-2.5-pro endpoint=/v1/responses tentativas_maximas=2 texto_bytes=33875 imagens_bytes=0
+2026-07-31 15:41:01,079 ERROR [PROCESSAMENTO] Chamada IA 1 falhou em 0.00 s; operacao=organizacao endpoint=/v1/responses timeout=False excecao=ProviderError
+2026-07-31 15:41:01,079 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T18:41:01.079+00:00","generation_id":"f5ab09d980164f08a06815577e8a4da6","idempotency_key":"8ec51d2d122b391e8f97037e652491544de3b1e329ae2f328d44942e50438069","stage":"organizacao","endpoint":"/v1/responses","model":"gemini-2.5-pro","logical_call":1,"started_at":"2026-07-31T18:41:01.077+00:00","attempts":0,"request_id":"","duration_seconds":0.0019945999993069563,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"error","error_type":"ProviderError"}
+2026-07-31 15:41:01,084 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T18:41:01.084+00:00","generation":"f5ab09d980164f08a06815577e8a4da6","stage":"organizacao","endpoint":"local","duration_seconds":0.018829,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 15:41:01,085 INFO =========================
+2026-07-31 15:41:01,085 INFO Resumo da geração
+2026-07-31 15:41:01,085 INFO =========================
+2026-07-31 15:41:01,085 INFO Geração: f5ab09d980164f08a06815577e8a4da6
+2026-07-31 15:41:01,085 INFO Tempo total: 0.03 s
+2026-07-31 15:41:01,086 INFO Quantidade de chamadas: 1
+2026-07-31 15:41:01,086 INFO /v1/responses: 1
+2026-07-31 15:41:01,086 INFO /v1/images: 0
+2026-07-31 15:41:01,086 INFO Tentativas HTTP: 0
+2026-07-31 15:41:01,086 INFO Tokens entrada: 0
+2026-07-31 15:41:01,087 INFO Tokens saída: 0
+2026-07-31 15:41:01,087 INFO Tokens cache: 0
+2026-07-31 15:41:01,087 INFO Tokens raciocínio: 0
+2026-07-31 15:41:01,087 INFO Tokens imagem: 0
+2026-07-31 15:41:01,087 INFO Custo aproximado: US$ 0.000000
+2026-07-31 15:41:01,087 INFO =========================
+2026-07-31 15:41:01,088 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-07-31T18:41:01.087+00:00","generation":"f5ab09d980164f08a06815577e8a4da6","idempotency_key":"8ec51d2d122b391e8f97037e652491544de3b1e329ae2f328d44942e50438069","duration_seconds":0.026082899999892106,"logical_calls":1,"http_attempts":0,"responses_calls":1,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.003473900000244612,"organizacao":0.018828899999789428}}
+2026-07-31 15:41:01,105 ERROR Falha na geração da sessão fc2ad21b441d485c9ef7e905106d0edb [missing_api_key] stage=redator_organizador provider=gemini model=gemini-2.5-pro status_http=None exception=ProviderError image= detail=ProviderError: Informe uma chave da API do Gemini.
+2026-07-31 15:41:01,106 INFO [PROCESSAMENTO] Interface encerrada em 2.00 s; sucesso=False
+2026-07-31 15:41:51,314 INFO [PROCESSAMENTO] Interface iniciada; sessao=fc2ad21b441d485c9ef7e905106d0edb
+2026-07-31 15:41:51,317 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T18:41:51.317+00:00","generation":"622c470cd20a49dda1ce2463f26acd2a","stage":"preparacao","endpoint":"local","duration_seconds":0.002775,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 15:41:51,317 INFO [PROCESSAMENTO] Início; geracao=622c470cd20a49dda1ce2463f26acd2a idempotencia=8ec51d2d122b391e8f97037e652491544de3b1e329ae2f328d44942e50438069 sessao=fc2ad21b441d485c9ef7e905106d0edb provider=gemini texto_bytes=10967 imagens=0 capa=False
+2026-07-31 15:41:51,317 INFO [MODELOS] Texto: Modelo: gemini-2.5-pro
+2026-07-31 15:41:51,318 INFO [MODELOS] Imagem: Modelo: gemini-3.1-flash-image
+2026-07-31 15:41:51,319 INFO [PROCESSAMENTO] organizacao iniciada
+2026-07-31 15:41:51,479 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=622c470cd20a49dda1ce2463f26acd2a operacao=organizacao modelo=gemini-2.5-pro endpoint=/v1/responses tentativas_maximas=2 texto_bytes=33875 imagens_bytes=0
+2026-07-31 15:41:55,108 INFO AFC is enabled with max remote calls: 10.
+2026-07-31 15:41:55,766 INFO HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro:generateContent "HTTP/1.1 429 Too Many Requests"
+2026-07-31 15:41:55,772 ERROR [PROCESSAMENTO] Chamada IA 1 falhou em 4.29 s; operacao=organizacao endpoint=/v1/responses timeout=False excecao=ProviderError
+2026-07-31 15:41:55,773 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T18:41:55.773+00:00","generation_id":"622c470cd20a49dda1ce2463f26acd2a","idempotency_key":"8ec51d2d122b391e8f97037e652491544de3b1e329ae2f328d44942e50438069","stage":"organizacao","endpoint":"/v1/responses","model":"gemini-2.5-pro","logical_call":1,"started_at":"2026-07-31T18:41:51.478+00:00","attempts":0,"request_id":"","duration_seconds":4.294220600000699,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"error","error_type":"ProviderError"}
+2026-07-31 15:41:55,777 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T18:41:55.777+00:00","generation":"622c470cd20a49dda1ce2463f26acd2a","stage":"organizacao","endpoint":"local","duration_seconds":4.457992,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 15:41:55,778 INFO =========================
+2026-07-31 15:41:55,779 INFO Resumo da geração
+2026-07-31 15:41:55,780 INFO =========================
+2026-07-31 15:41:55,780 INFO Geração: 622c470cd20a49dda1ce2463f26acd2a
+2026-07-31 15:41:55,780 INFO Tempo total: 4.46 s
+2026-07-31 15:41:55,780 INFO Quantidade de chamadas: 1
+2026-07-31 15:41:55,780 INFO /v1/responses: 1
+2026-07-31 15:41:55,781 INFO /v1/images: 0
+2026-07-31 15:41:55,781 INFO Tentativas HTTP: 0
+2026-07-31 15:41:55,781 INFO Tokens entrada: 0
+2026-07-31 15:41:55,781 INFO Tokens saída: 0
+2026-07-31 15:41:55,781 INFO Tokens cache: 0
+2026-07-31 15:41:55,782 INFO Tokens raciocínio: 0
+2026-07-31 15:41:55,782 INFO Tokens imagem: 0
+2026-07-31 15:41:55,782 INFO Custo aproximado: US$ 0.000000
+2026-07-31 15:41:55,782 INFO =========================
+2026-07-31 15:41:55,783 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-07-31T18:41:55.782+00:00","generation":"622c470cd20a49dda1ce2463f26acd2a","idempotency_key":"8ec51d2d122b391e8f97037e652491544de3b1e329ae2f328d44942e50438069","duration_seconds":4.463398899999447,"logical_calls":1,"http_attempts":0,"responses_calls":1,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.0027747999993152916,"organizacao":4.4579922999982955}}
+2026-07-31 15:41:55,804 ERROR Falha na geração da sessão fc2ad21b441d485c9ef7e905106d0edb [gemini_quota_exceeded] stage=redator_organizador provider=gemini model=gemini-2.5-pro status_http=429 exception=ProviderError image= detail=ProviderError: A cota do projeto para o modelo gemini-2.5-pro está definida como 0. Criar outra chave no mesmo projeto não resolve. Pode ser necessário habilitar o faturamento ou utilizar outro modelo com cota disponível. <- ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.5-pro\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.5-pro\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.5-pro\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.5-pro\nPlease retry in 4.255203114s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerDay-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-pro'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-pro'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-pro'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-pro'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '4s'}]}}
+2026-07-31 15:41:55,804 INFO [PROCESSAMENTO] Interface encerrada em 5.53 s; sucesso=False
+2026-07-31 15:43:26,269 INFO [PROCESSAMENTO] Interface iniciada; sessao=fc2ad21b441d485c9ef7e905106d0edb
+2026-07-31 15:43:26,272 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T18:43:26.272+00:00","generation":"3b843a1f404d46d3910a950aca564d20","stage":"preparacao","endpoint":"local","duration_seconds":0.002261,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 15:43:26,272 INFO [PROCESSAMENTO] Início; geracao=3b843a1f404d46d3910a950aca564d20 idempotencia=56aecd642559fdabaee6909e596f65fcb96eae7588ffd2f5a96b3d641815f15b sessao=fc2ad21b441d485c9ef7e905106d0edb provider=gemini texto_bytes=10967 imagens=0 capa=False
+2026-07-31 15:43:26,272 INFO [MODELOS] Texto: Modelo: gemini-flash-latest
+2026-07-31 15:43:26,272 INFO [MODELOS] Imagem: Modelo: gemini-3.1-flash-image
+2026-07-31 15:43:26,273 INFO [PROCESSAMENTO] organizacao iniciada
+2026-07-31 15:43:26,284 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=3b843a1f404d46d3910a950aca564d20 operacao=organizacao modelo=gemini-flash-latest endpoint=/v1/responses tentativas_maximas=2 texto_bytes=33875 imagens_bytes=0
+2026-07-31 15:43:28,988 INFO AFC is enabled with max remote calls: 10.
+2026-07-31 15:43:44,202 INFO HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent "HTTP/1.1 200 OK"
+2026-07-31 15:43:44,212 ERROR [PROCESSAMENTO] Chamada IA 1 falhou em 17.93 s; operacao=organizacao endpoint=/v1/responses timeout=False excecao=ProviderError
+2026-07-31 15:43:44,213 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T18:43:44.213+00:00","generation_id":"3b843a1f404d46d3910a950aca564d20","idempotency_key":"56aecd642559fdabaee6909e596f65fcb96eae7588ffd2f5a96b3d641815f15b","stage":"organizacao","endpoint":"/v1/responses","model":"gemini-flash-latest","logical_call":1,"started_at":"2026-07-31T18:43:26.284+00:00","attempts":0,"request_id":"","duration_seconds":17.928856599999563,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"error","error_type":"ProviderError"}
+2026-07-31 15:43:44,213 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T18:43:44.213+00:00","generation":"3b843a1f404d46d3910a950aca564d20","stage":"organizacao","endpoint":"local","duration_seconds":17.940424,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 15:43:44,213 INFO =========================
+2026-07-31 15:43:44,214 INFO Resumo da geração
+2026-07-31 15:43:44,214 INFO =========================
+2026-07-31 15:43:44,214 INFO Geração: 3b843a1f404d46d3910a950aca564d20
+2026-07-31 15:43:44,214 INFO Tempo total: 17.94 s
+2026-07-31 15:43:44,214 INFO Quantidade de chamadas: 1
+2026-07-31 15:43:44,214 INFO /v1/responses: 1
+2026-07-31 15:43:44,214 INFO /v1/images: 0
+2026-07-31 15:43:44,214 INFO Tentativas HTTP: 0
+2026-07-31 15:43:44,214 INFO Tokens entrada: 0
+2026-07-31 15:43:44,214 INFO Tokens saída: 0
+2026-07-31 15:43:44,214 INFO Tokens cache: 0
+2026-07-31 15:43:44,215 INFO Tokens raciocínio: 0
+2026-07-31 15:43:44,215 INFO Tokens imagem: 0
+2026-07-31 15:43:44,215 INFO Custo aproximado: US$ 0.000000
+2026-07-31 15:43:44,215 INFO =========================
+2026-07-31 15:43:44,215 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-07-31T18:43:44.215+00:00","generation":"3b843a1f404d46d3910a950aca564d20","idempotency_key":"56aecd642559fdabaee6909e596f65fcb96eae7588ffd2f5a96b3d641815f15b","duration_seconds":17.94456369999898,"logical_calls":1,"http_attempts":0,"responses_calls":1,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.002260799999930896,"organizacao":17.940423799998825}}
+2026-07-31 15:43:44,224 ERROR Falha na geração da sessão fc2ad21b441d485c9ef7e905106d0edb [gemini_invalid_schema_response] stage=redator_organizador provider=gemini model=gemini-flash-latest status_http=None exception=ProviderError image= detail=ProviderError: A resposta da IA não correspondeu ao formato esperado. <- ValidationError: 1 validation error for NoveltyPlan
+blocos.5
+  Value error, Bloco de lista sem itens. [type=value_error, input_value={'tipo': 'lista', 'secao_.... Sim e Nao. Itens: [{"}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.13/v/value_error
+2026-07-31 15:43:44,225 INFO [PROCESSAMENTO] Interface encerrada em 17.97 s; sucesso=False
+2026-07-31 15:47:49,281 INFO [PROCESSAMENTO] Interface iniciada; sessao=fc2ad21b441d485c9ef7e905106d0edb
+2026-07-31 15:47:49,285 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T18:47:49.284+00:00","generation":"418398ce8a874301b7183683922e8dda","stage":"preparacao","endpoint":"local","duration_seconds":0.002408,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 15:47:49,285 INFO [PROCESSAMENTO] Início; geracao=418398ce8a874301b7183683922e8dda idempotencia=8e579ffbbd010bb4e6756bb99d0bfeaac76683cfebc2b6135b012097970dcb94 sessao=fc2ad21b441d485c9ef7e905106d0edb provider=gemini texto_bytes=9913 imagens=0 capa=False
+2026-07-31 15:47:49,285 INFO [MODELOS] Texto: Modelo: gemini-flash-latest
+2026-07-31 15:47:49,285 INFO [MODELOS] Imagem: Modelo: gemini-3.1-flash-image
+2026-07-31 15:47:49,286 INFO [PROCESSAMENTO] organizacao iniciada
+2026-07-31 15:47:49,300 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=418398ce8a874301b7183683922e8dda operacao=organizacao modelo=gemini-flash-latest endpoint=/v1/responses tentativas_maximas=2 texto_bytes=31675 imagens_bytes=0
+2026-07-31 15:47:52,194 INFO AFC is enabled with max remote calls: 10.
+2026-07-31 15:48:06,590 INFO HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent "HTTP/1.1 200 OK"
+2026-07-31 15:48:06,600 INFO [PROCESSAMENTO] Chamada IA 1 concluída em 17.30 s; operacao=organizacao endpoint=/v1/responses recebido_bytes=0
+2026-07-31 15:48:06,601 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T18:48:06.601+00:00","generation_id":"418398ce8a874301b7183683922e8dda","idempotency_key":"8e579ffbbd010bb4e6756bb99d0bfeaac76683cfebc2b6135b012097970dcb94","stage":"organizacao","endpoint":"/v1/responses","model":"gemini-flash-latest","logical_call":1,"started_at":"2026-07-31T18:47:49.300+00:00","attempts":0,"request_id":"","duration_seconds":17.301043800001935,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-07-31 15:48:06,607 INFO [PROCESSAMENTO] organizacao concluída em 17.32 s
+2026-07-31 15:48:06,607 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T18:48:06.607+00:00","generation":"418398ce8a874301b7183683922e8dda","stage":"organizacao","endpoint":"local","duration_seconds":17.321299,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 15:48:06,607 INFO [PROCESSAMENTO] revisao iniciada
+2026-07-31 15:48:06,617 INFO [PROCESSAMENTO] Chamada IA 2 iniciada; geracao=418398ce8a874301b7183683922e8dda operacao=revisao modelo=gemini-flash-latest endpoint=/v1/responses tentativas_maximas=2 texto_bytes=20810 imagens_bytes=0
+2026-07-31 15:48:09,215 INFO AFC is enabled with max remote calls: 10.
+2026-07-31 15:48:15,609 INFO HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent "HTTP/1.1 200 OK"
+2026-07-31 15:48:15,618 INFO [PROCESSAMENTO] Chamada IA 2 concluída em 9.00 s; operacao=revisao endpoint=/v1/responses recebido_bytes=0
+2026-07-31 15:48:15,618 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T18:48:15.618+00:00","generation_id":"418398ce8a874301b7183683922e8dda","idempotency_key":"8e579ffbbd010bb4e6756bb99d0bfeaac76683cfebc2b6135b012097970dcb94","stage":"revisao","endpoint":"/v1/responses","model":"gemini-flash-latest","logical_call":2,"started_at":"2026-07-31T18:48:06.617+00:00","attempts":0,"request_id":"","duration_seconds":9.001769599999534,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-07-31 15:48:15,626 INFO [PROCESSAMENTO] revisao concluída em 9.02 s
+2026-07-31 15:48:15,626 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T18:48:15.626+00:00","generation":"418398ce8a874301b7183683922e8dda","stage":"revisao","endpoint":"local","duration_seconds":9.018987,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 15:48:15,626 INFO [PROCESSAMENTO] correcao iniciada
+2026-07-31 15:48:15,635 INFO [PROCESSAMENTO] Chamada IA 3 iniciada; geracao=418398ce8a874301b7183683922e8dda operacao=correcao modelo=gemini-flash-latest endpoint=/v1/responses tentativas_maximas=2 texto_bytes=4853 imagens_bytes=0
+2026-07-31 15:48:18,493 INFO AFC is enabled with max remote calls: 10.
+2026-07-31 15:48:33,707 INFO HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent "HTTP/1.1 200 OK"
+2026-07-31 15:48:33,713 INFO [PROCESSAMENTO] Chamada IA 3 concluída em 18.08 s; operacao=correcao endpoint=/v1/responses recebido_bytes=0
+2026-07-31 15:48:33,713 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T18:48:33.713+00:00","generation_id":"418398ce8a874301b7183683922e8dda","idempotency_key":"8e579ffbbd010bb4e6756bb99d0bfeaac76683cfebc2b6135b012097970dcb94","stage":"correcao","endpoint":"/v1/responses","model":"gemini-flash-latest","logical_call":3,"started_at":"2026-07-31T18:48:15.635+00:00","attempts":0,"request_id":"","duration_seconds":18.07817050000085,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-07-31 15:48:33,715 INFO [PROCESSAMENTO] correcao concluída em 18.09 s
+2026-07-31 15:48:33,715 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T18:48:33.715+00:00","generation":"418398ce8a874301b7183683922e8dda","stage":"correcao","endpoint":"local","duration_seconds":18.089418,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 15:48:33,715 INFO [PROCESSAMENTO] segunda_revisao iniciada
+2026-07-31 15:48:33,726 INFO [PROCESSAMENTO] Chamada IA 4 iniciada; geracao=418398ce8a874301b7183683922e8dda operacao=segunda_revisao modelo=gemini-flash-latest endpoint=/v1/responses tentativas_maximas=2 texto_bytes=21772 imagens_bytes=0
+2026-07-31 15:48:36,527 INFO AFC is enabled with max remote calls: 10.
+2026-07-31 15:48:46,149 INFO HTTP Request: POST https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent "HTTP/1.1 200 OK"
+2026-07-31 15:48:46,159 INFO [PROCESSAMENTO] Chamada IA 4 concluída em 12.43 s; operacao=segunda_revisao endpoint=/v1/responses recebido_bytes=0
+2026-07-31 15:48:46,160 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T18:48:46.159+00:00","generation_id":"418398ce8a874301b7183683922e8dda","idempotency_key":"8e579ffbbd010bb4e6756bb99d0bfeaac76683cfebc2b6135b012097970dcb94","stage":"segunda_revisao","endpoint":"/v1/responses","model":"gemini-flash-latest","logical_call":4,"started_at":"2026-07-31T18:48:33.725+00:00","attempts":0,"request_id":"","duration_seconds":12.434141999998246,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-07-31 15:48:46,160 INFO [PROCESSAMENTO] segunda_revisao concluída em 12.45 s
+2026-07-31 15:48:46,160 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T18:48:46.160+00:00","generation":"418398ce8a874301b7183683922e8dda","stage":"segunda_revisao","endpoint":"local","duration_seconds":12.44509,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 15:48:46,160 INFO [PROCESSAMENTO] preparacao_visualizacao iniciada
+2026-07-31 15:48:46,176 INFO [PROCESSAMENTO] preparacao_visualizacao concluída em 0.02 s
+2026-07-31 15:48:46,176 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T18:48:46.176+00:00","generation":"418398ce8a874301b7183683922e8dda","stage":"preparacao_visualizacao","endpoint":"local","duration_seconds":0.015607,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 15:48:46,176 INFO [PROCESSAMENTO] Total concluído em 56.89 s; chamadas_ia=4
+2026-07-31 15:48:46,176 INFO =========================
+2026-07-31 15:48:46,176 INFO Resumo da geração
+2026-07-31 15:48:46,177 INFO =========================
+2026-07-31 15:48:46,177 INFO Geração: 418398ce8a874301b7183683922e8dda
+2026-07-31 15:48:46,177 INFO Tempo total: 56.90 s
+2026-07-31 15:48:46,177 INFO Quantidade de chamadas: 4
+2026-07-31 15:48:46,177 INFO /v1/responses: 4
+2026-07-31 15:48:46,177 INFO /v1/images: 0
+2026-07-31 15:48:46,177 INFO Tentativas HTTP: 0
+2026-07-31 15:48:46,177 INFO Tokens entrada: 0
+2026-07-31 15:48:46,177 INFO Tokens saída: 0
+2026-07-31 15:48:46,178 INFO Tokens cache: 0
+2026-07-31 15:48:46,178 INFO Tokens raciocínio: 0
+2026-07-31 15:48:46,178 INFO Tokens imagem: 0
+2026-07-31 15:48:46,178 INFO Custo aproximado: US$ 0.000000
+2026-07-31 15:48:46,178 INFO =========================
+2026-07-31 15:48:46,178 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-07-31T18:48:46.178+00:00","generation":"418398ce8a874301b7183683922e8dda","idempotency_key":"8e579ffbbd010bb4e6756bb99d0bfeaac76683cfebc2b6135b012097970dcb94","duration_seconds":56.89526100000148,"logical_calls":4,"http_attempts":0,"responses_calls":4,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.0024081000010482967,"organizacao":17.321298700000625,"revisao":9.018986799997947,"correcao":18.08941820000109,"segunda_revisao":12.445089900000312,"preparacao_visualizacao":0.015607099998305785}}
+2026-07-31 15:48:46,178 INFO [PROCESSAMENTO] Orquestração recebida pela interface em 56.91 s
+2026-07-31 15:48:46,192 INFO [PROCESSAMENTO] Gravação de estado concluída em 0.01 s
+2026-07-31 15:48:46,193 INFO [PROCESSAMENTO] Visualização/UI concluída em 0.00 s; total=56.93 s
+2026-07-31 15:48:46,194 INFO [PROCESSAMENTO] Interface encerrada em 56.93 s; sucesso=True
+2026-07-31 16:02:43,770 INFO [PROCESSAMENTO] Interface iniciada; sessao=fc2ad21b441d485c9ef7e905106d0edb
+2026-07-31 16:02:43,773 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:02:43.773+00:00","generation":"ed52d8db6a554cdbaa82bcb6905819dd","stage":"preparacao","endpoint":"local","duration_seconds":0.002945,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:02:43,774 INFO [PROCESSAMENTO] Início; geracao=ed52d8db6a554cdbaa82bcb6905819dd idempotencia=211e92fcc7fe18f3630186bf98e54623838c1fd0746092605ae266c9feda535f sessao=fc2ad21b441d485c9ef7e905106d0edb provider=gemini texto_bytes=1626 imagens=0 capa=False
+2026-07-31 16:02:43,774 INFO [MODELOS] Texto: Modelo: gemini-flash-latest
+2026-07-31 16:02:43,774 INFO [MODELOS] Imagem: Modelo: gemini-3.1-flash-image
+2026-07-31 16:02:43,775 INFO [PROCESSAMENTO] organizacao iniciada
+2026-07-31 16:02:43,787 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=ed52d8db6a554cdbaa82bcb6905819dd operacao=organizacao modelo=gemini-flash-latest endpoint=/v1/responses tentativas_maximas=2 texto_bytes=13630 imagens_bytes=0
+2026-07-31 16:02:43,788 ERROR [PROCESSAMENTO] Chamada IA 1 falhou em 0.00 s; operacao=organizacao endpoint=/v1/responses timeout=False excecao=ProviderError
+2026-07-31 16:02:43,788 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T19:02:43.788+00:00","generation_id":"ed52d8db6a554cdbaa82bcb6905819dd","idempotency_key":"211e92fcc7fe18f3630186bf98e54623838c1fd0746092605ae266c9feda535f","stage":"organizacao","endpoint":"/v1/responses","model":"gemini-flash-latest","logical_call":1,"started_at":"2026-07-31T19:02:43.787+00:00","attempts":0,"request_id":"","duration_seconds":0.001382700000249315,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"error","error_type":"ProviderError"}
+2026-07-31 16:02:43,789 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:02:43.789+00:00","generation":"ed52d8db6a554cdbaa82bcb6905819dd","stage":"organizacao","endpoint":"local","duration_seconds":0.014138,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:02:43,789 INFO =========================
+2026-07-31 16:02:43,789 INFO Resumo da geração
+2026-07-31 16:02:43,790 INFO =========================
+2026-07-31 16:02:43,790 INFO Geração: ed52d8db6a554cdbaa82bcb6905819dd
+2026-07-31 16:02:43,790 INFO Tempo total: 0.02 s
+2026-07-31 16:02:43,790 INFO Quantidade de chamadas: 1
+2026-07-31 16:02:43,790 INFO /v1/responses: 1
+2026-07-31 16:02:43,790 INFO /v1/images: 0
+2026-07-31 16:02:43,791 INFO Tentativas HTTP: 0
+2026-07-31 16:02:43,791 INFO Tokens entrada: 0
+2026-07-31 16:02:43,791 INFO Tokens saída: 0
+2026-07-31 16:02:43,791 INFO Tokens cache: 0
+2026-07-31 16:02:43,791 INFO Tokens raciocínio: 0
+2026-07-31 16:02:43,791 INFO Tokens imagem: 0
+2026-07-31 16:02:43,792 INFO Custo aproximado: US$ 0.000000
+2026-07-31 16:02:43,792 INFO =========================
+2026-07-31 16:02:43,792 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-07-31T19:02:43.792+00:00","generation":"ed52d8db6a554cdbaa82bcb6905819dd","idempotency_key":"211e92fcc7fe18f3630186bf98e54623838c1fd0746092605ae266c9feda535f","duration_seconds":0.018963200000143843,"logical_calls":1,"http_attempts":0,"responses_calls":1,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.002945000000181608,"organizacao":0.014138399998046225}}
+2026-07-31 16:02:43,804 ERROR Falha na geração da sessão fc2ad21b441d485c9ef7e905106d0edb [missing_api_key] stage=redator_organizador provider=gemini model=gemini-flash-latest status_http=None exception=ProviderError image= detail=ProviderError: Informe uma chave da API do Gemini.
+2026-07-31 16:02:43,804 INFO [PROCESSAMENTO] Interface encerrada em 0.05 s; sucesso=False
+2026-07-31 16:02:44,991 WARNING http://localhost:8510/_nicegui/auto/static/1be841192583e69fa37c685f302f3e2e/Mascote.png not found
+2026-07-31 16:02:49,956 INFO [PROCESSAMENTO] Interface iniciada; sessao=fc2ad21b441d485c9ef7e905106d0edb
+2026-07-31 16:02:49,959 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:02:49.959+00:00","generation":"94045719d67642f6871a4d91d05ad674","stage":"preparacao","endpoint":"local","duration_seconds":0.001923,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:02:49,959 INFO [PROCESSAMENTO] Início; geracao=94045719d67642f6871a4d91d05ad674 idempotencia=211e92fcc7fe18f3630186bf98e54623838c1fd0746092605ae266c9feda535f sessao=fc2ad21b441d485c9ef7e905106d0edb provider=gemini texto_bytes=1626 imagens=0 capa=False
+2026-07-31 16:02:49,959 INFO [MODELOS] Texto: Modelo: gemini-flash-latest
+2026-07-31 16:02:49,960 INFO [MODELOS] Imagem: Modelo: gemini-3.1-flash-image
+2026-07-31 16:02:49,960 INFO [PROCESSAMENTO] organizacao iniciada
+2026-07-31 16:02:49,976 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=94045719d67642f6871a4d91d05ad674 operacao=organizacao modelo=gemini-flash-latest endpoint=/v1/responses tentativas_maximas=2 texto_bytes=13630 imagens_bytes=0
+2026-07-31 16:02:49,979 ERROR [PROCESSAMENTO] Chamada IA 1 falhou em 0.00 s; operacao=organizacao endpoint=/v1/responses timeout=False excecao=ProviderError
+2026-07-31 16:02:49,980 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T19:02:49.979+00:00","generation_id":"94045719d67642f6871a4d91d05ad674","idempotency_key":"211e92fcc7fe18f3630186bf98e54623838c1fd0746092605ae266c9feda535f","stage":"organizacao","endpoint":"/v1/responses","model":"gemini-flash-latest","logical_call":1,"started_at":"2026-07-31T19:02:49.976+00:00","attempts":0,"request_id":"","duration_seconds":0.003078300000197487,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"error","error_type":"ProviderError"}
+2026-07-31 16:02:49,980 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:02:49.980+00:00","generation":"94045719d67642f6871a4d91d05ad674","stage":"organizacao","endpoint":"local","duration_seconds":0.019864,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:02:49,980 INFO =========================
+2026-07-31 16:02:49,980 INFO Resumo da geração
+2026-07-31 16:02:49,981 INFO =========================
+2026-07-31 16:02:49,981 INFO Geração: 94045719d67642f6871a4d91d05ad674
+2026-07-31 16:02:49,981 INFO Tempo total: 0.02 s
+2026-07-31 16:02:49,981 INFO Quantidade de chamadas: 1
+2026-07-31 16:02:49,981 INFO /v1/responses: 1
+2026-07-31 16:02:49,981 INFO /v1/images: 0
+2026-07-31 16:02:49,982 INFO Tentativas HTTP: 0
+2026-07-31 16:02:49,982 INFO Tokens entrada: 0
+2026-07-31 16:02:49,982 INFO Tokens saída: 0
+2026-07-31 16:02:49,982 INFO Tokens cache: 0
+2026-07-31 16:02:49,982 INFO Tokens raciocínio: 0
+2026-07-31 16:02:49,982 INFO Tokens imagem: 0
+2026-07-31 16:02:49,982 INFO Custo aproximado: US$ 0.000000
+2026-07-31 16:02:49,983 INFO =========================
+2026-07-31 16:02:49,983 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-07-31T19:02:49.983+00:00","generation":"94045719d67642f6871a4d91d05ad674","idempotency_key":"211e92fcc7fe18f3630186bf98e54623838c1fd0746092605ae266c9feda535f","duration_seconds":0.02313490000233287,"logical_calls":1,"http_attempts":0,"responses_calls":1,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.0019233999992138706,"organizacao":0.01986419999957434}}
+2026-07-31 16:02:50,013 ERROR Falha na geração da sessão fc2ad21b441d485c9ef7e905106d0edb [missing_api_key] stage=redator_organizador provider=gemini model=gemini-flash-latest status_http=None exception=ProviderError image= detail=ProviderError: Informe uma chave da API do Gemini.
+2026-07-31 16:02:50,014 INFO [PROCESSAMENTO] Interface encerrada em 0.07 s; sucesso=False
+2026-07-31 16:02:50,924 INFO [PROCESSAMENTO] Interface iniciada; sessao=fc2ad21b441d485c9ef7e905106d0edb
+2026-07-31 16:02:50,927 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:02:50.927+00:00","generation":"bff3bc663553445cb858b70b5f759d76","stage":"preparacao","endpoint":"local","duration_seconds":0.002763,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:02:50,927 INFO [PROCESSAMENTO] Início; geracao=bff3bc663553445cb858b70b5f759d76 idempotencia=211e92fcc7fe18f3630186bf98e54623838c1fd0746092605ae266c9feda535f sessao=fc2ad21b441d485c9ef7e905106d0edb provider=gemini texto_bytes=1626 imagens=0 capa=False
+2026-07-31 16:02:50,928 INFO [MODELOS] Texto: Modelo: gemini-flash-latest
+2026-07-31 16:02:50,928 INFO [MODELOS] Imagem: Modelo: gemini-3.1-flash-image
+2026-07-31 16:02:50,929 INFO [PROCESSAMENTO] organizacao iniciada
+2026-07-31 16:02:50,939 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=bff3bc663553445cb858b70b5f759d76 operacao=organizacao modelo=gemini-flash-latest endpoint=/v1/responses tentativas_maximas=2 texto_bytes=13630 imagens_bytes=0
+2026-07-31 16:02:50,940 ERROR [PROCESSAMENTO] Chamada IA 1 falhou em 0.00 s; operacao=organizacao endpoint=/v1/responses timeout=False excecao=ProviderError
+2026-07-31 16:02:50,940 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T19:02:50.940+00:00","generation_id":"bff3bc663553445cb858b70b5f759d76","idempotency_key":"211e92fcc7fe18f3630186bf98e54623838c1fd0746092605ae266c9feda535f","stage":"organizacao","endpoint":"/v1/responses","model":"gemini-flash-latest","logical_call":1,"started_at":"2026-07-31T19:02:50.939+00:00","attempts":0,"request_id":"","duration_seconds":0.00126530000125058,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"error","error_type":"ProviderError"}
+2026-07-31 16:02:50,940 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:02:50.940+00:00","generation":"bff3bc663553445cb858b70b5f759d76","stage":"organizacao","endpoint":"local","duration_seconds":0.011091,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:02:50,941 INFO =========================
+2026-07-31 16:02:50,941 INFO Resumo da geração
+2026-07-31 16:02:50,941 INFO =========================
+2026-07-31 16:02:50,941 INFO Geração: bff3bc663553445cb858b70b5f759d76
+2026-07-31 16:02:50,941 INFO Tempo total: 0.02 s
+2026-07-31 16:02:50,941 INFO Quantidade de chamadas: 1
+2026-07-31 16:02:50,941 INFO /v1/responses: 1
+2026-07-31 16:02:50,941 INFO /v1/images: 0
+2026-07-31 16:02:50,941 INFO Tentativas HTTP: 0
+2026-07-31 16:02:50,941 INFO Tokens entrada: 0
+2026-07-31 16:02:50,941 INFO Tokens saída: 0
+2026-07-31 16:02:50,942 INFO Tokens cache: 0
+2026-07-31 16:02:50,942 INFO Tokens raciocínio: 0
+2026-07-31 16:02:50,942 INFO Tokens imagem: 0
+2026-07-31 16:02:50,942 INFO Custo aproximado: US$ 0.000000
+2026-07-31 16:02:50,942 INFO =========================
+2026-07-31 16:02:50,942 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-07-31T19:02:50.942+00:00","generation":"bff3bc663553445cb858b70b5f759d76","idempotency_key":"211e92fcc7fe18f3630186bf98e54623838c1fd0746092605ae266c9feda535f","duration_seconds":0.016141200001584366,"logical_calls":1,"http_attempts":0,"responses_calls":1,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.0027633999998215586,"organizacao":0.01109100000030594}}
+2026-07-31 16:02:50,952 ERROR Falha na geração da sessão fc2ad21b441d485c9ef7e905106d0edb [missing_api_key] stage=redator_organizador provider=gemini model=gemini-flash-latest status_http=None exception=ProviderError image= detail=ProviderError: Informe uma chave da API do Gemini.
+2026-07-31 16:02:50,953 INFO [PROCESSAMENTO] Interface encerrada em 0.04 s; sucesso=False
+2026-07-31 16:02:54,552 INFO [PROCESSAMENTO] Interface iniciada; sessao=fc2ad21b441d485c9ef7e905106d0edb
+2026-07-31 16:02:54,555 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:02:54.555+00:00","generation":"c5d39261e54640bbbe3f0c4a06cdf65a","stage":"preparacao","endpoint":"local","duration_seconds":0.0018,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:02:54,555 INFO [PROCESSAMENTO] Início; geracao=c5d39261e54640bbbe3f0c4a06cdf65a idempotencia=211e92fcc7fe18f3630186bf98e54623838c1fd0746092605ae266c9feda535f sessao=fc2ad21b441d485c9ef7e905106d0edb provider=gemini texto_bytes=1626 imagens=0 capa=False
+2026-07-31 16:02:54,555 INFO [MODELOS] Texto: Modelo: gemini-flash-latest
+2026-07-31 16:02:54,555 INFO [MODELOS] Imagem: Modelo: gemini-3.1-flash-image
+2026-07-31 16:02:54,556 INFO [PROCESSAMENTO] organizacao iniciada
+2026-07-31 16:02:54,564 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=c5d39261e54640bbbe3f0c4a06cdf65a operacao=organizacao modelo=gemini-flash-latest endpoint=/v1/responses tentativas_maximas=2 texto_bytes=13630 imagens_bytes=0
+2026-07-31 16:02:54,566 ERROR [PROCESSAMENTO] Chamada IA 1 falhou em 0.00 s; operacao=organizacao endpoint=/v1/responses timeout=False excecao=ProviderError
+2026-07-31 16:02:54,566 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T19:02:54.566+00:00","generation_id":"c5d39261e54640bbbe3f0c4a06cdf65a","idempotency_key":"211e92fcc7fe18f3630186bf98e54623838c1fd0746092605ae266c9feda535f","stage":"organizacao","endpoint":"/v1/responses","model":"gemini-flash-latest","logical_call":1,"started_at":"2026-07-31T19:02:54.564+00:00","attempts":0,"request_id":"","duration_seconds":0.0017807999975048006,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"error","error_type":"ProviderError"}
+2026-07-31 16:02:54,567 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:02:54.566+00:00","generation":"c5d39261e54640bbbe3f0c4a06cdf65a","stage":"organizacao","endpoint":"local","duration_seconds":0.010706,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:02:54,567 INFO =========================
+2026-07-31 16:02:54,567 INFO Resumo da geração
+2026-07-31 16:02:54,567 INFO =========================
+2026-07-31 16:02:54,567 INFO Geração: c5d39261e54640bbbe3f0c4a06cdf65a
+2026-07-31 16:02:54,567 INFO Tempo total: 0.01 s
+2026-07-31 16:02:54,567 INFO Quantidade de chamadas: 1
+2026-07-31 16:02:54,568 INFO /v1/responses: 1
+2026-07-31 16:02:54,568 INFO /v1/images: 0
+2026-07-31 16:02:54,568 INFO Tentativas HTTP: 0
+2026-07-31 16:02:54,568 INFO Tokens entrada: 0
+2026-07-31 16:02:54,568 INFO Tokens saída: 0
+2026-07-31 16:02:54,568 INFO Tokens cache: 0
+2026-07-31 16:02:54,568 INFO Tokens raciocínio: 0
+2026-07-31 16:02:54,569 INFO Tokens imagem: 0
+2026-07-31 16:02:54,569 INFO Custo aproximado: US$ 0.000000
+2026-07-31 16:02:54,569 INFO =========================
+2026-07-31 16:02:54,569 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-07-31T19:02:54.569+00:00","generation":"c5d39261e54640bbbe3f0c4a06cdf65a","idempotency_key":"211e92fcc7fe18f3630186bf98e54623838c1fd0746092605ae266c9feda535f","duration_seconds":0.013806300001306226,"logical_calls":1,"http_attempts":0,"responses_calls":1,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.0017995999987761024,"organizacao":0.010706400000344729}}
+2026-07-31 16:02:54,587 ERROR Falha na geração da sessão fc2ad21b441d485c9ef7e905106d0edb [missing_api_key] stage=redator_organizador provider=gemini model=gemini-flash-latest status_http=None exception=ProviderError image= detail=ProviderError: Informe uma chave da API do Gemini.
+2026-07-31 16:02:54,588 INFO [PROCESSAMENTO] Interface encerrada em 0.05 s; sucesso=False
+2026-07-31 16:03:28,605 INFO [PROCESSAMENTO] Interface iniciada; sessao=fc2ad21b441d485c9ef7e905106d0edb
+2026-07-31 16:03:28,608 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:03:28.608+00:00","generation":"04741e3327ca4853aba118415b98dd08","stage":"preparacao","endpoint":"local","duration_seconds":0.002155,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:03:28,608 INFO [PROCESSAMENTO] Início; geracao=04741e3327ca4853aba118415b98dd08 idempotencia=211e92fcc7fe18f3630186bf98e54623838c1fd0746092605ae266c9feda535f sessao=fc2ad21b441d485c9ef7e905106d0edb provider=gemini texto_bytes=1626 imagens=0 capa=False
+2026-07-31 16:03:28,608 INFO [MODELOS] Texto: Modelo: gemini-flash-latest
+2026-07-31 16:03:28,608 INFO [MODELOS] Imagem: Modelo: gemini-3.1-flash-image
+2026-07-31 16:03:28,609 INFO [PROCESSAMENTO] organizacao iniciada
+2026-07-31 16:03:28,622 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=04741e3327ca4853aba118415b98dd08 operacao=organizacao modelo=gemini-flash-latest endpoint=/v1/responses tentativas_maximas=2 texto_bytes=13630 imagens_bytes=0
+2026-07-31 16:03:28,622 ERROR [PROCESSAMENTO] Chamada IA 1 falhou em 0.00 s; operacao=organizacao endpoint=/v1/responses timeout=False excecao=ProviderError
+2026-07-31 16:03:28,623 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T19:03:28.623+00:00","generation_id":"04741e3327ca4853aba118415b98dd08","idempotency_key":"211e92fcc7fe18f3630186bf98e54623838c1fd0746092605ae266c9feda535f","stage":"organizacao","endpoint":"/v1/responses","model":"gemini-flash-latest","logical_call":1,"started_at":"2026-07-31T19:03:28.621+00:00","attempts":0,"request_id":"","duration_seconds":0.0012717999998130836,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"error","error_type":"ProviderError"}
+2026-07-31 16:03:28,623 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:03:28.623+00:00","generation":"04741e3327ca4853aba118415b98dd08","stage":"organizacao","endpoint":"local","duration_seconds":0.014019,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:03:28,623 INFO =========================
+2026-07-31 16:03:28,623 INFO Resumo da geração
+2026-07-31 16:03:28,623 INFO =========================
+2026-07-31 16:03:28,624 INFO Geração: 04741e3327ca4853aba118415b98dd08
+2026-07-31 16:03:28,624 INFO Tempo total: 0.02 s
+2026-07-31 16:03:28,624 INFO Quantidade de chamadas: 1
+2026-07-31 16:03:28,624 INFO /v1/responses: 1
+2026-07-31 16:03:28,624 INFO /v1/images: 0
+2026-07-31 16:03:28,624 INFO Tentativas HTTP: 0
+2026-07-31 16:03:28,624 INFO Tokens entrada: 0
+2026-07-31 16:03:28,624 INFO Tokens saída: 0
+2026-07-31 16:03:28,624 INFO Tokens cache: 0
+2026-07-31 16:03:28,624 INFO Tokens raciocínio: 0
+2026-07-31 16:03:28,624 INFO Tokens imagem: 0
+2026-07-31 16:03:28,625 INFO Custo aproximado: US$ 0.000000
+2026-07-31 16:03:28,625 INFO =========================
+2026-07-31 16:03:28,625 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-07-31T19:03:28.625+00:00","generation":"04741e3327ca4853aba118415b98dd08","idempotency_key":"211e92fcc7fe18f3630186bf98e54623838c1fd0746092605ae266c9feda535f","duration_seconds":0.017915600001288112,"logical_calls":1,"http_attempts":0,"responses_calls":1,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.002154600002540974,"organizacao":0.014019199999893317}}
+2026-07-31 16:03:28,640 ERROR Falha na geração da sessão fc2ad21b441d485c9ef7e905106d0edb [missing_api_key] stage=redator_organizador provider=gemini model=gemini-flash-latest status_http=None exception=ProviderError image= detail=ProviderError: Informe uma chave da API do Gemini.
+2026-07-31 16:03:28,641 INFO [PROCESSAMENTO] Interface encerrada em 0.05 s; sucesso=False
+2026-07-31 16:03:43,160 INFO [PROCESSAMENTO] Interface iniciada; sessao=fc2ad21b441d485c9ef7e905106d0edb
+2026-07-31 16:03:43,167 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:03:43.167+00:00","generation":"19d8efdd178649499e61f721e284d222","stage":"preparacao","endpoint":"local","duration_seconds":0.003012,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:03:43,167 INFO [PROCESSAMENTO] Início; geracao=19d8efdd178649499e61f721e284d222 idempotencia=88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48 sessao=fc2ad21b441d485c9ef7e905106d0edb provider=gemini texto_bytes=3307 imagens=0 capa=False
+2026-07-31 16:03:43,167 INFO [MODELOS] Texto: Modelo: gemini-flash-latest
+2026-07-31 16:03:43,167 INFO [MODELOS] Imagem: Modelo: gemini-3.1-flash-image
+2026-07-31 16:03:43,169 INFO [PROCESSAMENTO] organizacao iniciada
+2026-07-31 16:03:43,188 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=19d8efdd178649499e61f721e284d222 operacao=organizacao modelo=gemini-flash-latest endpoint=/v1/responses tentativas_maximas=2 texto_bytes=17698 imagens_bytes=0
+2026-07-31 16:03:43,189 ERROR [PROCESSAMENTO] Chamada IA 1 falhou em 0.00 s; operacao=organizacao endpoint=/v1/responses timeout=False excecao=ProviderError
+2026-07-31 16:03:43,190 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T19:03:43.190+00:00","generation_id":"19d8efdd178649499e61f721e284d222","idempotency_key":"88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48","stage":"organizacao","endpoint":"/v1/responses","model":"gemini-flash-latest","logical_call":1,"started_at":"2026-07-31T19:03:43.188+00:00","attempts":0,"request_id":"","duration_seconds":0.0018084000003000256,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"error","error_type":"ProviderError"}
+2026-07-31 16:03:43,190 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:03:43.190+00:00","generation":"19d8efdd178649499e61f721e284d222","stage":"organizacao","endpoint":"local","duration_seconds":0.021552,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:03:43,190 INFO =========================
+2026-07-31 16:03:43,190 INFO Resumo da geração
+2026-07-31 16:03:43,190 INFO =========================
+2026-07-31 16:03:43,190 INFO Geração: 19d8efdd178649499e61f721e284d222
+2026-07-31 16:03:43,191 INFO Tempo total: 0.03 s
+2026-07-31 16:03:43,191 INFO Quantidade de chamadas: 1
+2026-07-31 16:03:43,191 INFO /v1/responses: 1
+2026-07-31 16:03:43,191 INFO /v1/images: 0
+2026-07-31 16:03:43,191 INFO Tentativas HTTP: 0
+2026-07-31 16:03:43,191 INFO Tokens entrada: 0
+2026-07-31 16:03:43,191 INFO Tokens saída: 0
+2026-07-31 16:03:43,191 INFO Tokens cache: 0
+2026-07-31 16:03:43,191 INFO Tokens raciocínio: 0
+2026-07-31 16:03:43,191 INFO Tokens imagem: 0
+2026-07-31 16:03:43,191 INFO Custo aproximado: US$ 0.000000
+2026-07-31 16:03:43,192 INFO =========================
+2026-07-31 16:03:43,192 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-07-31T19:03:43.192+00:00","generation":"19d8efdd178649499e61f721e284d222","idempotency_key":"88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48","duration_seconds":0.02665270000215969,"logical_calls":1,"http_attempts":0,"responses_calls":1,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.0030123000033199787,"organizacao":0.021552399997744942}}
+2026-07-31 16:03:43,208 ERROR Falha na geração da sessão fc2ad21b441d485c9ef7e905106d0edb [missing_api_key] stage=redator_organizador provider=gemini model=gemini-flash-latest status_http=None exception=ProviderError image= detail=ProviderError: Informe uma chave da API do Gemini.
+2026-07-31 16:03:43,208 INFO [PROCESSAMENTO] Interface encerrada em 0.07 s; sucesso=False
+2026-07-31 16:03:47,699 INFO [PROCESSAMENTO] Interface iniciada; sessao=fc2ad21b441d485c9ef7e905106d0edb
+2026-07-31 16:03:47,702 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:03:47.702+00:00","generation":"210e98ee7cbc4175a0e2cd03d01f85e7","stage":"preparacao","endpoint":"local","duration_seconds":0.002026,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:03:47,702 INFO [PROCESSAMENTO] Início; geracao=210e98ee7cbc4175a0e2cd03d01f85e7 idempotencia=88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48 sessao=fc2ad21b441d485c9ef7e905106d0edb provider=gemini texto_bytes=3307 imagens=0 capa=False
+2026-07-31 16:03:47,702 INFO [MODELOS] Texto: Modelo: gemini-flash-latest
+2026-07-31 16:03:47,702 INFO [MODELOS] Imagem: Modelo: gemini-3.1-flash-image
+2026-07-31 16:03:47,703 INFO [PROCESSAMENTO] organizacao iniciada
+2026-07-31 16:03:47,720 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=210e98ee7cbc4175a0e2cd03d01f85e7 operacao=organizacao modelo=gemini-flash-latest endpoint=/v1/responses tentativas_maximas=2 texto_bytes=17698 imagens_bytes=0
+2026-07-31 16:03:47,722 ERROR [PROCESSAMENTO] Chamada IA 1 falhou em 0.00 s; operacao=organizacao endpoint=/v1/responses timeout=False excecao=ProviderError
+2026-07-31 16:03:47,722 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T19:03:47.722+00:00","generation_id":"210e98ee7cbc4175a0e2cd03d01f85e7","idempotency_key":"88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48","stage":"organizacao","endpoint":"/v1/responses","model":"gemini-flash-latest","logical_call":1,"started_at":"2026-07-31T19:03:47.720+00:00","attempts":0,"request_id":"","duration_seconds":0.0024592000008851755,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"error","error_type":"ProviderError"}
+2026-07-31 16:03:47,723 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:03:47.723+00:00","generation":"210e98ee7cbc4175a0e2cd03d01f85e7","stage":"organizacao","endpoint":"local","duration_seconds":0.01977,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:03:47,723 INFO =========================
+2026-07-31 16:03:47,724 INFO Resumo da geração
+2026-07-31 16:03:47,724 INFO =========================
+2026-07-31 16:03:47,724 INFO Geração: 210e98ee7cbc4175a0e2cd03d01f85e7
+2026-07-31 16:03:47,724 INFO Tempo total: 0.02 s
+2026-07-31 16:03:47,724 INFO Quantidade de chamadas: 1
+2026-07-31 16:03:47,725 INFO /v1/responses: 1
+2026-07-31 16:03:47,725 INFO /v1/images: 0
+2026-07-31 16:03:47,725 INFO Tentativas HTTP: 0
+2026-07-31 16:03:47,725 INFO Tokens entrada: 0
+2026-07-31 16:03:47,725 INFO Tokens saída: 0
+2026-07-31 16:03:47,725 INFO Tokens cache: 0
+2026-07-31 16:03:47,726 INFO Tokens raciocínio: 0
+2026-07-31 16:03:47,726 INFO Tokens imagem: 0
+2026-07-31 16:03:47,726 INFO Custo aproximado: US$ 0.000000
+2026-07-31 16:03:47,726 INFO =========================
+2026-07-31 16:03:47,726 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-07-31T19:03:47.726+00:00","generation":"210e98ee7cbc4175a0e2cd03d01f85e7","idempotency_key":"88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48","duration_seconds":0.023400400001264643,"logical_calls":1,"http_attempts":0,"responses_calls":1,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.002026300000579795,"organizacao":0.0197695000024396}}
+2026-07-31 16:03:47,752 ERROR Falha na geração da sessão fc2ad21b441d485c9ef7e905106d0edb [missing_api_key] stage=redator_organizador provider=gemini model=gemini-flash-latest status_http=None exception=ProviderError image= detail=ProviderError: Informe uma chave da API do Gemini.
+2026-07-31 16:03:47,753 INFO [PROCESSAMENTO] Interface encerrada em 0.07 s; sucesso=False
+2026-07-31 16:03:50,440 INFO [PROCESSAMENTO] Interface iniciada; sessao=fc2ad21b441d485c9ef7e905106d0edb
+2026-07-31 16:03:50,443 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:03:50.443+00:00","generation":"d69ed0f6180f49c68501f5708d26894d","stage":"preparacao","endpoint":"local","duration_seconds":0.002286,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:03:50,443 INFO [PROCESSAMENTO] Início; geracao=d69ed0f6180f49c68501f5708d26894d idempotencia=88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48 sessao=fc2ad21b441d485c9ef7e905106d0edb provider=gemini texto_bytes=3307 imagens=0 capa=False
+2026-07-31 16:03:50,443 INFO [MODELOS] Texto: Modelo: gemini-flash-latest
+2026-07-31 16:03:50,444 INFO [MODELOS] Imagem: Modelo: gemini-3.1-flash-image
+2026-07-31 16:03:50,445 INFO [PROCESSAMENTO] organizacao iniciada
+2026-07-31 16:03:50,481 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=d69ed0f6180f49c68501f5708d26894d operacao=organizacao modelo=gemini-flash-latest endpoint=/v1/responses tentativas_maximas=2 texto_bytes=17698 imagens_bytes=0
+2026-07-31 16:03:50,483 ERROR [PROCESSAMENTO] Chamada IA 1 falhou em 0.00 s; operacao=organizacao endpoint=/v1/responses timeout=False excecao=ProviderError
+2026-07-31 16:03:50,484 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T19:03:50.483+00:00","generation_id":"d69ed0f6180f49c68501f5708d26894d","idempotency_key":"88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48","stage":"organizacao","endpoint":"/v1/responses","model":"gemini-flash-latest","logical_call":1,"started_at":"2026-07-31T19:03:50.480+00:00","attempts":0,"request_id":"","duration_seconds":0.002872200002457248,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"error","error_type":"ProviderError"}
+2026-07-31 16:03:50,484 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:03:50.484+00:00","generation":"d69ed0f6180f49c68501f5708d26894d","stage":"organizacao","endpoint":"local","duration_seconds":0.038601,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:03:50,484 INFO =========================
+2026-07-31 16:03:50,484 INFO Resumo da geração
+2026-07-31 16:03:50,485 INFO =========================
+2026-07-31 16:03:50,485 INFO Geração: d69ed0f6180f49c68501f5708d26894d
+2026-07-31 16:03:50,485 INFO Tempo total: 0.04 s
+2026-07-31 16:03:50,485 INFO Quantidade de chamadas: 1
+2026-07-31 16:03:50,485 INFO /v1/responses: 1
+2026-07-31 16:03:50,485 INFO /v1/images: 0
+2026-07-31 16:03:50,485 INFO Tentativas HTTP: 0
+2026-07-31 16:03:50,486 INFO Tokens entrada: 0
+2026-07-31 16:03:50,486 INFO Tokens saída: 0
+2026-07-31 16:03:50,486 INFO Tokens cache: 0
+2026-07-31 16:03:50,486 INFO Tokens raciocínio: 0
+2026-07-31 16:03:50,486 INFO Tokens imagem: 0
+2026-07-31 16:03:50,486 INFO Custo aproximado: US$ 0.000000
+2026-07-31 16:03:50,487 INFO =========================
+2026-07-31 16:03:50,487 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-07-31T19:03:50.487+00:00","generation":"d69ed0f6180f49c68501f5708d26894d","idempotency_key":"88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48","duration_seconds":0.043714100000215694,"logical_calls":1,"http_attempts":0,"responses_calls":1,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.002285800001118332,"organizacao":0.038601399999606656}}
+2026-07-31 16:03:50,540 ERROR Falha na geração da sessão fc2ad21b441d485c9ef7e905106d0edb [missing_api_key] stage=redator_organizador provider=gemini model=gemini-flash-latest status_http=None exception=ProviderError image= detail=ProviderError: Informe uma chave da API do Gemini.
+2026-07-31 16:03:50,541 INFO [PROCESSAMENTO] Interface encerrada em 0.12 s; sucesso=False
+2026-07-31 16:03:52,686 INFO [PROCESSAMENTO] Interface iniciada; sessao=fc2ad21b441d485c9ef7e905106d0edb
+2026-07-31 16:03:52,688 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:03:52.688+00:00","generation":"296bde922d0e4c3fbc93b8d7346bedb2","stage":"preparacao","endpoint":"local","duration_seconds":0.00201,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:03:52,689 INFO [PROCESSAMENTO] Início; geracao=296bde922d0e4c3fbc93b8d7346bedb2 idempotencia=88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48 sessao=fc2ad21b441d485c9ef7e905106d0edb provider=gemini texto_bytes=3307 imagens=0 capa=False
+2026-07-31 16:03:52,689 INFO [MODELOS] Texto: Modelo: gemini-flash-latest
+2026-07-31 16:03:52,689 INFO [MODELOS] Imagem: Modelo: gemini-3.1-flash-image
+2026-07-31 16:03:52,690 INFO [PROCESSAMENTO] organizacao iniciada
+2026-07-31 16:03:52,719 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=296bde922d0e4c3fbc93b8d7346bedb2 operacao=organizacao modelo=gemini-flash-latest endpoint=/v1/responses tentativas_maximas=2 texto_bytes=17698 imagens_bytes=0
+2026-07-31 16:03:52,720 ERROR [PROCESSAMENTO] Chamada IA 1 falhou em 0.00 s; operacao=organizacao endpoint=/v1/responses timeout=False excecao=ProviderError
+2026-07-31 16:03:52,720 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T19:03:52.720+00:00","generation_id":"296bde922d0e4c3fbc93b8d7346bedb2","idempotency_key":"88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48","stage":"organizacao","endpoint":"/v1/responses","model":"gemini-flash-latest","logical_call":1,"started_at":"2026-07-31T19:03:52.719+00:00","attempts":0,"request_id":"","duration_seconds":0.0013292999974510167,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"error","error_type":"ProviderError"}
+2026-07-31 16:03:52,721 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:03:52.720+00:00","generation":"296bde922d0e4c3fbc93b8d7346bedb2","stage":"organizacao","endpoint":"local","duration_seconds":0.030453,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:03:52,721 INFO =========================
+2026-07-31 16:03:52,721 INFO Resumo da geração
+2026-07-31 16:03:52,721 INFO =========================
+2026-07-31 16:03:52,721 INFO Geração: 296bde922d0e4c3fbc93b8d7346bedb2
+2026-07-31 16:03:52,721 INFO Tempo total: 0.03 s
+2026-07-31 16:03:52,721 INFO Quantidade de chamadas: 1
+2026-07-31 16:03:52,722 INFO /v1/responses: 1
+2026-07-31 16:03:52,722 INFO /v1/images: 0
+2026-07-31 16:03:52,722 INFO Tentativas HTTP: 0
+2026-07-31 16:03:52,722 INFO Tokens entrada: 0
+2026-07-31 16:03:52,722 INFO Tokens saída: 0
+2026-07-31 16:03:52,722 INFO Tokens cache: 0
+2026-07-31 16:03:52,723 INFO Tokens raciocínio: 0
+2026-07-31 16:03:52,723 INFO Tokens imagem: 0
+2026-07-31 16:03:52,723 INFO Custo aproximado: US$ 0.000000
+2026-07-31 16:03:52,723 INFO =========================
+2026-07-31 16:03:52,723 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-07-31T19:03:52.723+00:00","generation":"296bde922d0e4c3fbc93b8d7346bedb2","idempotency_key":"88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48","duration_seconds":0.0343959999991057,"logical_calls":1,"http_attempts":0,"responses_calls":1,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.0020102999988012016,"organizacao":0.030453100000158884}}
+2026-07-31 16:03:52,753 ERROR Falha na geração da sessão fc2ad21b441d485c9ef7e905106d0edb [missing_api_key] stage=redator_organizador provider=gemini model=gemini-flash-latest status_http=None exception=ProviderError image= detail=ProviderError: Informe uma chave da API do Gemini.
+2026-07-31 16:03:52,753 INFO [PROCESSAMENTO] Interface encerrada em 0.08 s; sucesso=False
+2026-07-31 16:03:54,076 INFO [PROCESSAMENTO] Interface iniciada; sessao=fc2ad21b441d485c9ef7e905106d0edb
+2026-07-31 16:03:54,079 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:03:54.079+00:00","generation":"e243513a48f04efba49c2be9ec27ef60","stage":"preparacao","endpoint":"local","duration_seconds":0.002702,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:03:54,079 INFO [PROCESSAMENTO] Início; geracao=e243513a48f04efba49c2be9ec27ef60 idempotencia=88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48 sessao=fc2ad21b441d485c9ef7e905106d0edb provider=gemini texto_bytes=3307 imagens=0 capa=False
+2026-07-31 16:03:54,080 INFO [MODELOS] Texto: Modelo: gemini-flash-latest
+2026-07-31 16:03:54,080 INFO [MODELOS] Imagem: Modelo: gemini-3.1-flash-image
+2026-07-31 16:03:54,081 INFO [PROCESSAMENTO] organizacao iniciada
+2026-07-31 16:03:54,099 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=e243513a48f04efba49c2be9ec27ef60 operacao=organizacao modelo=gemini-flash-latest endpoint=/v1/responses tentativas_maximas=2 texto_bytes=17698 imagens_bytes=0
+2026-07-31 16:03:54,101 ERROR [PROCESSAMENTO] Chamada IA 1 falhou em 0.00 s; operacao=organizacao endpoint=/v1/responses timeout=False excecao=ProviderError
+2026-07-31 16:03:54,101 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T19:03:54.101+00:00","generation_id":"e243513a48f04efba49c2be9ec27ef60","idempotency_key":"88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48","stage":"organizacao","endpoint":"/v1/responses","model":"gemini-flash-latest","logical_call":1,"started_at":"2026-07-31T19:03:54.099+00:00","attempts":0,"request_id":"","duration_seconds":0.0022322999975585844,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"error","error_type":"ProviderError"}
+2026-07-31 16:03:54,102 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:03:54.102+00:00","generation":"e243513a48f04efba49c2be9ec27ef60","stage":"organizacao","endpoint":"local","duration_seconds":0.020545,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:03:54,102 INFO =========================
+2026-07-31 16:03:54,102 INFO Resumo da geração
+2026-07-31 16:03:54,103 INFO =========================
+2026-07-31 16:03:54,103 INFO Geração: e243513a48f04efba49c2be9ec27ef60
+2026-07-31 16:03:54,103 INFO Tempo total: 0.03 s
+2026-07-31 16:03:54,103 INFO Quantidade de chamadas: 1
+2026-07-31 16:03:54,104 INFO /v1/responses: 1
+2026-07-31 16:03:54,104 INFO /v1/images: 0
+2026-07-31 16:03:54,105 INFO Tentativas HTTP: 0
+2026-07-31 16:03:54,105 INFO Tokens entrada: 0
+2026-07-31 16:03:54,106 INFO Tokens saída: 0
+2026-07-31 16:03:54,107 INFO Tokens cache: 0
+2026-07-31 16:03:54,107 INFO Tokens raciocínio: 0
+2026-07-31 16:03:54,107 INFO Tokens imagem: 0
+2026-07-31 16:03:54,107 INFO Custo aproximado: US$ 0.000000
+2026-07-31 16:03:54,108 INFO =========================
+2026-07-31 16:03:54,108 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-07-31T19:03:54.108+00:00","generation":"e243513a48f04efba49c2be9ec27ef60","idempotency_key":"88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48","duration_seconds":0.025766099999600556,"logical_calls":1,"http_attempts":0,"responses_calls":1,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.002701999997952953,"organizacao":0.020544599999993807}}
+2026-07-31 16:03:54,175 ERROR Falha na geração da sessão fc2ad21b441d485c9ef7e905106d0edb [missing_api_key] stage=redator_organizador provider=gemini model=gemini-flash-latest status_http=None exception=ProviderError image= detail=ProviderError: Informe uma chave da API do Gemini.
+2026-07-31 16:03:54,176 INFO [PROCESSAMENTO] Interface encerrada em 0.11 s; sucesso=False
+2026-07-31 16:03:56,163 INFO [PROCESSAMENTO] Interface iniciada; sessao=fc2ad21b441d485c9ef7e905106d0edb
+2026-07-31 16:03:56,166 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:03:56.166+00:00","generation":"7af11865444548e2a1d145c0152a1784","stage":"preparacao","endpoint":"local","duration_seconds":0.002339,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:03:56,167 INFO [PROCESSAMENTO] Início; geracao=7af11865444548e2a1d145c0152a1784 idempotencia=88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48 sessao=fc2ad21b441d485c9ef7e905106d0edb provider=gemini texto_bytes=3307 imagens=0 capa=False
+2026-07-31 16:03:56,167 INFO [MODELOS] Texto: Modelo: gemini-flash-latest
+2026-07-31 16:03:56,167 INFO [MODELOS] Imagem: Modelo: gemini-3.1-flash-image
+2026-07-31 16:03:56,168 INFO [PROCESSAMENTO] organizacao iniciada
+2026-07-31 16:03:56,186 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=7af11865444548e2a1d145c0152a1784 operacao=organizacao modelo=gemini-flash-latest endpoint=/v1/responses tentativas_maximas=2 texto_bytes=17698 imagens_bytes=0
+2026-07-31 16:03:56,188 ERROR [PROCESSAMENTO] Chamada IA 1 falhou em 0.00 s; operacao=organizacao endpoint=/v1/responses timeout=False excecao=ProviderError
+2026-07-31 16:03:56,188 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-07-31T19:03:56.188+00:00","generation_id":"7af11865444548e2a1d145c0152a1784","idempotency_key":"88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48","stage":"organizacao","endpoint":"/v1/responses","model":"gemini-flash-latest","logical_call":1,"started_at":"2026-07-31T19:03:56.186+00:00","attempts":0,"request_id":"","duration_seconds":0.0019482999996398576,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"error","error_type":"ProviderError"}
+2026-07-31 16:03:56,189 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-07-31T19:03:56.188+00:00","generation":"7af11865444548e2a1d145c0152a1784","stage":"organizacao","endpoint":"local","duration_seconds":0.020236,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-07-31 16:03:56,189 INFO =========================
+2026-07-31 16:03:56,189 INFO Resumo da geração
+2026-07-31 16:03:56,189 INFO =========================
+2026-07-31 16:03:56,189 INFO Geração: 7af11865444548e2a1d145c0152a1784
+2026-07-31 16:03:56,190 INFO Tempo total: 0.02 s
+2026-07-31 16:03:56,190 INFO Quantidade de chamadas: 1
+2026-07-31 16:03:56,190 INFO /v1/responses: 1
+2026-07-31 16:03:56,190 INFO /v1/images: 0
+2026-07-31 16:03:56,190 INFO Tentativas HTTP: 0
+2026-07-31 16:03:56,190 INFO Tokens entrada: 0
+2026-07-31 16:03:56,190 INFO Tokens saída: 0
+2026-07-31 16:03:56,190 INFO Tokens cache: 0
+2026-07-31 16:03:56,191 INFO Tokens raciocínio: 0
+2026-07-31 16:03:56,191 INFO Tokens imagem: 0
+2026-07-31 16:03:56,191 INFO Custo aproximado: US$ 0.000000
+2026-07-31 16:03:56,191 INFO =========================
+2026-07-31 16:03:56,191 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-07-31T19:03:56.191+00:00","generation":"7af11865444548e2a1d145c0152a1784","idempotency_key":"88715e6942915466a34cf2e4bd5b0cd306187512ec1c30e5d17031d0db381f48","duration_seconds":0.024926200003392296,"logical_calls":1,"http_attempts":0,"responses_calls":1,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.002338800000870833,"organizacao":0.020236000000295462}}
+2026-07-31 16:03:56,208 ERROR Falha na geração da sessão fc2ad21b441d485c9ef7e905106d0edb [missing_api_key] stage=redator_organizador provider=gemini model=gemini-flash-latest status_http=None exception=ProviderError image= detail=ProviderError: Informe uma chave da API do Gemini.
+2026-07-31 16:03:56,209 INFO [PROCESSAMENTO] Interface encerrada em 0.06 s; sucesso=False

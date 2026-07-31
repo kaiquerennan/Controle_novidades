@@ -62,6 +62,7 @@ from services.editorial_orchestration_service import (
     EditorialOrchestrator,
     WRITER_ORGANIZER_PROMPT,
 )
+from services.html_export_service import build_novelty_html
 from services.eddie_message_service import EddieMessageService
 from services.whatsapp_config_service import (
     TOKEN_PLACEHOLDER,
@@ -211,6 +212,7 @@ def index() -> None:
         'generation': saved_generation,
         'whatsapp_public_link': str(saved_settings.get('whatsapp_public_link') or ''),
         'whatsapp_sending': False,
+        'html_override': str(saved.get('html_override') or ''),
     }
     controls: dict[str, Any] = {}
     generation_lock = GENERATION_REGISTRY.lock_for(workspace.session_id)
@@ -250,6 +252,7 @@ def index() -> None:
             'approved': bool(state['approved']),
             'current_step': state['current_step'],
             'generation': dict(state.get('generation') or {}),
+            'html_override': str(state.get('html_override') or ''),
             'settings': {
                 'provider': str(controls['provider'].value or 'gemini'),
                 'text_model': str(controls['text_model'].value or ''),
@@ -414,6 +417,7 @@ def index() -> None:
                 active_idempotency_key='',
                 placement_suggestions=[],
                 annotation_image_id=None,
+                html_override='',
             )
             thumbnails.refresh()
             resume_row.set_visibility(False)
@@ -1140,6 +1144,8 @@ def index() -> None:
                     state.update(approved=False, exports={})
                     persist_screen_state()
                     preview.refresh()
+                    # O HTML acompanha a matéria, exceto quando foi editado à mão.
+                    html_editor.refresh()
 
                 def open_annotations(image_id: str | None = None) -> None:
                     state['advanced_open'] = True
@@ -1148,30 +1154,120 @@ def index() -> None:
                         state['annotation_image_id'] = image_id
                     advanced_panel.refresh()
 
-                with ui.card().classes('simple-card publication w-full p-0'):
-                    @ui.refreshable
-                    def preview() -> None:
-                        if not state['generated']:
-                            ui.label('Gere a novidade para visualizar o resultado.').classes(
-                                'p-10 muted'
-                            )
-                            return
-                        warnings = list(composition.review.get('avisos') or [])
-                        if warnings:
-                            with ui.card().classes(
-                                'w-full max-w-4xl mx-auto bg-amber-50 border border-amber-200 p-4'
-                            ):
-                                ui.label(
-                                    'A mat\u00e9ria foi gerada, mas alguns pontos precisam de '
-                                    'revis\u00e3o antes da aprova\u00e7\u00e3o.'
-                                ).classes('font-medium text-amber-900')
-                                for warning in warnings:
-                                    ui.label(str(warning)).classes('text-sm text-amber-800')
-                        render_novelty_preview(
-                            composition, state['images'], content_changed, open_annotations,
+                def generated_html() -> str:
+                    """HTML atual: o editado manualmente ou o derivado da composi\u00e7\u00e3o."""
+                    if str(state.get('html_override') or '').strip():
+                        return str(state['html_override'])
+                    payload = composition.to_dict()
+                    payload['texto_novidade'] = composition.text
+                    payload['imagens'] = [
+                        {
+                            'id': str(item['id']),
+                            'arquivo_final': Path(
+                                item.get('final') or item.get('treated') or item['original']
+                            ).name,
+                        }
+                        for item in state['images'] if not item['error']
+                    ]
+                    return build_novelty_html(payload)
+
+                @ui.refreshable
+                def html_editor() -> None:
+                    if not state['generated']:
+                        ui.label('Gere a novidade para ver o HTML.').classes('p-10 muted')
+                        return
+                    editado = bool(str(state.get('html_override') or '').strip())
+                    with ui.row().classes('w-full items-center gap-2'):
+                        ui.label(
+                            'HTML editado manualmente: \u00e9 ele que ser\u00e1 exportado.'
+                            if editado
+                            else 'HTML gerado a partir da mat\u00e9ria.'
+                        ).classes('text-sm muted')
+                        if editado:
+                            ui.badge('editado').props('color=orange outline')
+                    codigo = ui.textarea(value=generated_html()).props(
+                        'rows=24 outlined input-class=font-mono'
+                    ).classes('w-full text-xs')
+
+                    def aplicar_html() -> None:
+                        state['html_override'] = str(codigo.value or '')
+                        state.update(approved=False, exports={})
+                        persist_screen_state()
+                        html_editor.refresh()
+                        ui.notify(
+                            'HTML aplicado. A exporta\u00e7\u00e3o passa a usar este c\u00f3digo.',
+                            type='positive',
                         )
 
-                    preview()
+                    def descartar_html() -> None:
+                        state['html_override'] = ''
+                        state.update(approved=False, exports={})
+                        persist_screen_state()
+                        html_editor.refresh()
+                        ui.notify('HTML voltou a ser gerado pela mat\u00e9ria.', type='positive')
+
+                    with ui.row().classes('w-full justify-end gap-2'):
+                        if editado:
+                            ui.button(
+                                'Descartar edi\u00e7\u00e3o', icon='restart_alt', on_click=descartar_html
+                            ).props('flat')
+                        ui.button(
+                            'Aplicar HTML', icon='save', on_click=aplicar_html
+                        ).props('color=primary')
+
+                with ui.tabs().classes('w-full') as editor_tabs:
+                    preview_tab = ui.tab('Pr\u00e9-visualiza\u00e7\u00e3o')
+                    editor_text_tab = ui.tab('Texto')
+                    editor_html_tab = ui.tab('HTML')
+                with ui.tab_panels(editor_tabs, value=preview_tab).classes('w-full'):
+                    with ui.tab_panel(preview_tab).classes('p-0'):
+                        with ui.card().classes('simple-card publication w-full p-0'):
+                            @ui.refreshable
+                            def preview() -> None:
+                                if not state['generated']:
+                                    ui.label(
+                                        'Gere a novidade para visualizar o resultado.'
+                                    ).classes('p-10 muted')
+                                    return
+                                warnings = list(composition.review.get('avisos') or [])
+                                if warnings:
+                                    with ui.card().classes(
+                                        'w-full max-w-4xl mx-auto bg-amber-50 '
+                                        'border border-amber-200 p-4'
+                                    ):
+                                        ui.label(
+                                            'A mat\u00e9ria foi gerada, mas alguns pontos precisam '
+                                            'de revis\u00e3o antes da aprova\u00e7\u00e3o.'
+                                        ).classes('font-medium text-amber-900')
+                                        for warning in warnings:
+                                            ui.label(str(warning)).classes(
+                                                'text-sm text-amber-800'
+                                            )
+                                render_novelty_preview(
+                                    composition, state['images'], content_changed,
+                                    open_annotations,
+                                )
+
+                            preview()
+                    with ui.tab_panel(editor_text_tab):
+                        @ui.refreshable
+                        def text_editor() -> None:
+                            if not state['generated']:
+                                ui.label('Gere a novidade para editar o texto.').classes(
+                                    'p-10 muted'
+                                )
+                                return
+                            ui.label(
+                                'Edite o t\u00edtulo e os par\u00e1grafos gerados pela IA. '
+                                'As altera\u00e7\u00f5es aparecem na pr\u00e9-visualiza\u00e7\u00e3o.'
+                            ).classes('text-sm muted')
+                            CompositionBuilder(
+                                composition, lambda: state['images'], content_changed
+                            ).render()
+
+                        text_editor()
+                    with ui.tab_panel(editor_html_tab):
+                        html_editor()
 
                 def remove_cover() -> None:
                     if composition.remove_cover():
@@ -1248,24 +1344,14 @@ def index() -> None:
                                 'Remover imagem de capa', icon='hide_image',
                                 on_click=remove_cover,
                             ).props('outline')
-                        with ui.tabs().classes('w-full') as tabs:
-                            text_tab = ui.tab('Texto e posição')
-                            image_tab = ui.tab('Imagens e marcações')
-                        selected_tab = (
-                            image_tab if state.get('advanced_tab') == 'images' else text_tab
-                        )
-                        with ui.tab_panels(tabs, value=selected_tab).classes('w-full'):
-                            with ui.tab_panel(text_tab):
-                                CompositionBuilder(
-                                    composition, lambda: state['images'], content_changed
-                                ).render()
-                            with ui.tab_panel(image_tab):
-                                AdvancedImageAdjuster(
-                                    state['images'], workspace, content_changed,
-                                    selected_id=state.get('annotation_image_id'),
-                                    on_anonymize=anonymize_marked_areas,
-                                    can_anonymize=lambda: bool((api_key.value or '').strip()),
-                                ).render()
+                        # A edição de texto agora fica na aba "Texto"; aqui ficam
+                        # apenas os ajustes de imagem e marcações.
+                        AdvancedImageAdjuster(
+                            state['images'], workspace, content_changed,
+                            selected_id=state.get('annotation_image_id'),
+                            on_anonymize=anonymize_marked_areas,
+                            can_anonymize=lambda: bool((api_key.value or '').strip()),
+                        ).render()
                     advanced.value = bool(state['advanced_open'])
 
                 advanced_panel()
@@ -1608,7 +1694,8 @@ def index() -> None:
                     payload = composition.to_dict()
                     payload['texto_novidade'] = composition.text
                     state['exports'] = build_composition_exports(
-                        workspace, export_items, payload, WRITER_ORGANIZER_PROMPT
+                        workspace, export_items, payload, WRITER_ORGANIZER_PROMPT,
+                        html_override=str(state.get('html_override') or ''),
                     )
                     persist_screen_state()
                     ui.notify('Arquivos gerados com sucesso.', type='positive')

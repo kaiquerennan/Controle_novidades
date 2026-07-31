@@ -576,7 +576,14 @@ def build_composition_exports(
     images: list[dict[str, Any]],
     composition: dict[str, Any],
     prompt: str,
+    html_override: str = '',
 ) -> dict[str, Path | None]:
+    """Gera os artefatos finais.
+
+    Quando ``html_override`` vem preenchido, o HTML editado manualmente na tela
+    substitui o gerado a partir da composição. Os demais artefatos continuam
+    saindo do CompositionDocument.
+    """
     novelty_dir = safe_path(workspace.export_dir / 'novidade')
     images_dir = safe_path(novelty_dir / 'imagens')
     annotations_dir = safe_path(novelty_dir / 'anotacoes')
@@ -730,7 +737,9 @@ def build_composition_exports(
         (prompt_path, 'prompt_utilizado.txt'),
     ))
     html_path = safe_path(novelty_dir / 'novidade.html')
-    html_path.write_text(build_novelty_html(metadata), encoding='utf-8')
+    html_path.write_text(
+        html_override.strip() or build_novelty_html(metadata), encoding='utf-8'
+    )
     archive_paths.append((html_path, 'novidade.html'))
 
     xml_path = safe_path(novelty_dir / 'novidade.xml')

@@ -111,48 +111,59 @@ técnico do conteúdo fornecido.
 O resultado deve soar como uma publicação editorial, nunca como manual, especificação
 funcional, Ordem de Mudança, documentação interna, relatório de testes ou checklist.
 
-Organize a leitura nesta sequência:
+PADRÃO DE ESCRITA OBRIGATÓRIO
 
-1. Apresente primeiro qual é a novidade.
-2. Explique depois, de forma natural, como ela funciona.
-3. Informe onde ela está disponível ou integrada, somente quando essa informação existir
-   na entrada.
+O título começa pelo particípio da ação, seguido do que mudou e de onde a mudança
+está, quando a entrada informar o módulo ou sistema. Escreva em uma única linha.
 
-A introdução deve explicar a novidade usando apenas fatos do texto original. Não crie
-introdução ou conclusão genérica.
+Exemplos do padrão correto:
 
-Para cada rotina, tela ou contexto funcional alterado, crie uma seção independente.
-Apresente um pequeno texto, depois o bloco de caminho daquela rotina, quando ele tiver
-sido informado, e em seguida explique somente as alterações correspondentes.
+Implementada Mudança no Autoatendimento para lançamento de produtos por código de barras sem balança
+Implementada integração com API Placas no EMC Agência de Veículos
 
-Repita essa estrutura para todas as rotinas. Nunca misture alterações de telas, rotinas,
-seções estruturadas ou caminhos diferentes no mesmo bloco.
+Use o particípio adequado à ação: Implementada, Implementado, Disponibilizada,
+Disponibilizado, Criado, Criada, Corrigido, Corrigida, Alterado, Alterada.
 
-Crie um título natural, claro e específico que represente o assunto principal.
+Não escreva títulos genéricos como: O que mudou, Como funciona, Justificativa,
+Próximos passos, Cadastro, Configuração, Integração.
 
-Evite títulos genéricos como:
+O corpo é texto corrido, em parágrafos. Não crie seções, subtítulos, numeração de
+etapas nem blocos separados por rotina. A matéria é uma leitura contínua.
 
-O que mudou
-Como funciona
-Justificativa
-Próximos passos
-Cadastro
-Configuração
-Integração
+O primeiro parágrafo declara a mudança na voz passiva, nomeando o módulo ou sistema
+quando a entrada informar. Exemplos do padrão correto:
 
-Prefira títulos que expressem diretamente a funcionalidade, como:
+Foi implementada no Comanda Touch uma nova modalidade de Autoatendimento que permite o lançamento de produtos por leitura de código de barras, sem utilização da balança.
+No caminho Cadastro | Veículo | F2 - Inserir, foi implementada a integração com a API Placas, permitindo a consulta automática dos dados do veículo por meio da placa.
 
-Perfis específicos para destinatários IBS/CBS
+Os parágrafos seguintes encadeiam as demais alterações com conectivos de
+continuidade: Também, Ainda em, Além disso, Com isso, Na nova modalidade.
+Exemplos do padrão correto:
 
-em vez de:
+Também foi criado o parâmetro "Cadastro Padrão WebMotors" em Utilitários | Configuração.
+Ainda em Utilitários | Configuração, foi disponibilizada a seção "Consulta de Placas", onde é possível informar o token da API.
+Além disso, as opções Buscar comanda automaticamente e Impressão da comanda ficam indisponíveis nessa modalidade.
 
-Cadastro de Perfis
+Escreva nomes de parâmetros, seções e opções criados ou alterados entre aspas duplas
+quando forem denominações próprias, como "Cadastro Padrão WebMotors".
+
+Quando um parâmetro tiver comportamento condicional, descreva cada valor em frases
+paralelas. Exemplo do padrão correto:
+
+Quando configurado como Sim, o cadastro permanece seguindo o padrão da base WebMotors, sem permitir inclusão manual de atributos. Quando configurado como Não, o sistema utiliza uma base própria de atributos.
 
 Agrupe informações relacionadas em poucos parágrafos consistentes. Evite dezenas de
 tópicos, numeração desnecessária e a transformação de cada frase em um item.
 
-Use listas somente quando a própria informação exigir uma enumeração objetiva, como
-perfis, formatos, campos ou opções. Nunca use uma lista para explicar toda a implementação.
+Use listas somente quando a informação for uma enumeração objetiva de modos, perfis,
+formatos, campos ou opções, e apresente a lista logo após uma frase que a introduza.
+Exemplo do padrão correto:
+
+Agora, é possível configurar o Autoatendimento para operar em um dos seguintes modos:
+- Produto principal de balança (funcionamento já existente);
+- Leitura de produtos por código de barras.
+
+Nunca use uma lista para explicar toda a implementação.
 
 Descreva o comportamento da funcionalidade, não o trabalho realizado pelo desenvolvimento.
 
@@ -170,17 +181,6 @@ para a explicação funcional.
 
 Não use expressões como:
 
-Criado
-Criada
-Implementado
-Implementada
-Criada tela
-Criado campo
-Criado botão
-Criado menu
-Criada seção
-Criado parâmetro
-Criada rotina
 Item 1
 Item 2
 Item 3
@@ -195,14 +195,15 @@ Nova OC
 Nova ordem de mudança
 Implementação futura
 
-Prefira construções editoriais como:
+Escreva na voz passiva do que já foi entregue. Construções do padrão:
 
+Foi implementada a integração com...
+Foi criado o parâmetro "..." em...
+Foi disponibilizada a seção "..." em...
+Foram realizadas adequações nas mensagens...
 A rotina passa a disponibilizar...
 A tela agora apresenta...
-Foi adicionada a opção...
-Foi corrigido o comportamento...
 O sistema passa a considerar...
-A funcionalidade permite...
 """ + COMMON_FIDELITY_RULES + """
 
 Não inclua conteúdo comercial, data, hora, autor, comentários internos ou tempo de leitura.
@@ -246,16 +247,16 @@ eliminar repetições reais e tornar a leitura mais agradável.
 Eliminar repetição não autoriza remover detalhes funcionais complementares, regras,
 opções, campos ou comportamentos necessários para compreender a alteração.
 
-Quando a entrada informar explicitamente uma navegação do sistema, o caminho é obrigatório
-e deve ficar em um bloco próprio, separado dos demais caminhos, usando duas linhas de
-texto simples exatamente neste formato:
+Quando a entrada informar explicitamente uma navegação do sistema, o caminho é
+obrigatório e deve aparecer dentro da própria frase, separando os níveis por barra
+vertical, no formato X | Y | Z. Não crie bloco separado nem linha isolada para o
+caminho. Exemplos do padrão correto:
 
-Acesse através do caminho:
-X / Y / Z
+No caminho Cadastro | Veículo | F2 - Inserir, foi implementada a integração com a API Placas.
+Também foi criado o parâmetro "Cadastro Padrão WebMotors" em Utilitários | Configuração.
+Ainda em Utilitários | Configuração, foi disponibilizada a seção "Consulta de Placas".
 
 Preserve todos os níveis e nomes fornecidos, sem resumir, trocar, unir ou inventar níveis.
-
-Cada rotina deve manter seu próprio bloco de caminho.
 
 Não aplique esse formato a:
 
@@ -283,7 +284,8 @@ marcadores Markdown inseridos dentro de blocos de texto
 
 O destaque visual será aplicado exclusivamente pela interface.
 
-Crie título, introdução e poucas seções específicas, somente quando melhorarem a leitura.
+Crie um título e parágrafos de texto corrido. Não crie subtítulos: a matéria é uma
+leitura contínua, como nos exemplos do padrão de escrita.
 
 Marque o primeiro bloco de texto com papel introducao.
 
@@ -374,9 +376,12 @@ funcional disponível ao usuário. Nesse caso, verifique se foram preservados ap
 elementos funcionais necessários, sem dados internos ou de teste desnecessários.
 
 Todo caminho de navegação do sistema presente na entrada e relacionado a uma alteração
-implementada deve aparecer no documento com a expressão:
+implementada deve aparecer no documento dentro da própria frase, com os níveis
+separados por barra vertical, no formato X | Y | Z. Exemplo do padrão correto:
 
-Acesse através do caminho:
+No caminho Cadastro | Veículo | F2 - Inserir, foi implementada a integração com a API Placas.
+
+Não exija bloco separado nem linha isolada para o caminho.
 
 Não trate URLs, diretórios do Windows, caminhos de arquivos ou endereços técnicos como
 caminhos de navegação do sistema.
@@ -393,12 +398,12 @@ A matéria somente pode ser aprovada quando:
 1. Preservar integralmente as alterações funcionais confirmadas.
 2. Não apresentar solicitações, hipóteses ou implementações futuras como concluídas.
 3. Não publicar informações internas desnecessárias.
-4. Manter corretamente os caminhos das rotinas.
+4. Manter corretamente os caminhos das rotinas, com os níveis preservados.
 5. Preservar todas as imagens fornecidas.
-6. Não misturar alterações de telas, rotinas, caminhos ou seções diferentes.
+6. Seguir o padrão de escrita: título iniciado pelo particípio da ação, corpo em texto
+   corrido, sem subtítulos, e caminhos citados dentro das frases.
 
-Verifique ainda se cada caminho foi mantido isolado em seu próprio bloco, sem unir rotas
-distintas.
+Verifique ainda se nenhum nível de caminho foi resumido, trocado, unido ou inventado.
 
 Não reescreva a matéria.
 
@@ -475,19 +480,14 @@ Somente aprove quando:
 - nenhuma informação funcional confirmada tiver sido perdida;
 - nenhuma alteração não confirmada tiver sido apresentada como concluída.
 
-Considere como formato canônico correto a expressão:
-
-Acesse através do caminho:
-
-Considere corretas as rotas com níveis separados por:
-
- /
+Considere canônico o caminho citado dentro da frase, com os níveis separados por
+barra vertical.
 
 Exemplo:
 
-Fiscal / Cadastros / Perfis
+No caminho Fiscal | Cadastros | Perfis, foi disponibilizada a nova opção.
 
-Entradas com o separador ">" são normalizadas localmente para esse formato.
+Entradas com os separadores ">" ou "/" são normalizadas localmente para esse formato.
 
 Não registre essa normalização de separador ou acentuação como alteração de nome técnico,
 invenção, omissão ou correção necessária.
