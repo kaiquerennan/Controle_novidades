@@ -220,6 +220,7 @@ def index() -> None:
         'whatsapp_public_link': str(saved_settings.get('whatsapp_public_link') or ''),
         'whatsapp_sending': False,
         'html_override': str(saved.get('html_override') or ''),
+        'editing_text': False,
     }
     controls: dict[str, Any] = {}
     generation_lock = GENERATION_REGISTRY.lock_for(workspace.session_id)
@@ -995,9 +996,8 @@ def index() -> None:
                                 progress.value = 1
                                 progress.update()
                                 preview.refresh()
-                                # As abas Texto e HTML também nascem vazias antes
-                                # da geração e precisam ser remontadas aqui.
-                                text_editor.refresh()
+                                # A aba HTML também nasce vazia antes da geração
+                                # e precisa ser remontada aqui.
                                 html_editor.refresh()
                                 advanced_panel.refresh()
                                 visualize_button.enable()
@@ -1220,9 +1220,16 @@ def index() -> None:
                             'Aplicar HTML', icon='save', on_click=aplicar_html
                         ).props('color=primary')
 
+                def start_editing() -> None:
+                    state['editing_text'] = True
+                    preview.refresh()
+
+                def cancel_editing() -> None:
+                    state['editing_text'] = False
+                    preview.refresh()
+
                 with ui.tabs().classes('w-full') as editor_tabs:
                     preview_tab = ui.tab('Pr\u00e9-visualiza\u00e7\u00e3o')
-                    editor_text_tab = ui.tab('Texto')
                     editor_html_tab = ui.tab('HTML')
                 with ui.tab_panels(editor_tabs, value=preview_tab).classes('w-full'):
                     with ui.tab_panel(preview_tab).classes('p-0'):
@@ -1233,6 +1240,9 @@ def index() -> None:
                                     ui.label(
                                         'Gere a novidade para visualizar o resultado.'
                                     ).classes('p-10 muted')
+                                    return
+                                if state.get('editing_text'):
+                                    render_text_edition()
                                     return
                                 warnings = list(composition.review.get('avisos') or [])
                                 if warnings:
@@ -1248,45 +1258,46 @@ def index() -> None:
                                             ui.label(str(warning)).classes(
                                                 'text-sm text-amber-800'
                                             )
+                                with ui.row().classes('w-full justify-end px-6 pt-4'):
+                                    ui.button(
+                                        'Editar texto', icon='edit', on_click=start_editing
+                                    ).props('outline color=primary')
                                 render_novelty_preview(
                                     composition, state['images'], content_changed,
                                     open_annotations,
                                 )
 
+                            def render_text_edition() -> None:
+                                """Edi\u00e7\u00e3o do texto no lugar da mat\u00e9ria, na mesma aba."""
+                                with ui.column().classes('w-full max-w-4xl mx-auto p-6 gap-3'):
+                                    ui.label('Editar texto da novidade').classes(
+                                        'text-xl font-bold'
+                                    )
+                                    ui.label(
+                                        'A primeira linha \u00e9 o t\u00edtulo, par\u00e1grafos s\u00e3o '
+                                        'separados por linha em branco, listas usam "- " '
+                                        'no in\u00edcio da linha e **negrito** entre asteriscos '
+                                        'duplos. As imagens s\u00e3o preservadas.'
+                                    ).classes('text-sm muted')
+                                    corpo = ui.textarea(
+                                        value=composition_to_plain_text(composition)
+                                    ).props('rows=24 outlined').classes('w-full text-base')
+
+                                    def salvar() -> None:
+                                        apply_plain_text(composition, str(corpo.value or ''))
+                                        state['editing_text'] = False
+                                        content_changed()
+                                        ui.notify('Texto aplicado \u00e0 mat\u00e9ria.', type='positive')
+
+                                    with ui.row().classes('w-full justify-end gap-2'):
+                                        ui.button(
+                                            'Cancelar', on_click=cancel_editing
+                                        ).props('flat')
+                                        ui.button(
+                                            'Salvar texto', icon='save', on_click=salvar
+                                        ).props('color=primary')
+
                             preview()
-                    with ui.tab_panel(editor_text_tab):
-                        @ui.refreshable
-                        def text_editor() -> None:
-                            if not has_content():
-                                ui.label('Gere a novidade para editar o texto.').classes(
-                                    'p-10 muted'
-                                )
-                                return
-                            ui.label(
-                                'Texto da novidade como ele ser\u00e1 publicado. A primeira '
-                                'linha \u00e9 o t\u00edtulo, par\u00e1grafos s\u00e3o separados por linha em '
-                                'branco e listas usam "- " no in\u00edcio da linha.'
-                            ).classes('text-sm muted')
-                            corpo = ui.textarea(
-                                value=composition_to_plain_text(composition)
-                            ).props('rows=26 outlined').classes('w-full text-base')
-
-                            def aplicar_texto() -> None:
-                                apply_plain_text(composition, str(corpo.value or ''))
-                                content_changed()
-                                text_editor.refresh()
-                                ui.notify('Texto aplicado \u00e0 mat\u00e9ria.', type='positive')
-
-                            with ui.row().classes('w-full justify-end gap-2'):
-                                ui.button(
-                                    'Descartar altera\u00e7\u00f5es', icon='restart_alt',
-                                    on_click=text_editor.refresh,
-                                ).props('flat')
-                                ui.button(
-                                    'Aplicar texto', icon='save', on_click=aplicar_texto
-                                ).props('color=primary')
-
-                        text_editor()
                     with ui.tab_panel(editor_html_tab):
                         html_editor()
 
@@ -1821,7 +1832,6 @@ def index() -> None:
                 progress.set_visibility(False)
                 progress_label.set_text('')
                 preview.refresh()
-                text_editor.refresh()
                 html_editor.refresh()
                 advanced_panel.refresh()
                 visualize_button.enable()

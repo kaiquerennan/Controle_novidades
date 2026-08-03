@@ -347,6 +347,24 @@ marcadores Markdown inseridos dentro de blocos de texto
 
 O destaque visual será aplicado exclusivamente pela interface.
 
+NEGRITO
+
+Use negrito onde ele ajudar a leitura, preenchendo o campo destaques do bloco. Não
+escreva asteriscos: informe apenas os trechos que devem aparecer em negrito, e a
+interface aplica a formatação.
+
+Destaque os elementos que o usuário procura com os olhos: nomes de parâmetros,
+campos, opções, botões, abas e valores de configuração que ele precisa localizar na
+tela. Exemplo: em "foi criado o parâmetro Cadastro Padrão WebMotors em Utilitários |
+Configuração", o destaque é Cadastro Padrão WebMotors.
+
+Destaque trechos curtos, de poucas palavras. Não destaque frases inteiras, nem o
+título, nem termos genéricos. Um parágrafo sem nenhum elemento que mereça destaque
+deve ficar sem destaques.
+
+Cada valor informado em destaques precisa ser exatamente igual a um trecho existente
+no texto do próprio bloco.
+
 Crie um título e parágrafos de texto corrido. Não crie subtítulos: a matéria é uma
 leitura contínua, como nos exemplos do padrão de escrita.
 
