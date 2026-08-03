@@ -14,9 +14,12 @@ data/exports/
 data/image_analysis_cache/
 data/sessions/
 data/storage_secret.local
+# Sessao do WhatsApp: credenciais do aparelho vinculado
+data/whatsapp_session/
 
 # Ambiente e caches
 .venv/
+whatsapp_gateway/node_modules/
 __pycache__/
 *.py[cod]
 .pytest_cache/

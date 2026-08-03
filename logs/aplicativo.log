@@ -4877,3 +4877,181 @@ RuntimeError: The parent slot of Timer(id=65) has been deleted.
 2026-08-03 10:58:54,929 INFO [PROCESSAMENTO] Gravação de estado concluída em 0.01 s
 2026-08-03 10:58:54,930 INFO [PROCESSAMENTO] Visualização/UI concluída em 0.00 s; total=217.51 s
 2026-08-03 10:58:54,930 INFO [PROCESSAMENTO] Interface encerrada em 217.51 s; sucesso=True
+2026-08-03 12:08:40,518 ERROR The parent slot of Timer(id=70) has been deleted.
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\background_tasks.py", line 152, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 76, in _run_once
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\elements\timer.py", line 15, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\element.py", line 150, in parent_slot
+    raise RuntimeError(f'The parent slot of {name}(id={self.id}{markers}) has been deleted.')
+RuntimeError: The parent slot of Timer(id=70) has been deleted.
+2026-08-03 12:08:40,527 ERROR The parent slot of Timer(id=127) has been deleted.
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\background_tasks.py", line 152, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 76, in _run_once
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\elements\timer.py", line 15, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\element.py", line 150, in parent_slot
+    raise RuntimeError(f'The parent slot of {name}(id={self.id}{markers}) has been deleted.')
+RuntimeError: The parent slot of Timer(id=127) has been deleted.
+2026-08-03 12:09:43,408 INFO [PROCESSAMENTO] Interface iniciada; sessao=708ea256267d43ac966acb6261b7da9d
+2026-08-03 12:09:45,557 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-03T15:09:45.557+00:00","generation":"5c1532eacbe04211979c3cb76663d865","stage":"preparacao","endpoint":"local","duration_seconds":0.003141,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-03 12:09:45,558 INFO [PROCESSAMENTO] Início; geracao=5c1532eacbe04211979c3cb76663d865 idempotencia=a4e0c5aafb31e9ab2d40368d2d95e25ae1333eb3c882ea5201cd69d6745843ab sessao=708ea256267d43ac966acb6261b7da9d provider=openai texto_bytes=1486 imagens=0 capa=False
+2026-08-03 12:09:45,558 INFO [MODELOS] Texto: Modelo: gpt-5-mini
+2026-08-03 12:09:45,558 INFO [MODELOS] Imagem: Modelo: gpt-image-1.5
+2026-08-03 12:09:45,559 INFO [PROCESSAMENTO] organizacao iniciada
+2026-08-03 12:09:45,568 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=5c1532eacbe04211979c3cb76663d865 operacao=organizacao modelo=gpt-5-mini endpoint=/v1/responses tentativa=1 de 3 texto_bytes=19214 imagens_bytes=0
+2026-08-03 12:09:50,414 INFO [OPENAI] RequisiÃ§Ã£o iniciada; endpoint=/v1/responses tentativa=1 timeout=180 s
+2026-08-03 12:09:50,414 INFO [API_AUDIT] {"event":"http_attempt","timestamp":"2026-08-03T15:09:50.414+00:00","generation":"5c1532eacbe04211979c3cb76663d865","stage":"organizacao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":1,"attempt":1,"retry":false}
+2026-08-03 12:10:26,400 INFO HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-03 12:10:26,401 INFO [OPENAI] RequisiÃ§Ã£o concluÃ­da; endpoint=/v1/responses tentativa=1 duracao=35.99 s status_http=200
+2026-08-03 12:10:26,401 INFO [API_AUDIT] {"event":"http_response","timestamp":"2026-08-03T15:10:26.401+00:00","generation":"5c1532eacbe04211979c3cb76663d865","stage":"organizacao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":1,"attempt":1,"request_id":"req_9f1c7395a3ad42a4ac14ea148ae576de","status_http":200}
+2026-08-03 12:10:26,885 INFO [PROCESSAMENTO] Chamada IA 1 concluída em 41.32 s; operacao=organizacao endpoint=/v1/responses recebido_bytes=0
+2026-08-03 12:10:26,886 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-03T15:10:26.885+00:00","generation_id":"5c1532eacbe04211979c3cb76663d865","idempotency_key":"a4e0c5aafb31e9ab2d40368d2d95e25ae1333eb3c882ea5201cd69d6745843ab","stage":"organizacao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":1,"started_at":"2026-08-03T15:09:45.568+00:00","attempts":1,"request_id":"req_9f1c7395a3ad42a4ac14ea148ae576de","duration_seconds":41.31853020000017,"input_tokens":4972,"cached_tokens":3840,"output_tokens":2624,"reasoning_tokens":2176,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.005627,"cost_method":"tokens_reportados","status":"success","error_type":""}
+2026-08-03 12:10:26,887 INFO [PROCESSAMENTO] organizacao concluída em 41.33 s
+2026-08-03 12:10:26,887 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-03T15:10:26.887+00:00","generation":"5c1532eacbe04211979c3cb76663d865","stage":"organizacao","endpoint":"local","duration_seconds":41.32904,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-03 12:10:26,887 INFO [PROCESSAMENTO] revisao iniciada
+2026-08-03 12:10:26,895 INFO [PROCESSAMENTO] Chamada IA 2 iniciada; geracao=5c1532eacbe04211979c3cb76663d865 operacao=revisao modelo=gpt-5-mini endpoint=/v1/responses tentativa=1 de 3 texto_bytes=12217 imagens_bytes=0
+2026-08-03 12:10:29,690 INFO [OPENAI] RequisiÃ§Ã£o iniciada; endpoint=/v1/responses tentativa=1 timeout=180 s
+2026-08-03 12:10:29,690 INFO [API_AUDIT] {"event":"http_attempt","timestamp":"2026-08-03T15:10:29.690+00:00","generation":"5c1532eacbe04211979c3cb76663d865","stage":"revisao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":2,"attempt":1,"retry":false}
+2026-08-03 12:11:05,035 INFO HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-03 12:11:05,036 INFO [OPENAI] RequisiÃ§Ã£o concluÃ­da; endpoint=/v1/responses tentativa=1 duracao=35.35 s status_http=200
+2026-08-03 12:11:05,036 INFO [API_AUDIT] {"event":"http_response","timestamp":"2026-08-03T15:11:05.036+00:00","generation":"5c1532eacbe04211979c3cb76663d865","stage":"revisao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":2,"attempt":1,"request_id":"req_68ad8730373d4e7b9812dde06ba4b0b9","status_http":200}
+2026-08-03 12:11:05,043 INFO [PROCESSAMENTO] Chamada IA 2 concluída em 38.15 s; operacao=revisao endpoint=/v1/responses recebido_bytes=0
+2026-08-03 12:11:05,043 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-03T15:11:05.043+00:00","generation_id":"5c1532eacbe04211979c3cb76663d865","idempotency_key":"a4e0c5aafb31e9ab2d40368d2d95e25ae1333eb3c882ea5201cd69d6745843ab","stage":"revisao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":2,"started_at":"2026-08-03T15:10:26.895+00:00","attempts":1,"request_id":"req_68ad8730373d4e7b9812dde06ba4b0b9","duration_seconds":38.14885080000022,"input_tokens":2943,"cached_tokens":0,"output_tokens":2284,"reasoning_tokens":1728,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.00530375,"cost_method":"tokens_reportados","status":"success","error_type":""}
+2026-08-03 12:11:05,050 INFO [PROCESSAMENTO] revisao concluída em 38.16 s
+2026-08-03 12:11:05,050 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-03T15:11:05.050+00:00","generation":"5c1532eacbe04211979c3cb76663d865","stage":"revisao","endpoint":"local","duration_seconds":38.163227,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-03 12:11:05,050 INFO [PROCESSAMENTO] correcao iniciada
+2026-08-03 12:11:05,058 INFO [PROCESSAMENTO] Chamada IA 3 iniciada; geracao=5c1532eacbe04211979c3cb76663d865 operacao=correcao modelo=gpt-5-mini endpoint=/v1/responses tentativa=1 de 3 texto_bytes=4778 imagens_bytes=0
+2026-08-03 12:11:08,010 INFO [OPENAI] RequisiÃ§Ã£o iniciada; endpoint=/v1/responses tentativa=1 timeout=180 s
+2026-08-03 12:11:08,010 INFO [API_AUDIT] {"event":"http_attempt","timestamp":"2026-08-03T15:11:08.010+00:00","generation":"5c1532eacbe04211979c3cb76663d865","stage":"correcao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":3,"attempt":1,"retry":false}
+2026-08-03 12:11:34,755 INFO HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-03 12:11:34,755 INFO [OPENAI] RequisiÃ§Ã£o concluÃ­da; endpoint=/v1/responses tentativa=1 duracao=26.75 s status_http=200
+2026-08-03 12:11:34,755 INFO [API_AUDIT] {"event":"http_response","timestamp":"2026-08-03T15:11:34.755+00:00","generation":"5c1532eacbe04211979c3cb76663d865","stage":"correcao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":3,"attempt":1,"request_id":"req_0966cab306234598a3ba774588702e0e","status_http":200}
+2026-08-03 12:11:34,759 INFO [PROCESSAMENTO] Chamada IA 3 concluída em 29.70 s; operacao=correcao endpoint=/v1/responses recebido_bytes=0
+2026-08-03 12:11:34,759 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-03T15:11:34.759+00:00","generation_id":"5c1532eacbe04211979c3cb76663d865","idempotency_key":"a4e0c5aafb31e9ab2d40368d2d95e25ae1333eb3c882ea5201cd69d6745843ab","stage":"correcao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":3,"started_at":"2026-08-03T15:11:05.058+00:00","attempts":1,"request_id":"req_0966cab306234598a3ba774588702e0e","duration_seconds":29.701171000000613,"input_tokens":1759,"cached_tokens":0,"output_tokens":2246,"reasoning_tokens":1408,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.00493175,"cost_method":"tokens_reportados","status":"success","error_type":""}
+2026-08-03 12:11:34,760 INFO [PROCESSAMENTO] correcao concluída em 29.71 s
+2026-08-03 12:11:34,760 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-03T15:11:34.760+00:00","generation":"5c1532eacbe04211979c3cb76663d865","stage":"correcao","endpoint":"local","duration_seconds":29.710713,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-03 12:11:34,760 INFO [PROCESSAMENTO] segunda_revisao iniciada
+2026-08-03 12:11:34,769 INFO [PROCESSAMENTO] Chamada IA 4 iniciada; geracao=5c1532eacbe04211979c3cb76663d865 operacao=segunda_revisao modelo=gpt-5-mini endpoint=/v1/responses tentativa=1 de 3 texto_bytes=14287 imagens_bytes=0
+2026-08-03 12:11:37,540 INFO [OPENAI] RequisiÃ§Ã£o iniciada; endpoint=/v1/responses tentativa=1 timeout=180 s
+2026-08-03 12:11:37,540 INFO [API_AUDIT] {"event":"http_attempt","timestamp":"2026-08-03T15:11:37.540+00:00","generation":"5c1532eacbe04211979c3cb76663d865","stage":"segunda_revisao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":4,"attempt":1,"retry":false}
+2026-08-03 12:11:56,866 INFO HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-03 12:11:56,866 INFO [OPENAI] RequisiÃ§Ã£o concluÃ­da; endpoint=/v1/responses tentativa=1 duracao=19.33 s status_http=200
+2026-08-03 12:11:56,867 INFO [API_AUDIT] {"event":"http_response","timestamp":"2026-08-03T15:11:56.867+00:00","generation":"5c1532eacbe04211979c3cb76663d865","stage":"segunda_revisao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":4,"attempt":1,"request_id":"req_3e42146641494368bad4f3f806591056","status_http":200}
+2026-08-03 12:11:56,984 INFO [PROCESSAMENTO] Chamada IA 4 concluída em 22.22 s; operacao=segunda_revisao endpoint=/v1/responses recebido_bytes=0
+2026-08-03 12:11:56,984 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-03T15:11:56.984+00:00","generation_id":"5c1532eacbe04211979c3cb76663d865","idempotency_key":"a4e0c5aafb31e9ab2d40368d2d95e25ae1333eb3c882ea5201cd69d6745843ab","stage":"segunda_revisao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":4,"started_at":"2026-08-03T15:11:34.769+00:00","attempts":1,"request_id":"req_3e42146641494368bad4f3f806591056","duration_seconds":22.21583400000054,"input_tokens":3419,"cached_tokens":1792,"output_tokens":1318,"reasoning_tokens":768,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.00308755,"cost_method":"tokens_reportados","status":"success","error_type":""}
+2026-08-03 12:11:56,985 INFO [PROCESSAMENTO] segunda_revisao concluída em 22.23 s
+2026-08-03 12:11:56,985 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-03T15:11:56.985+00:00","generation":"5c1532eacbe04211979c3cb76663d865","stage":"segunda_revisao","endpoint":"local","duration_seconds":22.225367,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-03 12:11:56,985 INFO [PROCESSAMENTO] preparacao_visualizacao iniciada
+2026-08-03 12:11:56,999 INFO [PROCESSAMENTO] preparacao_visualizacao concluída em 0.01 s
+2026-08-03 12:11:57,000 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-03T15:11:57.000+00:00","generation":"5c1532eacbe04211979c3cb76663d865","stage":"preparacao_visualizacao","endpoint":"local","duration_seconds":0.014478,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-03 12:11:57,000 INFO [PROCESSAMENTO] Total concluído em 131.44 s; chamadas_ia=4
+2026-08-03 12:11:57,000 INFO =========================
+2026-08-03 12:11:57,000 INFO Resumo da geração
+2026-08-03 12:11:57,001 INFO =========================
+2026-08-03 12:11:57,001 INFO Geração: 5c1532eacbe04211979c3cb76663d865
+2026-08-03 12:11:57,001 INFO Tempo total: 131.45 s
+2026-08-03 12:11:57,001 INFO Quantidade de chamadas: 4
+2026-08-03 12:11:57,002 INFO /v1/responses: 4
+2026-08-03 12:11:57,002 INFO /v1/images: 0
+2026-08-03 12:11:57,002 INFO Tentativas HTTP: 4
+2026-08-03 12:11:57,002 INFO Tokens entrada: 13093
+2026-08-03 12:11:57,002 INFO Tokens saída: 8472
+2026-08-03 12:11:57,003 INFO Tokens cache: 5632
+2026-08-03 12:11:57,003 INFO Tokens raciocínio: 6080
+2026-08-03 12:11:57,003 INFO Tokens imagem: 0
+2026-08-03 12:11:57,003 INFO Custo aproximado: US$ 0.018950
+2026-08-03 12:11:57,003 INFO =========================
+2026-08-03 12:11:57,003 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-08-03T15:11:57.003+00:00","generation":"5c1532eacbe04211979c3cb76663d865","idempotency_key":"a4e0c5aafb31e9ab2d40368d2d95e25ae1333eb3c882ea5201cd69d6745843ab","duration_seconds":131.44847579999987,"logical_calls":4,"http_attempts":4,"responses_calls":4,"images_calls":0,"input_tokens":13093,"cached_tokens":5632,"output_tokens":8472,"reasoning_tokens":6080,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.01895005,"stages":{"preparacao":0.003140700000585639,"organizacao":41.32903989999977,"revisao":38.16322650000075,"correcao":29.710713399999804,"segunda_revisao":22.22536729999956,"preparacao_visualizacao":0.014478499999313499}}
+2026-08-03 12:11:57,004 INFO [PROCESSAMENTO] Orquestração recebida pela interface em 133.61 s
+2026-08-03 12:11:57,022 INFO [PROCESSAMENTO] Gravação de estado concluída em 0.02 s
+2026-08-03 12:11:57,023 INFO [PROCESSAMENTO] Visualização/UI concluída em 0.00 s; total=133.63 s
+2026-08-03 12:11:57,023 INFO [PROCESSAMENTO] Interface encerrada em 133.63 s; sucesso=True
+2026-08-03 12:12:50,656 INFO [WHATSAPP] Mensagem enviada; destinatario=5531*******10 id=3EB0E34E4F5C9B47D87668
+2026-08-03 12:12:50,657 INFO [WHATSAPP] Novidade enviada; destinatario=3197*****10 titulo=Alterada atualização automática do EMC Desktop no EMC Gestão Empresarial para ambiente com servidor em nuvem id=3EB0E34E4F5C9B47D87668
+2026-08-03 12:13:16,370 INFO [PROCESSAMENTO] Interface iniciada; sessao=708ea256267d43ac966acb6261b7da9d
+2026-08-03 12:13:16,373 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-03T15:13:16.373+00:00","generation":"13ad5f61af1c4e13949b99134ca70d7a","stage":"preparacao","endpoint":"local","duration_seconds":0.002114,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-03 12:13:16,373 INFO [PROCESSAMENTO] Início; geracao=13ad5f61af1c4e13949b99134ca70d7a idempotencia=fa628254ba73ea8f4aee64b8d157f5f231e2ba5f570db7cd1686cd75af5c4f4d sessao=708ea256267d43ac966acb6261b7da9d provider=openai texto_bytes=2260 imagens=0 capa=False
+2026-08-03 12:13:16,373 INFO [MODELOS] Texto: Modelo: gpt-5-mini
+2026-08-03 12:13:16,373 INFO [MODELOS] Imagem: Modelo: gpt-image-1.5
+2026-08-03 12:13:16,374 INFO [PROCESSAMENTO] organizacao iniciada
+2026-08-03 12:13:16,388 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=13ad5f61af1c4e13949b99134ca70d7a operacao=organizacao modelo=gpt-5-mini endpoint=/v1/responses tentativa=1 de 3 texto_bytes=21456 imagens_bytes=0
+2026-08-03 12:13:19,120 INFO [OPENAI] RequisiÃ§Ã£o iniciada; endpoint=/v1/responses tentativa=1 timeout=180 s
+2026-08-03 12:13:19,120 INFO [API_AUDIT] {"event":"http_attempt","timestamp":"2026-08-03T15:13:19.120+00:00","generation":"13ad5f61af1c4e13949b99134ca70d7a","stage":"organizacao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":1,"attempt":1,"retry":false}
+2026-08-03 12:13:51,050 INFO HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-03 12:13:51,050 INFO [OPENAI] RequisiÃ§Ã£o concluÃ­da; endpoint=/v1/responses tentativa=1 duracao=31.93 s status_http=200
+2026-08-03 12:13:51,050 INFO [API_AUDIT] {"event":"http_response","timestamp":"2026-08-03T15:13:51.050+00:00","generation":"13ad5f61af1c4e13949b99134ca70d7a","stage":"organizacao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":1,"attempt":1,"request_id":"req_513890575cee4ffc894bf4e225c36e14","status_http":200}
+2026-08-03 12:13:51,249 INFO [PROCESSAMENTO] Chamada IA 1 concluída em 34.86 s; operacao=organizacao endpoint=/v1/responses recebido_bytes=0
+2026-08-03 12:13:51,249 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-03T15:13:51.249+00:00","generation_id":"13ad5f61af1c4e13949b99134ca70d7a","idempotency_key":"fa628254ba73ea8f4aee64b8d157f5f231e2ba5f570db7cd1686cd75af5c4f4d","stage":"organizacao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":1,"started_at":"2026-08-03T15:13:16.388+00:00","attempts":1,"request_id":"req_513890575cee4ffc894bf4e225c36e14","duration_seconds":34.86173290000079,"input_tokens":5633,"cached_tokens":3840,"output_tokens":2702,"reasoning_tokens":2112,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.00594825,"cost_method":"tokens_reportados","status":"success","error_type":""}
+2026-08-03 12:13:51,251 INFO [PROCESSAMENTO] organizacao concluída em 34.88 s
+2026-08-03 12:13:51,251 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-03T15:13:51.251+00:00","generation":"13ad5f61af1c4e13949b99134ca70d7a","stage":"organizacao","endpoint":"local","duration_seconds":34.877804,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-03 12:13:51,251 INFO [PROCESSAMENTO] revisao iniciada
+2026-08-03 12:13:51,272 INFO [PROCESSAMENTO] Chamada IA 2 iniciada; geracao=13ad5f61af1c4e13949b99134ca70d7a operacao=revisao modelo=gpt-5-mini endpoint=/v1/responses tentativa=1 de 3 texto_bytes=14110 imagens_bytes=0
+2026-08-03 12:13:53,949 INFO [OPENAI] RequisiÃ§Ã£o iniciada; endpoint=/v1/responses tentativa=1 timeout=180 s
+2026-08-03 12:13:53,949 INFO [API_AUDIT] {"event":"http_attempt","timestamp":"2026-08-03T15:13:53.949+00:00","generation":"13ad5f61af1c4e13949b99134ca70d7a","stage":"revisao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":2,"attempt":1,"retry":false}
+2026-08-03 12:14:31,537 INFO HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-03 12:14:31,538 INFO [OPENAI] RequisiÃ§Ã£o concluÃ­da; endpoint=/v1/responses tentativa=1 duracao=37.59 s status_http=200
+2026-08-03 12:14:31,538 INFO [API_AUDIT] {"event":"http_response","timestamp":"2026-08-03T15:14:31.538+00:00","generation":"13ad5f61af1c4e13949b99134ca70d7a","stage":"revisao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":2,"attempt":1,"request_id":"req_c993617887664089850d63d954bac561","status_http":200}
+2026-08-03 12:14:31,552 INFO [PROCESSAMENTO] Chamada IA 2 concluída em 40.28 s; operacao=revisao endpoint=/v1/responses recebido_bytes=0
+2026-08-03 12:14:31,553 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-03T15:14:31.552+00:00","generation_id":"13ad5f61af1c4e13949b99134ca70d7a","idempotency_key":"fa628254ba73ea8f4aee64b8d157f5f231e2ba5f570db7cd1686cd75af5c4f4d","stage":"revisao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":2,"started_at":"2026-08-03T15:13:51.272+00:00","attempts":1,"request_id":"req_c993617887664089850d63d954bac561","duration_seconds":40.28097239999988,"input_tokens":3552,"cached_tokens":1792,"output_tokens":2977,"reasoning_tokens":2368,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.006438800000000001,"cost_method":"tokens_reportados","status":"success","error_type":""}
+2026-08-03 12:14:31,562 INFO [PROCESSAMENTO] revisao concluída em 40.31 s
+2026-08-03 12:14:31,562 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-03T15:14:31.562+00:00","generation":"13ad5f61af1c4e13949b99134ca70d7a","stage":"revisao","endpoint":"local","duration_seconds":40.311236,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-03 12:14:31,562 INFO [PROCESSAMENTO] correcao iniciada
+2026-08-03 12:14:31,578 INFO [PROCESSAMENTO] Chamada IA 3 iniciada; geracao=13ad5f61af1c4e13949b99134ca70d7a operacao=correcao modelo=gpt-5-mini endpoint=/v1/responses tentativa=1 de 3 texto_bytes=6643 imagens_bytes=0
+2026-08-03 12:14:35,220 INFO [OPENAI] RequisiÃ§Ã£o iniciada; endpoint=/v1/responses tentativa=1 timeout=180 s
+2026-08-03 12:14:35,221 INFO [API_AUDIT] {"event":"http_attempt","timestamp":"2026-08-03T15:14:35.221+00:00","generation":"13ad5f61af1c4e13949b99134ca70d7a","stage":"correcao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":3,"attempt":1,"retry":false}
+2026-08-03 12:15:19,737 INFO HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-03 12:15:19,737 INFO [OPENAI] RequisiÃ§Ã£o concluÃ­da; endpoint=/v1/responses tentativa=1 duracao=44.52 s status_http=200
+2026-08-03 12:15:19,738 INFO [API_AUDIT] {"event":"http_response","timestamp":"2026-08-03T15:15:19.737+00:00","generation":"13ad5f61af1c4e13949b99134ca70d7a","stage":"correcao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":3,"attempt":1,"request_id":"req_1cb3069186f040ebb5f66229ec127d57","status_http":200}
+2026-08-03 12:15:19,742 INFO [PROCESSAMENTO] Chamada IA 3 concluída em 48.16 s; operacao=correcao endpoint=/v1/responses recebido_bytes=0
+2026-08-03 12:15:19,742 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-03T15:15:19.742+00:00","generation_id":"13ad5f61af1c4e13949b99134ca70d7a","idempotency_key":"fa628254ba73ea8f4aee64b8d157f5f231e2ba5f570db7cd1686cd75af5c4f4d","stage":"correcao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":3,"started_at":"2026-08-03T15:14:31.578+00:00","attempts":1,"request_id":"req_1cb3069186f040ebb5f66229ec127d57","duration_seconds":48.16476359999979,"input_tokens":2329,"cached_tokens":0,"output_tokens":3322,"reasoning_tokens":2432,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.00722625,"cost_method":"tokens_reportados","status":"success","error_type":""}
+2026-08-03 12:15:19,744 INFO [PROCESSAMENTO] correcao concluída em 48.18 s
+2026-08-03 12:15:19,744 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-03T15:15:19.744+00:00","generation":"13ad5f61af1c4e13949b99134ca70d7a","stage":"correcao","endpoint":"local","duration_seconds":48.183249,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-03 12:15:19,745 INFO [PROCESSAMENTO] segunda_revisao iniciada
+2026-08-03 12:15:19,757 INFO [PROCESSAMENTO] Chamada IA 4 iniciada; geracao=13ad5f61af1c4e13949b99134ca70d7a operacao=segunda_revisao modelo=gpt-5-mini endpoint=/v1/responses tentativa=1 de 3 texto_bytes=17289 imagens_bytes=0
+2026-08-03 12:15:22,723 INFO [OPENAI] RequisiÃ§Ã£o iniciada; endpoint=/v1/responses tentativa=1 timeout=180 s
+2026-08-03 12:15:22,723 INFO [API_AUDIT] {"event":"http_attempt","timestamp":"2026-08-03T15:15:22.723+00:00","generation":"13ad5f61af1c4e13949b99134ca70d7a","stage":"segunda_revisao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":4,"attempt":1,"retry":false}
+2026-08-03 12:15:51,127 INFO HTTP Request: POST https://api.openai.com/v1/responses "HTTP/1.1 200 OK"
+2026-08-03 12:15:51,127 INFO [OPENAI] RequisiÃ§Ã£o concluÃ­da; endpoint=/v1/responses tentativa=1 duracao=28.40 s status_http=200
+2026-08-03 12:15:51,127 INFO [API_AUDIT] {"event":"http_response","timestamp":"2026-08-03T15:15:51.127+00:00","generation":"13ad5f61af1c4e13949b99134ca70d7a","stage":"segunda_revisao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":4,"attempt":1,"request_id":"req_9e0e67bb8d2e4c8a922b3905179ffaa2","status_http":200}
+2026-08-03 12:15:51,131 INFO [PROCESSAMENTO] Chamada IA 4 concluída em 31.37 s; operacao=segunda_revisao endpoint=/v1/responses recebido_bytes=0
+2026-08-03 12:15:51,132 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-03T15:15:51.132+00:00","generation_id":"13ad5f61af1c4e13949b99134ca70d7a","idempotency_key":"fa628254ba73ea8f4aee64b8d157f5f231e2ba5f570db7cd1686cd75af5c4f4d","stage":"segunda_revisao","endpoint":"/v1/responses","model":"gpt-5-mini","logical_call":4,"started_at":"2026-08-03T15:15:19.757+00:00","attempts":1,"request_id":"req_9e0e67bb8d2e4c8a922b3905179ffaa2","duration_seconds":31.37521779999952,"input_tokens":4315,"cached_tokens":1792,"output_tokens":2383,"reasoning_tokens":1728,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.00544155,"cost_method":"tokens_reportados","status":"success","error_type":""}
+2026-08-03 12:15:51,132 INFO [PROCESSAMENTO] segunda_revisao concluída em 31.39 s
+2026-08-03 12:15:51,132 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-03T15:15:51.132+00:00","generation":"13ad5f61af1c4e13949b99134ca70d7a","stage":"segunda_revisao","endpoint":"local","duration_seconds":31.38804,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-03 12:15:51,132 INFO [PROCESSAMENTO] preparacao_visualizacao iniciada
+2026-08-03 12:15:51,145 INFO [PROCESSAMENTO] preparacao_visualizacao concluída em 0.01 s
+2026-08-03 12:15:51,146 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-03T15:15:51.146+00:00","generation":"13ad5f61af1c4e13949b99134ca70d7a","stage":"preparacao_visualizacao","endpoint":"local","duration_seconds":0.013609,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-03 12:15:51,146 INFO [PROCESSAMENTO] Total concluído em 154.77 s; chamadas_ia=4
+2026-08-03 12:15:51,146 INFO =========================
+2026-08-03 12:15:51,146 INFO Resumo da geração
+2026-08-03 12:15:51,146 INFO =========================
+2026-08-03 12:15:51,146 INFO Geração: 13ad5f61af1c4e13949b99134ca70d7a
+2026-08-03 12:15:51,146 INFO Tempo total: 154.78 s
+2026-08-03 12:15:51,146 INFO Quantidade de chamadas: 4
+2026-08-03 12:15:51,146 INFO /v1/responses: 4
+2026-08-03 12:15:51,147 INFO /v1/images: 0
+2026-08-03 12:15:51,147 INFO Tentativas HTTP: 4
+2026-08-03 12:15:51,147 INFO Tokens entrada: 15829
+2026-08-03 12:15:51,147 INFO Tokens saída: 11384
+2026-08-03 12:15:51,147 INFO Tokens cache: 7424
+2026-08-03 12:15:51,147 INFO Tokens raciocínio: 8640
+2026-08-03 12:15:51,147 INFO Tokens imagem: 0
+2026-08-03 12:15:51,147 INFO Custo aproximado: US$ 0.025055
+2026-08-03 12:15:51,147 INFO =========================
+2026-08-03 12:15:51,147 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-08-03T15:15:51.147+00:00","generation":"13ad5f61af1c4e13949b99134ca70d7a","idempotency_key":"fa628254ba73ea8f4aee64b8d157f5f231e2ba5f570db7cd1686cd75af5c4f4d","duration_seconds":154.77767390000008,"logical_calls":4,"http_attempts":4,"responses_calls":4,"images_calls":0,"input_tokens":15829,"cached_tokens":7424,"output_tokens":11384,"reasoning_tokens":8640,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.02505485,"stages":{"preparacao":0.0021140999997442123,"organizacao":34.877804099998684,"revisao":40.31123579999985,"correcao":48.18324920000123,"segunda_revisao":31.388039699999354,"preparacao_visualizacao":0.013608799999929033}}
+2026-08-03 12:15:51,148 INFO [PROCESSAMENTO] Orquestração recebida pela interface em 154.79 s
+2026-08-03 12:15:51,164 INFO [PROCESSAMENTO] Gravação de estado concluída em 0.02 s
+2026-08-03 12:15:51,165 INFO [PROCESSAMENTO] Visualização/UI concluída em 0.00 s; total=154.81 s
+2026-08-03 12:15:51,165 INFO [PROCESSAMENTO] Interface encerrada em 154.81 s; sucesso=True

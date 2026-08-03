@@ -189,7 +189,7 @@ funcional, Ordem de Mudança, documentação interna, relatório de testes ou ch
 PADRÃO DE ESCRITA OBRIGATÓRIO
 
 O título começa pelo particípio da ação, seguido do que mudou e de onde a mudança
-está, quando a entrada informar o módulo ou sistema. Escreva em uma única linha.
+está, quando a entrada informar o módulo ou sistema. Escreva em uma única linha. O títilo deve ter até 100 caracteres e não ter ponto final
 
 Exemplos do padrão correto:
 
@@ -636,79 +636,6 @@ def _section_text(blocks: list[ContentBlock]) -> str:
     return '\n'.join(values).casefold()
 
 
-def _ensure_source_structure(
-    document: CompositionDocument, units: list[EditorialUnit],
-) -> None:
-    for unit in units:
-        indices = [
-            index for index, block in enumerate(document.blocks)
-            if block.secao_id == unit.id
-        ]
-        if not indices and unit.caminho:
-            indices = [
-                index for index, block in enumerate(document.blocks)
-                if block.caminho == unit.caminho
-                or (block.papel == 'caminho' and unit.caminho in block.conteudo)
-            ]
-        if not indices:
-            insert_at = len(document.blocks)
-            if unit.nome:
-                document.blocks.insert(insert_at, ContentBlock(
-                    tipo='subtitulo', conteudo=unit.nome,
-                    secao_id=unit.id, rotina=unit.nome, caminho=unit.caminho,
-                ))
-                insert_at += 1
-            indices = [insert_at - 1] if insert_at else [0]
-        section_blocks = [
-            block for block in document.blocks if block.secao_id == unit.id
-        ]
-        insert_at = max(indices) + 1
-        if unit.caminho and not any(
-            block.papel == 'caminho' and unit.caminho in block.conteudo
-            for block in section_blocks
-        ):
-            document.blocks.insert(insert_at, ContentBlock(
-                tipo='texto', papel='caminho', secao_id=unit.id,
-                rotina=unit.nome, caminho=unit.caminho,
-                conteudo=f'{PATH_LABEL}\n{unit.caminho}',
-            ))
-            insert_at += 1
-        section_blocks = [
-            block for block in document.blocks if block.secao_id == unit.id
-        ]
-        section_text = _section_text(section_blocks)
-        labelled = (
-            ('Campos', unit.campos), ('Botões', unit.botoes),
-            ('Parâmetros', unit.parametros), ('Opções', unit.opcoes),
-            ('Exemplos', unit.exemplos), ('Observações', unit.observacoes),
-        )
-        for label, values in labelled:
-            missing = [value for value in values if value.casefold() not in section_text]
-            if not missing:
-                continue
-            document.blocks.insert(insert_at, ContentBlock(
-                tipo='lista', papel=label.casefold(), secao_id=unit.id,
-                rotina=unit.nome, caminho=unit.caminho,
-                itens=[{'texto': value, 'destaques': [value]} for value in missing],
-            ))
-            insert_at += 1
-            section_text += '\n' + '\n'.join(value.casefold() for value in missing)
-        for source_list in unit.listas:
-            missing_items = [
-                dict(item) for item in source_list
-                if str(item.get('texto') or '').casefold() not in section_text
-            ]
-            if missing_items:
-                document.blocks.insert(insert_at, ContentBlock(
-                    tipo='lista', papel='lista', secao_id=unit.id,
-                    rotina=unit.nome, caminho=unit.caminho, itens=missing_items,
-                ))
-                insert_at += 1
-                section_text += '\n' + '\n'.join(
-                    str(item.get('texto') or '').casefold() for item in missing_items
-                )
-
-
 def document_from_editorial_plan(
     plan: NoveltyPlan,
     images: list[dict[str, Any]],
@@ -823,7 +750,6 @@ def document_from_editorial_plan(
     for image_id in missing:
         document.blocks.append(ContentBlock(tipo='imagem', imagem_id=image_id))
     document.fallback_image_ids = missing
-    _ensure_source_structure(document, list(source_units or []))
     document._undo.clear()
     if not document.title or not document.introduction:
         raise ProviderError(
@@ -837,12 +763,12 @@ def document_from_editorial_plan(
 def _append_missing_paths(
     document: CompositionDocument, paths: list[str], units: list[EditorialUnit] | None = None,
 ) -> None:
-    by_path = {unit.caminho: unit for unit in units or [] if unit.caminho}
+    """Garante que a navegação informada na origem apareça na matéria.
+
+    Só o caminho é reposto: onde a alteração está disponível é informação que o
+    usuário procura. Nenhum outro conteúdo da ocorrência volta para o texto.
+    """
     for path in paths:
-        unit = by_path.get(path)
-        if unit:
-            _ensure_source_structure(document, [unit])
-            continue
         document.blocks.append(ContentBlock(
             tipo='texto', papel='caminho', conteudo=f'{PATH_LABEL}\n{path}', caminho=path,
         ))
@@ -1329,7 +1255,6 @@ Use apenas correcoes e trechos_fonte do payload. Não invente informações.
                     document = _merge_corrected_document(
                         document, corrected_candidate, effective_review,
                     )
-                    _ensure_source_structure(document, source_units)
                     _append_missing_paths(
                         document, missing_system_paths(raw_text, document.text), source_units,
                     )

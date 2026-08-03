@@ -102,7 +102,31 @@ confirmação. A exclusão é local: o banco nunca é alterado.
 
 - **Ocorrências de mudança** — o painel inicial
 - **Novidades lançadas** — histórico do que já foi exportado, com download do HTML e do ZIP
+- **WhatsApp** — vínculo da conta usada nos envios
 - **Configurações** — provedor de IA, chave e modelos
+
+---
+
+## WhatsApp
+
+O envio usa a biblioteca **Baileys**, que conversa com o WhatsApp pelo mesmo
+protocolo do WhatsApp Web. Como o Baileys é uma biblioteca Node.js, ele roda em um
+processo separado (`whatsapp_gateway/`) que ouve apenas em `127.0.0.1`. A aplicação
+sobe esse processo sozinha quando necessário.
+
+Instale as dependências uma única vez:
+
+```powershell
+.\instalar_whatsapp.bat
+```
+
+Depois abra **WhatsApp** no menu lateral e leia o QR com o celular, em
+**Aparelhos conectados**. O vínculo fica salvo em `data/whatsapp_session/`, então
+só é preciso repetir se a conta for desconectada no aparelho.
+
+Com a conta vinculada, o botão **Enviar pelo WhatsApp** abre uma tela com o número
+do destinatário e a mensagem, já preenchida com o título da novidade e editável
+antes do envio. Números sem código do país são tratados como brasileiros.
 
 ---
 

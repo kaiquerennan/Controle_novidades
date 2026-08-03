@@ -36,7 +36,6 @@ if __name__ in {'__main__', '__mp_main__'}:
 from nicegui import app as ui_app, events, run, ui
 from PIL import Image
 
-from components.advanced_image_adjuster import AdvancedImageAdjuster
 from components.image_editor import ImageEditor
 from components.novelty_preview import render_novelty_preview
 from components.occurrence_menu import render_occurrence_menu
@@ -53,8 +52,6 @@ from models.composition import CompositionDocument
 from services.image_service import (
     PROJECT_ROOT,
     SessionWorkspace,
-    build_anonymization_instructions,
-    build_anonymization_mask,
     build_composition_exports,
     safe_path,
 )
@@ -64,16 +61,11 @@ from services.editorial_orchestration_service import (
 )
 from services.html_export_service import build_novelty_html
 from services.plain_text_composition import apply_plain_text, composition_to_plain_text
-from services.eddie_message_service import EddieMessageService
-from services.whatsapp_config_service import (
-    TOKEN_PLACEHOLDER,
-    WhatsAppConfig,
-    WhatsAppConfigService,
-)
-from services.whatsapp_service import (
-    WhatsAppApiError,
-    WhatsAppService,
-    mask_recipient,
+from components.whatsapp_panel import render_whatsapp_panel
+from services.whatsapp_gateway_service import (
+    WhatsAppGatewayError,
+    WhatsAppGatewayService,
+    mask_phone,
 )
 from services.browser_session_service import resolve_storage_secret, session_state_path
 from services.generation_control_service import GENERATION_REGISTRY
@@ -186,9 +178,7 @@ def index() -> None:
         composition = CompositionDocument()
         saved = {}
     editorial_orchestrator = EditorialOrchestrator()
-    whatsapp_config_service = WhatsAppConfigService()
-    whatsapp_service = WhatsAppService()
-    eddie_message_service = EddieMessageService()
+    whatsapp_gateway = WhatsAppGatewayService()
     saved_settings = dict(saved.get('settings') or {})
     saved_generation = dict(saved.get('generation') or {})
     if saved_generation.get('status') == 'completed' and saved_generation.get('composition'):
@@ -208,8 +198,6 @@ def index() -> None:
         'exports': {},
         'generation_error': '',
         'generation_error_details': {},
-        'advanced_open': False,
-        'advanced_tab': 'text',
         'annotation_image_id': None,
         'placement_suggestions': [],
         'generation_in_progress': False,
@@ -217,7 +205,6 @@ def index() -> None:
         'active_idempotency_key': str(saved_generation.get('idempotency_key') or ''),
         'current_step': str(saved.get('current_step') or 'Adicionar conteúdo'),
         'generation': saved_generation,
-        'whatsapp_public_link': str(saved_settings.get('whatsapp_public_link') or ''),
         'whatsapp_sending': False,
         'html_override': str(saved.get('html_override') or ''),
         'editing_text': False,
@@ -266,7 +253,6 @@ def index() -> None:
                 'text_model': str(controls['text_model'].value or ''),
                 'image_model': str(controls['image_model'].value or ''),
                 'cover_requested': bool(controls['cover'].value),
-                'whatsapp_public_link': str(state.get('whatsapp_public_link') or ''),
             },
         })
 
@@ -347,6 +333,7 @@ def index() -> None:
     MENU_ENTRIES = (
         ('ocorrencias', 'Ocorrências de mudança', 'fact_check'),
         ('novidades', 'Novidades lançadas', 'auto_stories'),
+        ('whatsapp', 'WhatsApp', 'chat'),
         ('configuracoes', 'Configurações', 'settings'),
     )
 
@@ -389,6 +376,7 @@ def index() -> None:
             current_view['name'] = name
             occurrence_panel.set_visibility(name == 'ocorrencias')
             novelty_panel.set_visibility(name == 'novidades')
+            whatsapp_panel.set_visibility(name == 'whatsapp')
             settings_panel.set_visibility(name == 'configuracoes')
             for element in creation_elements:
                 element.set_visibility(name == 'criar')
@@ -470,6 +458,9 @@ def index() -> None:
 
         with ui.column().classes('w-full gap-4') as novelty_panel:
             render_novelty_history()
+
+        with ui.column().classes('w-full gap-4') as whatsapp_panel:
+            render_whatsapp_panel(whatsapp_gateway)
 
         with ui.column().classes('w-full gap-4') as settings_panel:
             with ui.card().classes('simple-card w-full p-5 gap-3'):
@@ -999,7 +990,6 @@ def index() -> None:
                                 # A aba HTML também nasce vazia antes da geração
                                 # e precisa ser remontada aqui.
                                 html_editor.refresh()
-                                advanced_panel.refresh()
                                 visualize_button.enable()
                                 retry_button.set_visibility(False)
                                 generation_error_panel.refresh()
@@ -1148,13 +1138,6 @@ def index() -> None:
                     # O HTML acompanha a matéria, exceto quando foi editado à mão.
                     html_editor.refresh()
 
-                def open_annotations(image_id: str | None = None) -> None:
-                    state['advanced_open'] = True
-                    state['advanced_tab'] = 'images'
-                    if image_id:
-                        state['annotation_image_id'] = image_id
-                    advanced_panel.refresh()
-
                 def generated_html() -> str:
                     """HTML atual: o editado manualmente ou o derivado da composi\u00e7\u00e3o."""
                     if str(state.get('html_override') or '').strip():
@@ -1244,27 +1227,12 @@ def index() -> None:
                                 if state.get('editing_text'):
                                     render_text_edition()
                                     return
-                                warnings = list(composition.review.get('avisos') or [])
-                                if warnings:
-                                    with ui.card().classes(
-                                        'w-full max-w-4xl mx-auto bg-amber-50 '
-                                        'border border-amber-200 p-4'
-                                    ):
-                                        ui.label(
-                                            'A mat\u00e9ria foi gerada, mas alguns pontos precisam '
-                                            'de revis\u00e3o antes da aprova\u00e7\u00e3o.'
-                                        ).classes('font-medium text-amber-900')
-                                        for warning in warnings:
-                                            ui.label(str(warning)).classes(
-                                                'text-sm text-amber-800'
-                                            )
                                 with ui.row().classes('w-full justify-end px-6 pt-4'):
                                     ui.button(
                                         'Editar texto', icon='edit', on_click=start_editing
                                     ).props('outline color=primary')
                                 render_novelty_preview(
                                     composition, state['images'], content_changed,
-                                    open_annotations,
                                 )
 
                             def render_text_edition() -> None:
@@ -1301,99 +1269,6 @@ def index() -> None:
                     with ui.tab_panel(editor_html_tab):
                         html_editor()
 
-                def remove_cover() -> None:
-                    if composition.remove_cover():
-                        state.update(approved=False, exports={})
-                        preview.refresh()
-                        advanced_panel.refresh()
-                        persist_screen_state()
-                        ui.notify('Imagem de capa removida.', type='positive')
-
-                async def anonymize_marked_areas(item: dict[str, Any]) -> bool:
-                    areas = list(item.get('anonymization_areas') or [])
-                    if not areas:
-                        ui.notify('Marque ao menos uma area para anonimizar.', type='warning')
-                        return False
-                    if not str(api_key.value or '').strip():
-                        ui.notify('Informe a chave da API antes de anonimizar.', type='warning')
-                        return False
-                    try:
-                        provider = ProviderFactory.create(str(provider_name.value or ''))
-                        source = safe_path(Path(item.get('final') or item.get('treated') or item['original']))
-                        output_dir = safe_path(workspace.processed_dir / str(item['id']))
-                        output_dir.mkdir(parents=True, exist_ok=True)
-                        mask_path = build_anonymization_mask(
-                            source, output_dir / 'mascara_anonimizacao.png', areas
-                        )
-                        destination = safe_path(output_dir / 'imagem_anonimizada.png')
-                        instructions = build_anonymization_instructions(areas)
-                        result_path = await run.io_bound(
-                            provider.anonymize_marked_areas,
-                            api_key=str(api_key.value or ''),
-                            model=str(image_model.value or ''),
-                            source=source,
-                            mask=mask_path,
-                            instructions=instructions,
-                            destination=destination,
-                        )
-                        item['treated'] = safe_path(result_path)
-                        item['final'] = safe_path(result_path)
-                        item['status'] = 'Anonimizada'
-                        item['error'] = ''
-                        content_changed()
-                        advanced_panel.refresh()
-                        ui.notify('Areas marcadas anonimizadas.', type='positive')
-                        return True
-                    except ProviderError as exc:
-                        ui.notify(exc.user_message, type='negative')
-                        logger.warning(
-                            '[ANONIMIZACAO] Falha manual; provider=%s model=%s image=%s status_http=%s detail=%s',
-                            exc.provider,
-                            exc.model,
-                            item.get('id'),
-                            exc.status_http,
-                            sanitize_technical_detail(exc.technical_detail or exc, str(api_key.value or '')),
-                        )
-                    except Exception as exc:
-                        ui.notify('Nao foi possivel anonimizar as areas marcadas.', type='negative')
-                        logger.warning(
-                            '[ANONIMIZACAO] Falha manual inesperada; image=%s detail=%s',
-                            item.get('id'),
-                            sanitize_technical_detail(exc, str(api_key.value or '')),
-                        )
-                    return False
-
-                @ui.refreshable
-                def advanced_panel() -> None:
-                    if not state['generated']:
-                        return
-                    with ui.expansion('Ajustes avançados', icon='tune').classes('w-full') as advanced:
-                        ui.label(
-                            'Use somente quando precisar corrigir manualmente o resultado.'
-                        ).classes('muted')
-                        if composition.cover.get('status') == 'gerada':
-                            ui.button(
-                                'Remover imagem de capa', icon='hide_image',
-                                on_click=remove_cover,
-                            ).props('outline')
-                        # A edição de texto agora fica na aba "Texto"; aqui ficam
-                        # apenas os ajustes de imagem e marcações.
-                        AdvancedImageAdjuster(
-                            state['images'], workspace, content_changed,
-                            selected_id=state.get('annotation_image_id'),
-                            on_anonymize=anonymize_marked_areas,
-                            can_anonymize=lambda: bool((api_key.value or '').strip()),
-                        ).render()
-                    advanced.value = bool(state['advanced_open'])
-
-                advanced_panel()
-
-                def open_advanced() -> None:
-                    state['advanced_open'] = True
-                    state['advanced_tab'] = 'text'
-                    advanced_panel.refresh()
-
-
                 def undo_organization() -> None:
                     content_changed() if composition.undo() else None
 
@@ -1404,9 +1279,6 @@ def index() -> None:
                     ui.label('Arraste as imagens na matéria para alterar sua posição.').classes(
                         'w-full text-center text-sm muted'
                     )
-                    ui.button(
-                        'Adicionar marcações', icon='draw', on_click=open_annotations
-                    ).props('outline')
                     ui.button(
                         'Desfazer organização', icon='undo', on_click=undo_organization
                     ).props('outline')
@@ -1420,293 +1292,76 @@ def index() -> None:
                     stepper.previous()
 
 
-                def exported_metadata() -> dict[str, Any]:
-                    exports = dict(state.get('exports') or {})
-                    json_path = exports.get('json')
-                    if json_path:
-                        try:
-                            value = json.loads(Path(json_path).read_text(encoding='utf-8'))
-                            if isinstance(value, dict):
-                                return value
-                        except (OSError, json.JSONDecodeError, TypeError, ValueError):
-                            logger.warning('[WHATSAPP] Metadados exportados n?o puderam ser lidos.')
-                    return {}
-
-                def current_whatsapp_config() -> WhatsAppConfig:
-                    return whatsapp_config_service.load()
-
-                def open_whatsapp_config_dialog(reason: str = '') -> None:
-                    current = current_whatsapp_config()
-                    with ui.dialog() as dialog, ui.card().classes('w-full max-w-2xl p-6 gap-4'):
-                        ui.label('Configurar integracao com WhatsApp').classes('text-2xl font-bold')
-                        if reason:
-                            ui.label(reason).classes('text-sm text-orange-700')
-                        with ui.column().classes('w-full gap-3'):
-                            provider_input = ui.select(
-                                {'generic_json': 'API generica JSON'},
-                                label='Provedor',
-                                value=current.provider or 'generic_json',
-                            ).classes('w-full')
-                            base_url_input = ui.input(
-                                'URL base da API', value=current.base_url,
-                                placeholder='https://api.seu-provedor.com',
-                            ).props('debounce=500').classes('w-full')
-                            endpoint_input = ui.input(
-                                'Endpoint de envio', value=current.send_endpoint,
-                                placeholder='/messages/send',
-                            ).props('debounce=500').classes('w-full')
-                            auth_scheme_input = ui.select(
-                                {'bearer': 'Bearer Token', 'api_key_header': 'API Key em cabecalho'},
-                                label='Tipo de autenticacao',
-                                value=current.auth_scheme or 'bearer',
-                            ).classes('w-full')
-                            auth_header_input = ui.input(
-                                'Cabecalho da API Key', value=current.auth_header_name or 'X-API-Key',
-                            ).props('debounce=500').classes('w-full')
-                            token_input = ui.input(
-                                'Token ou chave de autenticacao',
-                                placeholder=TOKEN_PLACEHOLDER if current.has_token else '',
-                                password=True,
-                                password_toggle_button=False,
-                            ).props('autocomplete=off').classes('w-full')
-                            sender_input = ui.input(
-                                'Identificador do numero remetente', value=current.sender_id,
-                            ).props('debounce=500').classes('w-full')
-                            instance_input = ui.input(
-                                'Nome da instancia', value=current.instance_name,
-                            ).props('debounce=500').classes('w-full')
-                            timeout_input = ui.number(
-                                'Timeout da requisicao (segundos)',
-                                value=current.timeout_seconds,
-                                min=1,
-                                max=120,
-                            ).classes('w-full')
-                            status_label = ui.label('').classes('text-sm muted')
-                            loading = ui.spinner(size='lg')
-                            loading.set_visibility(False)
-
-                        def update_visible_fields() -> None:
-                            auth_header_input.set_visibility(auth_scheme_input.value == 'api_key_header')
-                            sender_input.set_visibility(True)
-                            instance_input.set_visibility(True)
-
-                        def draft_config() -> WhatsAppConfig:
-                            return WhatsAppConfig(
-                                provider=str(provider_input.value or 'generic_json'),
-                                base_url=str(base_url_input.value or ''),
-                                send_endpoint=str(endpoint_input.value or ''),
-                                auth_scheme=str(auth_scheme_input.value or 'bearer'),
-                                auth_header_name=str(auth_header_input.value or ''),
-                                sender_id=str(sender_input.value or ''),
-                                instance_name=str(instance_input.value or ''),
-                                timeout_seconds=float(timeout_input.value or 20),
-                                encrypted_token=current.encrypted_token,
-                            )
-
-                        def token_for_request() -> str:
-                            typed = str(token_input.value or '').strip()
-                            if typed:
-                                return typed
-                            return whatsapp_config_service.decrypt_token(current) if current.has_token else ''
-
-                        async def test_connection() -> None:
-                            test_button.disable()
-                            loading.set_visibility(True)
-                            status_label.set_text('Testando conexao com a API de WhatsApp...')
-                            try:
-                                config = draft_config()
-                                token = token_for_request()
-                                missing = whatsapp_config_service.missing_fields(
-                                    WhatsAppConfig(**{**config.public_dict(), 'encrypted_token': 'ok' if token else ''})
-                                )
-                                if missing:
-                                    raise WhatsAppApiError('Configuracao incompleta: ' + ', '.join(missing) + '.')
-                                await run.io_bound(whatsapp_service.test_connection, config, token)
-                                status_label.set_text('Conexao validada com sucesso.')
-                                ui.notify('Conexao com WhatsApp validada.', type='positive')
-                                state['whatsapp_last_valid'] = {
-                                    **config.public_dict(),
-                                    'token_signature': sha256(token.encode('utf-8')).hexdigest(),
-                                }
-                            except (WhatsAppApiError, ValueError) as exc:
-                                message = str(getattr(exc, 'user_message', exc))
-                                status_label.set_text(message)
-                                ui.notify(message, type='negative')
-                            finally:
-                                loading.set_visibility(False)
-                                test_button.enable()
-
-                        async def save_and_continue() -> None:
-                            try:
-                                config = draft_config()
-                                token = token_for_request()
-                                typed_token = str(token_input.value or '').strip()
-                                missing = whatsapp_config_service.missing_fields(
-                                    WhatsAppConfig(**{**config.public_dict(), 'encrypted_token': 'ok' if token else ''})
-                                )
-                                if missing:
-                                    raise WhatsAppApiError('Configuracao incompleta: ' + ', '.join(missing) + '.')
-                                last_valid = dict(state.get('whatsapp_last_valid') or {})
-                                mark_valid = all(
-                                    str(last_valid.get(key) or '') == str(value or '')
-                                    for key, value in config.public_dict().items()
-                                ) and str(last_valid.get('token_signature') or '') == sha256(token.encode('utf-8')).hexdigest()
-                                saved_config = await run.io_bound(
-                                    whatsapp_config_service.save,
-                                    config,
-                                    token=typed_token,
-                                    keep_existing_token=not bool(typed_token),
-                                    mark_valid=mark_valid,
-                                )
-                                if not whatsapp_config_service.status(saved_config).valid:
-                                    ui.notify('Configuracao salva. Teste a conexao antes do envio.', type='warning')
-                                    status_label.set_text('Configuracao salva, mas ainda nao validada.')
-                                    return
-                                ui.notify('Configuracao salva.', type='positive')
-                                dialog.close()
-                                open_whatsapp_send_dialog()
-                            except (WhatsAppApiError, ValueError) as exc:
-                                ui.notify(str(getattr(exc, 'user_message', exc)), type='negative')
-
-                        def remove_config() -> None:
-                            whatsapp_config_service.remove()
-                            state.pop('whatsapp_last_valid', None)
-                            ui.notify('Configuracao do WhatsApp removida.', type='info')
-                            dialog.close()
-
-                        auth_scheme_input.on_value_change(lambda _: update_visible_fields())
-                        update_visible_fields()
-                        with ui.row().classes('w-full justify-end gap-2'):
-                            ui.button('Remover configuracao', icon='delete', on_click=remove_config).props('flat color=negative')
-                            test_button = ui.button('Testar conexao', icon='sync', on_click=test_connection).props('outline')
-                            ui.button('Salvar e continuar', icon='save', on_click=save_and_continue)
-                            ui.button('Cancelar', icon='close', on_click=dialog.close).props('flat')
-                    dialog.open()
-
-                def open_whatsapp_send_dialog() -> None:
-                    config = current_whatsapp_config()
-                    status = whatsapp_config_service.status(config)
-                    if not status.valid:
-                        open_whatsapp_config_dialog(status.message)
-                        return
-                    with ui.dialog() as dialog, ui.card().classes('w-full max-w-2xl p-6 gap-4'):
-                        ui.label('Eddie - envio pelo WhatsApp').classes('text-2xl font-bold')
-                        recipient_input = ui.input(
-                            'Destinatario', placeholder='5531999999999',
-                        ).props('debounce=500').classes('w-full')
-                        link_input = ui.input(
-                            'Link da novidade', value=str(state.get('whatsapp_public_link') or ''),
-                        ).props('debounce=500').classes('w-full')
-                        ui.label(f'Titulo da novidade: {composition.title or "Novidade EMC"}').classes('text-sm')
-                        ui.label(f'Endpoint configurado: {config.send_endpoint}').classes('text-sm')
-                        ui.label(f'Status da configuracao: {status.message}').classes('text-sm text-green-700')
-                        preview = ui.textarea('Previa da mensagem').props('rows=11').classes('w-full')
-                        result_label = ui.label('').classes('text-sm muted')
-                        loading = ui.spinner(size='lg')
-                        loading.set_visibility(False)
-
-                        def refresh_preview() -> None:
-                            state['whatsapp_public_link'] = str(link_input.value or '')
-                            try:
-                                message = eddie_message_service.build(
-                                    composition,
-                                    public_link=str(link_input.value or ''),
-                                    exported_metadata=exported_metadata(),
-                                )
-                                preview.value = message.preview
-                                result_label.set_text('Revise a previa e confirme para enviar.')
-                            except ValueError as exc:
-                                preview.value = ''
-                                result_label.set_text(str(exc))
-                            preview.update()
-                            result_label.update()
-                            persist_screen_state()
-
-                        async def perform_send(confirm_dialog) -> None:
-                            if state.get('whatsapp_sending'):
-                                return
-                            confirm_dialog.close()
-                            state['whatsapp_sending'] = True
-                            send_button.disable()
-                            loading.set_visibility(True)
-                            result_label.set_text('Enviando pela API de WhatsApp...')
-                            try:
-                                message = eddie_message_service.build(
-                                    composition,
-                                    public_link=str(link_input.value or ''),
-                                    exported_metadata=exported_metadata(),
-                                )
-                                token = whatsapp_config_service.decrypt_token(config)
-                                result = await run.io_bound(
-                                    whatsapp_service.send_message,
-                                    config,
-                                    token,
-                                    recipient=str(recipient_input.value or ''),
-                                    message=str(preview.value or ''),
-                                    novelty_title=message.title,
-                                    novelty_link=message.link,
-                                )
-                                success_message = f'Enviado com sucesso. ID: {result.message_id or "nao informado"}'
-                                result_label.set_text(success_message)
-                                logger.info(
-                                    '[WHATSAPP] Novidade enviada; destinatario=%s titulo=%s status_http=%s message_id=%s',
-                                    mask_recipient(str(recipient_input.value or '')),
-                                    message.title,
-                                    result.status_http,
-                                    result.message_id or 'nao informado',
-                                )
-                                ui.notify(success_message, type='positive')
-                            except (WhatsAppApiError, ValueError) as exc:
-                                error_message = str(getattr(exc, 'user_message', exc))
-                                result_label.set_text(error_message)
-                                ui.notify(error_message, type='negative')
-                            finally:
-                                loading.set_visibility(False)
-                                send_button.enable()
-                                state['whatsapp_sending'] = False
-
-                        def confirm_send() -> None:
-                            try:
-                                eddie_message_service.build(
-                                    composition,
-                                    public_link=str(link_input.value or ''),
-                                    exported_metadata=exported_metadata(),
-                                )
-                                if not str(preview.value or '').strip():
-                                    raise ValueError('A mensagem nao pode ficar vazia.')
-                            except ValueError as exc:
-                                result_label.set_text(str(exc))
-                                ui.notify(str(exc), type='warning')
-                                return
-                            with ui.dialog() as confirm_dialog, ui.card().classes('w-full max-w-lg p-5 gap-4'):
-                                ui.label('Confirmar envio pelo WhatsApp').classes('text-xl font-bold')
-                                ui.label('A API sera chamada somente depois desta confirmacao.').classes('text-sm muted')
-                                with ui.row().classes('w-full justify-end gap-2'):
-                                    ui.button('Confirmar envio', icon='send', on_click=lambda: perform_send(confirm_dialog))
-                                    ui.button('Cancelar', icon='close', on_click=confirm_dialog.close).props('flat')
-                            confirm_dialog.open()
-
-                        link_input.on_value_change(lambda _: refresh_preview())
-                        refresh_preview()
-                        with ui.row().classes('w-full justify-end gap-2'):
-                            ui.button('Editar mensagem', icon='edit', on_click=lambda: preview.run_method('focus')).props('outline')
-                            send_button = ui.button('Confirmar envio', icon='send', on_click=confirm_send)
-                            ui.button(
-                                'Configurar WhatsApp', icon='settings',
-                                on_click=lambda: (dialog.close(), open_whatsapp_config_dialog()),
-                            ).props('outline')
-                            ui.button('Cancelar', icon='close', on_click=dialog.close).props('flat')
-                    dialog.open()
-
                 def open_whatsapp_flow() -> None:
+                    """Tela de envio: resumo editável e número do destinatário."""
                     if not state['generated']:
                         ui.notify('Gere a novidade primeiro.', type='warning')
                         return
-                    status = whatsapp_config_service.status()
-                    if not status.configured or not status.valid:
-                        open_whatsapp_config_dialog(status.message)
+                    situacao = whatsapp_gateway.status()
+                    if not situacao.connected:
+                        ui.notify(
+                            f'WhatsApp não está pronto: {situacao.label}. '
+                            'Vincule a conta no menu WhatsApp.',
+                            type='warning',
+                        )
+                        show_view('whatsapp')
                         return
-                    open_whatsapp_send_dialog()
+
+                    titulo = composition.title or 'Novidade EMC'
+                    with ui.dialog() as dialog, ui.card().classes('w-full max-w-2xl p-6 gap-4'):
+                        ui.label('Enviar novidade pelo WhatsApp').classes('text-2xl font-bold')
+                        ui.label(f'Conta vinculada: {situacao.phone or "não informada"}').classes(
+                            'text-sm muted'
+                        )
+                        numero = ui.input(
+                            'Número do destinatário', placeholder='31999999999',
+                        ).props('outlined').classes('w-full').mark('whatsapp-numero')
+                        ui.label(
+                            'Sem o código do país, o número é tratado como brasileiro.'
+                        ).classes('text-xs muted')
+                        mensagem = ui.textarea(
+                            'Mensagem', value=titulo,
+                        ).props('rows=8 outlined').classes('w-full').mark('whatsapp-mensagem')
+                        resultado = ui.label('').classes('text-sm muted')
+                        enviando = ui.spinner(size='lg')
+                        enviando.set_visibility(False)
+
+                        async def enviar() -> None:
+                            if state.get('whatsapp_sending'):
+                                return
+                            state['whatsapp_sending'] = True
+                            botao_enviar.disable()
+                            enviando.set_visibility(True)
+                            resultado.set_text('Enviando...')
+                            try:
+                                identificador = await run.io_bound(
+                                    lambda: whatsapp_gateway.send(
+                                        recipient=str(numero.value or ''),
+                                        message=str(mensagem.value or ''),
+                                    )
+                                )
+                                ui.notify('Novidade enviada pelo WhatsApp.', type='positive')
+                                logger.info(
+                                    '[WHATSAPP] Novidade enviada; destinatario=%s titulo=%s id=%s',
+                                    mask_phone(str(numero.value or '')), titulo,
+                                    identificador or 'nao informado',
+                                )
+                                dialog.close()
+                            except WhatsAppGatewayError as exc:
+                                resultado.set_text(exc.user_message)
+                                ui.notify(exc.user_message, type='negative')
+                            finally:
+                                state['whatsapp_sending'] = False
+                                botao_enviar.enable()
+                                enviando.set_visibility(False)
+
+                        with ui.row().classes('w-full justify-end gap-2'):
+                            ui.button('Cancelar', on_click=dialog.close).props('flat')
+                            botao_enviar = ui.button(
+                                'Enviar', icon='send', on_click=enviar,
+                            ).props('color=green').mark('whatsapp-enviar')
+                    dialog.open()
+
 
                 def export_novelty(download: bool = True) -> None:
                     if not state['generated']:
@@ -1833,7 +1488,6 @@ def index() -> None:
                 progress_label.set_text('')
                 preview.refresh()
                 html_editor.refresh()
-                advanced_panel.refresh()
                 visualize_button.enable()
                 retry_button.set_visibility(False)
                 generation_error_panel.refresh()
