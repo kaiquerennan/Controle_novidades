@@ -40,6 +40,7 @@ from components.image_editor import ImageEditor
 from components.novelty_preview import render_novelty_preview
 from components.occurrence_menu import render_occurrence_menu
 from components.novelty_history_panel import render_novelty_history
+from services.novelty_history_service import NoveltyHistoryService
 from core.config import (
     API_KEY_ENVIRONMENTS,
     IMAGE_MODELS,
@@ -456,8 +457,42 @@ def index() -> None:
             or bool(state['generated'])
         )
 
+        def edit_launched_novelty(novelty: Any) -> None:
+            """Traz uma novidade já exportada de volta para o fluxo de criação."""
+            documento, imagens = NoveltyHistoryService().load_content(novelty)
+            if not documento.blocks:
+                ui.notify(
+                    'Não foi possível reconstruir esta novidade para edição.',
+                    type='negative',
+                )
+                return
+            reset_novelty_draft()
+            composition.blocks = documento.blocks
+            composition.source = documento.source
+            composition.fallback_image_ids = list(documento.fallback_image_ids)
+            composition.cover = dict(documento.cover)
+            composition.review = {}
+            composition._undo.clear()
+            composition._redo.clear()
+            state['images'] = _restored_images(imagens)
+            state['generated'] = True
+            controls['raw_text'].value = composition.text
+            stepper.set_value('Visualizar')
+            persist_screen_state(step='Visualizar')
+            show_creation(True)
+            preview.refresh()
+            html_editor.refresh()
+            thumbnails.refresh()
+            ui.notify('Novidade aberta para edição.', type='positive')
+
+        def send_launched_novelty(novelty: Any) -> None:
+            open_whatsapp_dialog(novelty.display_title)
+
         with ui.column().classes('w-full gap-4') as novelty_panel:
-            render_novelty_history()
+            render_novelty_history(
+                on_send_whatsapp=send_launched_novelty,
+                on_edit=edit_launched_novelty,
+            )
 
         with ui.column().classes('w-full gap-4') as whatsapp_panel:
             render_whatsapp_panel(whatsapp_gateway)
@@ -1235,6 +1270,92 @@ def index() -> None:
                                     composition, state['images'], content_changed,
                                 )
 
+                            arrastada: dict[str, str | None] = {'block_id': None}
+
+                            def soltar_imagem(destino: int) -> None:
+                                bloco_id = arrastada.get('block_id')
+                                arrastada['block_id'] = None
+                                if not bloco_id:
+                                    return
+                                atual = composition.index(bloco_id)
+                                if atual is None:
+                                    return
+                                # Ao mover para baixo, a remoção do bloco desloca
+                                # o alvo em uma posição.
+                                alvo = destino - 1 if atual < destino else destino
+                                if composition.move_image_block(bloco_id, alvo):
+                                    mapa_imagens.refresh()
+
+                            def area_de_solta(destino: int) -> None:
+                                zona = ui.element('div').classes(
+                                    'w-full h-4 border border-dashed border-slate-300 '
+                                    'hover:border-blue-500 hover:bg-blue-50 rounded my-1'
+                                )
+                                zona.tooltip('Solte a imagem aqui')
+                                zona.on(
+                                    'dragover',
+                                    js_handler='(event) => event.preventDefault()',
+                                )
+                                zona.on(
+                                    'drop',
+                                    lambda indice=destino: soltar_imagem(indice),
+                                    js_handler=(
+                                        '(event) => { event.preventDefault(); emit(); }'
+                                    ),
+                                )
+
+                            @ui.refreshable
+                            def mapa_imagens() -> None:
+                                """Esboço da matéria com as imagens arrastáveis."""
+                                por_id = {str(i['id']): i for i in state['images']}
+                                with ui.column().classes(
+                                    'w-full gap-0 border border-slate-200 rounded-lg p-3'
+                                ):
+                                    for ordem, bloco in enumerate(composition.blocks):
+                                        area_de_solta(ordem)
+                                        if bloco.tipo == 'imagem':
+                                            cartao = ui.row().classes(
+                                                'w-full items-center gap-3 bg-blue-50 '
+                                                'border border-blue-200 rounded p-2 cursor-move'
+                                            )
+                                            cartao.props('draggable=true')
+                                            cartao.on(
+                                                'dragstart',
+                                                lambda valor=bloco.id: arrastada.update(
+                                                    block_id=valor
+                                                ),
+                                                js_handler=(
+                                                    '(event) => { event.dataTransfer'
+                                                    '.effectAllowed = "move"; emit(); }'
+                                                ),
+                                            )
+                                            with cartao:
+                                                ui.icon('drag_indicator').classes('text-blue-500')
+                                                for imagem_id in bloco.image_ids:
+                                                    item = por_id.get(str(imagem_id))
+                                                    if not item:
+                                                        continue
+                                                    caminho = (
+                                                        item.get('final')
+                                                        or item.get('treated')
+                                                        or item['original']
+                                                    )
+                                                    ui.image(str(caminho)).classes(
+                                                        'w-20 h-14 object-cover rounded'
+                                                    )
+                                                ui.label('Imagem').classes(
+                                                    'text-sm font-medium text-blue-900'
+                                                )
+                                            continue
+                                        texto = bloco.conteudo or ' / '.join(
+                                            str(i.get('texto') or '') for i in bloco.itens
+                                        )
+                                        resumo = texto.replace('\n', ' ').strip()[:90]
+                                        ui.label(resumo or f'({bloco.tipo})').classes(
+                                            'text-sm text-slate-600 py-1'
+                                        )
+                                    area_de_solta(len(composition.blocks))
+
                             def render_text_edition() -> None:
                                 """Edi\u00e7\u00e3o do texto no lugar da mat\u00e9ria, na mesma aba."""
                                 with ui.column().classes('w-full max-w-4xl mx-auto p-6 gap-3'):
@@ -1247,12 +1368,31 @@ def index() -> None:
                                         'no in\u00edcio da linha e **negrito** entre asteriscos '
                                         'duplos. As imagens s\u00e3o preservadas.'
                                     ).classes('text-sm muted')
+                                    def aplicar_texto() -> None:
+                                        """Reflete o texto na mat\u00e9ria, preservando as imagens."""
+                                        apply_plain_text(composition, str(corpo.value or ''))
+
                                     corpo = ui.textarea(
-                                        value=composition_to_plain_text(composition)
-                                    ).props('rows=24 outlined').classes('w-full text-base')
+                                        value=composition_to_plain_text(composition),
+                                        on_change=lambda _: (
+                                            aplicar_texto(), mapa_imagens.refresh(),
+                                        ),
+                                    ).props('rows=20 outlined debounce=700').classes(
+                                        'w-full text-base'
+                                    )
+
+                                    if state['images']:
+                                        ui.label('Posi\u00e7\u00e3o das imagens').classes(
+                                            'text-lg font-bold mt-2'
+                                        )
+                                        ui.label(
+                                            'Arraste uma imagem para mov\u00ea-la entre os '
+                                            'par\u00e1grafos. O texto acima acompanha a edi\u00e7\u00e3o.'
+                                        ).classes('text-sm muted')
+                                        mapa_imagens()
 
                                     def salvar() -> None:
-                                        apply_plain_text(composition, str(corpo.value or ''))
+                                        aplicar_texto()
                                         state['editing_text'] = False
                                         content_changed()
                                         ui.notify('Texto aplicado \u00e0 mat\u00e9ria.', type='positive')
@@ -1293,10 +1433,13 @@ def index() -> None:
 
 
                 def open_whatsapp_flow() -> None:
-                    """Tela de envio: resumo editável e número do destinatário."""
                     if not state['generated']:
                         ui.notify('Gere a novidade primeiro.', type='warning')
                         return
+                    open_whatsapp_dialog(composition.title or 'Novidade EMC')
+
+                def open_whatsapp_dialog(titulo: str) -> None:
+                    """Tela de envio: resumo editável e número do destinatário."""
                     situacao = whatsapp_gateway.status()
                     if not situacao.connected:
                         ui.notify(
@@ -1307,7 +1450,7 @@ def index() -> None:
                         show_view('whatsapp')
                         return
 
-                    titulo = composition.title or 'Novidade EMC'
+                    titulo = str(titulo or 'Novidade EMC')
                     with ui.dialog() as dialog, ui.card().classes('w-full max-w-2xl p-6 gap-4'):
                         ui.label('Enviar novidade pelo WhatsApp').classes('text-2xl font-bold')
                         ui.label(f'Conta vinculada: {situacao.phone or "não informada"}').classes(

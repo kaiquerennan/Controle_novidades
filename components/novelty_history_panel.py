@@ -1,22 +1,75 @@
 from __future__ import annotations
 
-from typing import Any
+from typing import Any, Callable
 
 from nicegui import ui
 
+from components.novelty_preview import render_novelty_preview
 from services.novelty_history_service import LaunchedNovelty, NoveltyHistoryService
 
 
 def render_novelty_history(
     *,
     history_service: NoveltyHistoryService | None = None,
+    on_send_whatsapp: Callable[[LaunchedNovelty], Any] | None = None,
+    on_edit: Callable[[LaunchedNovelty], Any] | None = None,
 ) -> None:
     """Lista as novidades já exportadas por este aplicativo."""
     history = history_service or NoveltyHistoryService()
-    state: dict[str, Any] = {'search': ''}
+    state: dict[str, Any] = {'search': '', 'aberta': None}
+
+    def abrir(novelty: LaunchedNovelty) -> None:
+        state['aberta'] = novelty
+        novelty_list.refresh()
+
+    def voltar() -> None:
+        state['aberta'] = None
+        novelty_list.refresh()
+
+    def _detalhe(novelty: LaunchedNovelty) -> None:
+        documento, imagens = history.load_content(novelty)
+        with ui.row().classes('w-full items-center justify-between no-wrap gap-3'):
+            ui.button('Voltar', icon='arrow_back', on_click=voltar).props('flat')
+            with ui.row().classes('items-center gap-2 no-wrap'):
+                if on_edit is not None:
+                    ui.button(
+                        'Editar novidade', icon='edit',
+                        on_click=lambda: on_edit(novelty),
+                    ).props('outline color=primary').mark('editar-novidade')
+                if on_send_whatsapp is not None:
+                    ui.button(
+                        'Enviar pelo WhatsApp', icon='send',
+                        on_click=lambda: on_send_whatsapp(novelty),
+                    ).props('color=green').mark('enviar-novidade')
+                if novelty.html_path:
+                    ui.button(
+                        'HTML', icon='code',
+                        on_click=lambda path=novelty.html_path: ui.download(str(path)),
+                    ).props('flat color=primary')
+                if novelty.zip_path:
+                    ui.button(
+                        'ZIP', icon='download',
+                        on_click=lambda path=novelty.zip_path: ui.download(str(path)),
+                    ).props('flat color=primary')
+        with ui.row().classes('items-center gap-2'):
+            if novelty.created_at_label:
+                ui.label(novelty.created_at_label).classes('muted text-sm')
+            ui.badge(f'{novelty.image_count} imagem(ns)').props('color=blue-grey outline')
+        if not documento.blocks:
+            ui.label(
+                'Não foi possível reconstruir o conteúdo desta exportação. '
+                'Os arquivos continuam disponíveis para download.'
+            ).classes('muted p-4')
+            return
+        with ui.card().classes('simple-card publication w-full p-0'):
+            # Somente leitura: a edição acontece no fluxo de criação.
+            render_novelty_preview(documento, imagens)
 
     @ui.refreshable
     def novelty_list() -> None:
+        if state['aberta'] is not None:
+            _detalhe(state['aberta'])
+            return
         novelties = history.list_novelties(search=str(state['search']))
         ui.label(f'{len(novelties)} novidade(s) exportada(s)').classes('muted text-sm px-1')
         if not novelties:
@@ -43,18 +96,15 @@ def render_novelty_history(
                         if novelty.has_cover:
                             ui.badge('com capa').props('color=indigo outline')
                 with ui.row().classes('items-center gap-2 no-wrap'):
-                    if novelty.html_path:
-                        ui.button(
-                            'HTML',
-                            icon='code',
-                            on_click=lambda _, path=novelty.html_path: ui.download(str(path)),
-                        ).props('flat color=primary')
+                    ui.button(
+                        'Abrir', icon='open_in_new',
+                        on_click=lambda _, item=novelty: abrir(item),
+                    ).props('color=primary').mark(f'abrir-{novelty.session_id[:8]}')
                     if novelty.zip_path:
                         ui.button(
-                            'ZIP',
                             icon='download',
                             on_click=lambda _, path=novelty.zip_path: ui.download(str(path)),
-                        ).props('flat color=primary')
+                        ).props('flat color=primary').tooltip('Baixar o ZIP')
             if novelty.excerpt:
                 ui.label(novelty.excerpt).classes('text-sm whitespace-pre-wrap')
             ui.label(f'Sessão {novelty.session_id}').classes('muted text-xs')

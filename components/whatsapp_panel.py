@@ -113,10 +113,6 @@ def render_whatsapp_panel(gateway: WhatsAppGatewayService | None = None) -> None
     with ui.card().classes('simple-card w-full p-5 gap-3'):
         with ui.column().classes('gap-0'):
             ui.label('WhatsApp').classes('text-2xl font-bold')
-            ui.label(
-                'Conta usada para enviar as novidades. O vínculo é feito por QR, '
-                'como no WhatsApp Web.'
-            ).classes('muted text-sm')
         painel()
         ui.timer(0.1, refresh_state, once=True)
 

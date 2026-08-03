@@ -5,6 +5,7 @@ from datetime import datetime
 import json
 from pathlib import Path
 
+from models.composition import CompositionDocument
 from services.image_service import DATA_ROOT, safe_path
 
 
@@ -94,6 +95,68 @@ class NoveltyHistoryService:
             xml_path=self._existing(novelty_dir / 'novidade.xml'),
             zip_path=self._existing(folder / 'emc_novidade_visual_ia.zip'),
         )
+
+    def load_content(self, novelty: LaunchedNovelty) -> tuple[CompositionDocument, list[dict]]:
+        """Reconstrói a matéria exportada e as suas imagens, para abrir ou editar.
+
+        Os caminhos gravados no metadado são relativos à pasta da exportação;
+        aqui viram absolutos para que a tela consiga exibir as imagens.
+        """
+        if novelty.directory is None:
+            return CompositionDocument(), []
+        metadata_path = novelty.directory / METADATA_NAME
+        try:
+            payload = json.loads(metadata_path.read_text(encoding='utf-8-sig'))
+        except (OSError, json.JSONDecodeError):
+            return CompositionDocument(), []
+        if not isinstance(payload, dict):
+            return CompositionDocument(), []
+
+        base = novelty.directory
+        try:
+            document = CompositionDocument.from_dict(payload)
+        except (TypeError, ValueError):
+            document = CompositionDocument()
+
+        # A capa é gravada com caminho relativo à exportação. Sem converter, a
+        # tela tenta carregar um arquivo inexistente e deixa um vão em branco no
+        # lugar da imagem.
+        capa = dict(document.cover)
+        arquivo_capa = str(capa.get('arquivo') or '')
+        if arquivo_capa:
+            absoluto = base / arquivo_capa
+            if absoluto.is_file():
+                capa['arquivo'] = str(absoluto)
+            else:
+                capa = {}
+            document.cover = capa
+
+        imagens: list[dict] = []
+        for item in payload.get('imagens') or []:
+            if not isinstance(item, dict):
+                continue
+            caminhos = {
+                chave: base / str(item.get(origem) or '')
+                for chave, origem in (
+                    ('original', 'arquivo_original'),
+                    ('treated', 'arquivo_tratado'),
+                    ('final', 'arquivo_final'),
+                )
+                if item.get(origem)
+            }
+            existentes = {
+                chave: valor for chave, valor in caminhos.items() if valor.is_file()
+            }
+            if not existentes:
+                continue
+            imagens.append({
+                'id': str(item.get('id') or ''),
+                'filename': str(item.get('nome_original') or ''),
+                'status': str(item.get('status') or ''),
+                'error': str(item.get('mensagem_erro') or ''),
+                **{chave: str(valor) for chave, valor in existentes.items()},
+            })
+        return document, imagens
 
     @staticmethod
     def _existing(path: Path) -> Path | None:
