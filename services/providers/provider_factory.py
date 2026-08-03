@@ -17,6 +17,10 @@ class ProviderFactory:
             from services.providers.openai_provider import OpenAIProvider
 
             return OpenAIProvider()
+        if normalized == 'deepseek':
+            from services.providers.deepseek_provider import DeepSeekProvider
+
+            return DeepSeekProvider()
         available = ', '.join(PROVIDER_LABELS.values())
         raise ProviderError(
             f'Provedor inválido. Escolha uma das opções: {available}.',

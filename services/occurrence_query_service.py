@@ -53,6 +53,21 @@ ADMINISTRATIVE_PATTERNS = tuple(
         r'disponivel para teste',
         r'disponibilizado para teste',
         r'^::.*::$',
+        r'novo arquivo disponibilizado',
+        r'arquivo compactado',
+        r'novo instalador',
+        r'instalador do',
+        r'\.(zip|exe|rar|7z|msi)\b',
+        # Numeros de chamado citados no corpo da observacao.
+        r'\b(oc|ic|os)\s*\d{4,}',
+        # Frases de acompanhamento da equipe.
+        r'^analisando',
+        r'nosso maior problema',
+        r'gentileza analisar',
+        # Jargao de infraestrutura: nao interessa ao cliente final e serve de
+        # isca para a IA copiar o rascunho tecnico da equipe. Atinge 0,04% das
+        # linhas, medido sobre a base atual.
+        r'\b(cache[s]?|buffer[s]?|lock[s]?|thread[s]?|heap|swap)\b',
         # A URL pode vir precedida do marcador de lista da propria observacao.
         r'^https?://\S+$',
         # Ambientes de homologacao e arquivos de teste compartilhados. Links

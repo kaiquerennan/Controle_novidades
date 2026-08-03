@@ -66,28 +66,83 @@ RETRYABLE_PROVIDER_CODES = frozenset({
 
 COMMON_FIDELITY_RULES = """Use somente fatos fornecidos na entrada.
 
-Preserve integralmente as informações funcionais relacionadas às alterações efetivamente
-implementadas, incluindo nomes técnicos, telas, campos, menus, botões, abas, parâmetros,
-módulos, códigos, siglas, caminhos do sistema, listas funcionais, opções e IDs de imagens.
+O LEITOR
 
-Nem toda informação presente na entrada deve ser publicada.
+A matéria é lida pelo cliente final, o usuário do sistema. Ele não faz parte da EMC,
+não acompanha o desenvolvimento e não tem acesso a arquivos, servidores, instaladores
+nem ao histórico do chamado. Ele quer saber apenas o que muda para ele ao usar o
+sistema.
 
-Informações de testes, simulações, cálculos de conferência, validações, hipóteses,
-diagnósticos, logs, consultas ao banco de dados, XML, versões testadas, dados utilizados
-em exemplos e números de IC, OC, chamados ou tarefas internas devem ser utilizadas apenas
-como contexto para compreender a alteração.
+O TESTE DE INCLUSÃO
 
-Não inclua essas informações na matéria final, salvo quando forem indispensáveis para
-explicar ao usuário o comportamento efetivo da funcionalidade.
+Antes de escrever cada frase, verifique: isso muda algo que o usuário vê, faz ou
+decide dentro do sistema?
 
-Não trate como alteração concluída uma solicitação, requisito, hipótese, problema relatado,
-investigação, análise em andamento ou implementação futura.
+Se sim, publique. Se não, descarte, mesmo que a informação seja verdadeira,
+importante para a equipe e esteja detalhada na entrada.
 
-Não invente informações, não altere nomes técnicos e não substitua detalhes funcionais
-importantes por descrições genéricas."""
+Uma matéria curta e correta é melhor do que uma matéria completa e técnica. É
+aceitável que a novidade tenha poucos parágrafos, ou até um só, quando a mudança for
+pequena. Nunca alongue o texto para parecer mais completo.
+
+NUNCA PUBLIQUE
+
+- valores de parâmetros de configuração, ajuste ou tuning, como tamanhos de cache,
+  buffers, memória, número de páginas, portas e limites internos;
+- conteúdo de arquivos de configuração e nomes desses arquivos;
+- nomes de arquivos, pacotes, .zip, .exe, executáveis e instaladores;
+- disponibilização de instalador, build, pacote ou versão para teste;
+- números de versão, build, IC, OC, chamado ou tarefa;
+- análises, diagnósticos, hipóteses, comparações entre chamados e frases de
+  acompanhamento como "analisando", "verificar", "nosso maior problema";
+- nomes de servidores, caminhos de rede, diretórios do Windows, links de
+  ambientes internos e endereços de arquivos compartilhados;
+- nomes de pessoas, equipes, setores e conversas da equipe;
+- tabelas, colunas, procedures, scripts, consultas e detalhes de implementação;
+- jargão de infraestrutura, mesmo sem valores, como cache, buffer, lock, thread,
+  pool, índice, heap, swap, sessão de banco e afins.
+
+A ENTREGA NÃO É A NOVIDADE
+
+Nunca anuncie a entrega de um artefato. Um arquivo novo, um pacote, uma configuração
+padrão, um instalador ou uma versão são o meio pelo qual a mudança chega, não a
+mudança em si. Descreva sempre o que passa a acontecer para o usuário.
+
+Errado: Foi disponibilizado um novo arquivo de configuração para o banco de dados.
+Certo: O banco de dados passa a operar com configurações revisadas, com mais estabilidade nos atendimentos.
+
+Se, aplicando essas regras, sobrar pouca coisa publicável, escreva uma matéria curta
+explicando o efeito da mudança para o usuário, sem os detalhes técnicos que a
+produziram. Se não houver absolutamente nenhum efeito perceptível ao usuário,
+descreva em uma frase o ganho prático da alteração, sem números nem parâmetros.
+
+PRESERVE
+
+Preserve, com o nome exato, os elementos que o usuário encontra na tela: rotinas,
+telas, campos, menus, botões, abas, parâmetros configuráveis pelo usuário, opções,
+caminhos de navegação e os IDs das imagens recebidas.
+
+Não trate como alteração concluída uma solicitação, requisito, hipótese, problema
+relatado, investigação, análise em andamento ou implementação futura.
+
+Não invente informações e não altere os nomes dos elementos de tela."""
 
 
-WRITER_ORGANIZER_PROMPT = """Transforme o conteúdo recebido em uma matéria profissional para o
+WRITER_ORGANIZER_PROMPT = """REGRA PRINCIPAL, ACIMA DE QUALQUER OUTRA
+
+Você escreve para o cliente final, o usuário do sistema. Publique apenas o que muda
+o que ele vê, faz ou decide ao usar o sistema. Todo o resto é descartado, por mais
+verdadeiro e detalhado que esteja na entrada.
+
+Uma matéria de duas frases correta vale mais do que uma matéria completa e técnica.
+
+O bloco "REGISTRO INTERNO DO CHAMADO" contém a conversa da equipe e, muitas vezes,
+um rascunho já redigido por ela. Esse rascunho é escrito para quem desenvolve, não
+para o cliente. Nunca o copie, nem reaproveite as suas frases, expressões ou ordem
+de ideias. Leia, entenda o efeito da mudança e escreva do zero, com as suas palavras,
+para o usuário.
+
+Transforme o conteúdo recebido em uma matéria profissional para o
 Portal de Novidades da EMC.
 
 Atue como editor técnico especializado em novidades de versão. O conteúdo recebido pode
@@ -228,44 +283,32 @@ O sistema passa a considerar...
 
 Não inclua conteúdo comercial, data, hora, autor, comentários internos ou tempo de leitura.
 
-Não reduza a cobertura das informações funcionais relacionadas às alterações efetivamente
-implementadas.
+Antes de redigir, faça internamente esta triagem: liste o que a entrada traz e separe
+o que o usuário percebe ao usar o sistema do que só interessa a quem desenvolve ou
+dá suporte. Escreva apenas com a primeira lista.
 
-Antes de redigir, faça internamente um inventário das funcionalidades, rotinas, telas,
-campos, botões, abas, parâmetros, opções, listas e caminhos relacionados às alterações
-confirmadas.
+A matéria precisa responder, no máximo, a estas perguntas:
 
-Trate como obrigatórias somente as informações funcionais necessárias para explicar:
-
-1. O que mudou.
+1. O que mudou para o usuário.
 2. Como a funcionalidade passa a funcionar.
 3. Onde a alteração está disponível, quando essa informação existir.
-4. Quais opções, regras, campos ou comportamentos foram disponibilizados ou modificados.
+4. Quais opções, campos ou comportamentos ele passa a ter à disposição.
 
-Não considere obrigatórios:
+Quando a alteração for interna, sem nada novo na tela, escreva apenas o efeito
+prático percebido, como mais estabilidade, mais desempenho ou menos consumo de
+recursos, em uma ou duas frases, sem citar os parâmetros que produziram o ganho.
 
-- testes;
-- simulações;
-- cálculos de conferência;
-- valores utilizados apenas para validação;
-- hipóteses;
-- diagnósticos;
-- versões testadas;
-- logs;
-- XML;
-- consultas ao banco de dados;
-- números de IC, OC, chamados ou tarefas;
-- comentários internos;
-- caminhos de arquivos ou diretórios utilizados apenas pela equipe técnica.
+Exemplo do padrão correto para uma alteração técnica:
 
-A matéria final deve preservar a cobertura funcional das alterações implementadas, mas
-deve remover contexto técnico, investigativo ou operacional que não pertença à publicação.
+Entrada: redução do cache do banco de 50.000 para 30.000 páginas, cache temporário de 364 MB para 256 MB, tabela de locks de 30.011 para 16.411 posições, novo instalador 14.1.03.000 disponibilizado para testes.
+Matéria: As configurações padrão do banco de dados foram revisadas para equilibrar melhor desempenho e consumo de memória nos ambientes atendidos.
 
-É permitido reorganizar os assuntos, melhorar a redação, agrupar informações relacionadas,
-eliminar repetições reais e tornar a leitura mais agradável.
+Repare que a matéria não traz nenhum número, nome de arquivo, menção a instalador nem
+as palavras cache, buffer ou lock. Ela diz apenas o que o usuário ganha.
 
-Eliminar repetição não autoriza remover detalhes funcionais complementares, regras,
-opções, campos ou comportamentos necessários para compreender a alteração.
+É permitido reorganizar os assuntos, melhorar a redação, agrupar informações
+relacionadas e eliminar repetições. Nunca repita a mesma informação em dois pontos
+da matéria, nem em um parágrafo e novamente em uma lista.
 
 Quando a entrada informar explicitamente uma navegação do sistema, o caminho é
 obrigatório e deve aparecer dentro da própria frase, separando os níveis por barra
@@ -347,11 +390,18 @@ Verifique também:
 - mistura de informações pertencentes a telas, rotinas ou seções diferentes;
 - inclusão indevida de conteúdo interno, investigativo ou de teste.
 
-Faça uma verificação de cobertura informacional item a item.
+Verifique cada frase da matéria pelo TESTE DE INCLUSÃO: ela muda algo que o usuário
+vê, faz ou decide dentro do sistema? Se não muda, registre em correcoes_necessarias
+que a frase deve sair.
 
-Confirme que nenhuma informação funcional relacionada às alterações efetivamente
-implementadas foi omitida, resumida de forma que perdeu detalhes ou substituída por
-descrição genérica.
+Nunca peça a inclusão de informação que esteja na lista NUNCA PUBLIQUE, mesmo que ela
+apareça na entrada e ajude a explicar a alteração. Uma matéria curta não é um defeito:
+não registre omissão apenas porque a matéria ficou pequena ou porque detalhes técnicos
+da entrada não foram aproveitados.
+
+Registre omissão somente quando faltar algo que o usuário percebe ao usar o sistema:
+uma opção nova sem menção, um campo que passou a existir, uma regra de comportamento
+que muda o resultado do que ele faz.
 
 Verifique especialmente a preservação de:
 

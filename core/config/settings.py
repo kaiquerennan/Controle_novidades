@@ -15,7 +15,13 @@ HTML_IMAGE_BASE_PATH = '/app_dotnet/AppExtranet/imagens/'
 PROVIDER_LABELS = {
     'gemini': 'Gemini',
     'openai': 'OpenAI',
+    'deepseek': 'DeepSeek',
 }
+
+# A DeepSeek expoe uma API compativel com a da OpenAI, mas apenas em Chat
+# Completions e somente para texto: nao gera nem interpreta imagens.
+DEEPSEEK_BASE_URL = 'https://api.deepseek.com'
+DEEPSEEK_TEXT_MODEL = 'deepseek-chat'
 
 OPENAI_TEXT_MODEL = 'gpt-5-mini'
 OPENAI_IMAGE_MODEL = 'gpt-image-1.5'
@@ -28,6 +34,11 @@ DEFAULT_MODELS = {
     'openai': {
         'text': OPENAI_TEXT_MODEL,
         'image': OPENAI_IMAGE_MODEL,
+    },
+    'deepseek': {
+        'text': DEEPSEEK_TEXT_MODEL,
+        # A DeepSeek nao gera imagens; a capa fica indisponivel neste provedor.
+        'image': '',
     },
 }
 
@@ -42,11 +53,13 @@ IMAGE_MODELS = {
 IMAGE_MODEL_MARKERS = {
     'gemini': ('-image',),
     'openai': ('gpt-image',),
+    'deepseek': (),
 }
 
 API_KEY_ENVIRONMENTS = {
     'gemini': 'GEMINI_API_KEY',
     'openai': 'OPENAI_API_KEY',
+    'deepseek': 'DEEPSEEK_API_KEY',
 }
 
 # Banco de ocorrências (SQL Server, via pyodbc). O processo lê as ocorrências

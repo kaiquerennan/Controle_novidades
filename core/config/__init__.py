@@ -1,5 +1,7 @@
 from .settings import (
     API_KEY_ENVIRONMENTS,
+    DEEPSEEK_BASE_URL,
+    DEEPSEEK_TEXT_MODEL,
     DEFAULT_MODELS,
     HTML_IMAGE_BASE_PATH,
     IMAGE_MODELS,
@@ -18,6 +20,8 @@ from .settings import (
 
 __all__ = [
     'API_KEY_ENVIRONMENTS',
+    'DEEPSEEK_BASE_URL',
+    'DEEPSEEK_TEXT_MODEL',
     'DEFAULT_MODELS',
     'HTML_IMAGE_BASE_PATH',
     'IMAGE_MODELS',
