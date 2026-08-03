@@ -1,62 +1,842 @@
 {
-  "session_id": "fc2ad21b441d485c9ef7e905106d0edb",
-  "raw_text": "OCORRÊNCIA: 97005\nSISTEMA: EMC GESTÃO EMPRESARIAL\nMÓDULO: EMC LOJA WEB\n\nCAMINHO: \r\nEMC Loja Web\r\n\r\nSOLICITAÇÃO: \r\nAlteração da cor no menu de departamentos na horizontal. \r\n\r\nJUSTIFICATIVA: \r\nCliente solicita a opção de alteração de cor do menu.\r\n\r\nATENDIMENTO: \r\nSolicitação de mudança:\nAlteração da cor do menu de departamentos na loja web.\n\nOBSERVAÇÕES:\n- Não há risco comercial identificado. Trata-se de uma solicitação da cliente com o objetivo de alinhar a interface ao padrão visual utilizado no site da GMinas.\n\nDessa forma, solicito a análise de viabilidade para implementação da alteração solicitada.\n- Incluso os campos:\n\nMenu horizontal - Departamentos com os campos Cor de fundo e Cor de texto.\n\n- Realizar testes no PC e Smartphones com os seguintes layouts: \nDepartamento 11, Departamento 07, Departamento 04, Departamento 01, Categoria 04, Categoria 01 e Banner Full 02.\n\n- Realizar testes nos seguimentos Varejo e Agência de Veículos\n- Alteração de status de várias ocorrências.\n- ::Teste Realizado na Versão: 0301.00.18::\n\nFavor Verificar.\n\nA mudança não se aplica para Smartphones somente para PC. Gentileza analisar.\n\n::SIMULAÇÃO::\n\n- https://www.websotoresoluction.com.br/\n- Campos Cor de fundo e Cor de texto, aplicado como Rosa e Preto\n- No PC Menu horizontal - Departamentos, as cores definidas são exibidas corretamente\n- No  Smartphones, parmanece na cor padrão\n- Por definição de regra as cores definas para os departamentos (menu horizontal) não se aplicam aos smartphones.\n- Por definição de regra as cores definas para os departamentos (menu horizontal) não se aplicam aos smartphones.",
+  "session_id": "2f7ca0d697ec4e3e9563a6d4ae7c90e3",
+  "raw_text": "OCORRÊNCIA: 97262\nSISTEMA: EMC GESTÃO EMPRESARIAL\n\nCAMINHO: \r\nEMC Gestão | Operacional | Relatórios | Cadastros | Produtos | Produtos.\r\n\r\nSOLICITAÇÃO: \r\nA cliente solicitou que seja implementado no sistema, no 'Relatório de Produtos', um relatório contendo o IBS/CBS dos produtos.\r\n\r\nJUSTIFICATIVA: \r\nAtualmente, só é possível visualizar o IBS/CBS dos produtos pela ferramenta 'Correção de Dados Cadastrais'. É necessário que exista um lugar no sistema que possa gerar um relatório com estas informações.\r\n\r\nOBSERVAÇÃO: \r\nFavor análisar.\n\r\n\r\nATENDIMENTO: \r\nRelatório de Produtos, contendo os dados de IBS/CBS.\n\nCOMPLEMENTO:\nAtualizar cliente para versão 14.1.02.038 do Gestão Empresarial\n\nMudança Implementada. Foi incluído a nova checkbox \"Apresentar Dados do IBS/CBS\" no relatório de produtos, acessível através do caminho \"Operacional / Relatórios / Cadastros / Produtos / Produtos / Tipo de Relatório: Situação Fiscal\".\n\nQuando marcada, as colunas do IBS/CBS serão apresentadas no lugar das colunas de PIS/COFINS no relatório. Serão Apresentadas as informações de 'CST de IBS/CBS', 'Class Trib', '% CBS', '% IBS Est' e '%IBS Mun'.\n\n- Finalizando OC, conforme observação do Suporte:\n\n\"Gerado o relatório junto à cliente. Todas as informações de IBS/CBS foram destacadas conforme solicitado.\n\nFavor finalizar OC.\"\n\nOBSERVAÇÕES:\n- Necessidade de melhoria em Relatório de Produtos. Isto atenderá inúmeros clientes. Estas informações são importantíssimas para as empresas, principalmente no momento atual onde todos estão organizando os seus cadastros. Além de ter relatórios constando estes dados, precisamos também de relatórios onde poderemos conseguir filtrar por estes dados.\n- Vamos adaptar o relatório de situação fiscal para incluir as informações do IBS/CBS.\n- Operacional / Relatórios / Cadastros / Produtos / Produtos\nTipo de Relatório: Situação Fiscal\n\nIncluir um checkbox \"Apresentar Dados do IBS/CBS\"\n\nQuando marcado, as colunas do IBS/CBS devem ser apresentadas no lugar das colunas de PIS/COFINS.\n- Alterado conforme a observação de Edson Jr.\n- Nova versão disponível na homologação.\r\nAlteração de status de várias ocorrências.\n- ::Teste Realizado na Versão: 14.01.2.38\n\nMudança Implementada\n\nFoi adicionada a nova opção \"Apresentar Dados do IBS/CBS\" no relatório de produtos, disponível em Operacional > Relatórios > Cadastros > Produtos > Produtos, selecionando o Tipo de Relatório: Situação Fiscal.\n\nAo marcar essa opção, as colunas referentes ao PIS/COFINS serão substituídas pelas colunas do IBS/CBS, permitindo a visualização das seguintes informações: CST de IBS/CBS, Class Trib, % CBS, % IBS Est e % IBS Mun.\n- Atualizar cliente para versão 14.1.02.038 do Gestão Empresarial\n\nMudança Implementada. Foi incluído a nova checkbox \"Apresentar Dados do IBS/CBS\" no relatório de produtos, acessível através do caminho \"Operacional / Relatórios / Cadastros / Produtos / Produtos / Tipo de Relatório: Situação Fiscal\".\n\nQuando marcada, as colunas do IBS/CBS serão apresentadas no lugar das colunas de PIS/COFINS no relatório. Serão Apresentadas as informações de 'CST de IBS/CBS', 'Class Trib', '% CBS', '% IBS Est' e '%IBS Mun'.\n- Gerado o relatório junto à cliente. Todas as informações de IBS/CBS foram destacadas conforme solicitado.\n\nFavor finalizar OC.\n- Atualizar cliente para versão 14.1.02.038 do Gestão Empresarial\n\nMudança Implementada. Foi incluído a nova checkbox \"Apresentar Dados do IBS/CBS\" no relatório de produtos, acessível através do caminho \"Operacional / Relatórios / Cadastros / Produtos / Produtos / Tipo de Relatório: Situação Fiscal\".\n\nQuando marcada, as colunas do IBS/CBS serão apresentadas no lugar das colunas de PIS/COFINS no relatório. Serão Apresentadas as informações de 'CST de IBS/CBS', 'Class Trib', '% CBS', '% IBS Est' e '%IBS Mun'.\n\n- Finalizando OC, conforme observação do Suporte: \n\n\"Gerado o relatório junto à cliente. Todas as informações de IBS/CBS foram destacadas conforme solicitado.\n\nFavor finalizar OC.\"\n- Atualizar cliente para versão 14.1.02.038 do Gestão Empresarial\n\nMudança Implementada. Foi incluído a nova checkbox \"Apresentar Dados do IBS/CBS\" no relatório de produtos, acessível através do caminho \"Operacional / Relatórios / Cadastros / Produtos / Produtos / Tipo de Relatório: Situação Fiscal\".\n\nQuando marcada, as colunas do IBS/CBS serão apresentadas no lugar das colunas de PIS/COFINS no relatório. Serão Apresentadas as informações de 'CST de IBS/CBS', 'Class Trib', '% CBS', '% IBS Est' e '%IBS Mun'.\n\n- Finalizando OC, conforme observação do Suporte:\n\n\"Gerado o relatório junto à cliente. Todas as informações de IBS/CBS foram destacadas conforme solicitado.\n\nFavor finalizar OC.\"",
   "images": [],
   "composition": {
     "origem": "manual",
-    "titulo": "",
+    "titulo": "Implementada opção \"Apresentar Dados do IBS/CBS\" no Relatório de Produtos",
     "imagens_fallback": [],
     "capa": {
       "solicitada": false,
       "status": "nao_gerada",
-      "tema": "",
+      "tema": "Implementada opção \"Apresentar Dados do IBS/CBS\" no Relatório de Produtos",
       "arquivo": "",
       "mensagem": ""
     },
     "revisao": {
       "aprovada": false,
-      "avisos": [],
+      "status": "nao_concluida",
       "correcao_automatica_realizada": false,
-      "status": "pendente"
+      "avisos": [
+        "A matéria foi gerada, mas a revisão automática não pôde ser concluída. Revise o conteúdo antes de aprovar."
+      ]
     },
     "blocos": [
       {
         "ordem": 1,
-        "id": "bloco_0662701fa8d9",
+        "id": "bloco_001",
         "tipo": "titulo",
-        "conteudo": ""
+        "conteudo": "Implementada opção \"Apresentar Dados do IBS/CBS\" no Relatório de Produtos",
+        "secao_id": "rotina_001",
+        "rotina": "Relatório de Produtos",
+        "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
       },
       {
         "ordem": 2,
-        "id": "bloco_4f56c556a9c8",
+        "id": "bloco_fffb830ffd9e",
         "tipo": "texto",
-        "conteudo": ""
+        "conteudo": "Foi implementada no Relatório de Produtos do EMC Gestão Empresarial a opção \"Apresentar Dados do IBS/CBS\", disponível em Operacional | Relatórios | Cadastros | Produtos | Produtos, quando for selecionado o Tipo de Relatório: Situação Fiscal.",
+        "secao_id": "rotina_001",
+        "rotina": "Relatório de Produtos",
+        "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+      },
+      {
+        "ordem": 3,
+        "id": "bloco_f894d83443b3",
+        "tipo": "texto",
+        "conteudo": "Quando a opção \"Apresentar Dados do IBS/CBS\" for marcada, as colunas referentes ao PIS/COFINS são substituídas pelas colunas do IBS/CBS. Com isso, o relatório passa a apresentar as seguintes informações:",
+        "secao_id": "rotina_001",
+        "rotina": "Relatório de Produtos",
+        "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+      },
+      {
+        "ordem": 4,
+        "id": "bloco_004",
+        "tipo": "lista",
+        "itens": [
+          {
+            "texto": "CST de IBS/CBS",
+            "destaques": [
+              "CST de IBS/CBS"
+            ]
+          },
+          {
+            "texto": "Class Trib",
+            "destaques": [
+              "Class Trib"
+            ]
+          },
+          {
+            "texto": "% CBS",
+            "destaques": [
+              "% CBS"
+            ]
+          },
+          {
+            "texto": "% IBS Est",
+            "destaques": [
+              "% IBS Est"
+            ]
+          },
+          {
+            "texto": "%IBS Mun",
+            "destaques": [
+              "%IBS Mun"
+            ]
+          }
+        ],
+        "papel": "lista",
+        "secao_id": "rotina_001",
+        "rotina": "Relatório de Produtos",
+        "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+      },
+      {
+        "ordem": 5,
+        "id": "bloco_d8f8c5320060",
+        "tipo": "texto",
+        "conteudo": "A opção está disponível na versão 14.1.02.038 do EMC Gestão Empresarial.",
+        "secao_id": "rotina_001",
+        "rotina": "Relatório de Produtos",
+        "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+      },
+      {
+        "ordem": 6,
+        "id": "bloco_6ec0ad75cccf",
+        "tipo": "lista",
+        "itens": [
+          {
+            "texto": "Finalizando OC, conforme observação do Suporte:",
+            "destaques": []
+          }
+        ],
+        "papel": "lista",
+        "secao_id": "rotina_001",
+        "rotina": "OCORRÊNCIA: 97262"
+      },
+      {
+        "ordem": 7,
+        "id": "bloco_da6d265f744d",
+        "tipo": "lista",
+        "itens": [
+          {
+            "texto": "Necessidade de melhoria em Relatório de Produtos. Isto atenderá inúmeros clientes. Estas informações são importantíssimas para as empresas, principalmente no momento atual onde todos estão organizando os seus cadastros. Além de ter relatórios constando estes dados, precisamos também de relatórios onde poderemos conseguir filtrar por estes dados.",
+            "destaques": []
+          },
+          {
+            "texto": "Vamos adaptar o relatório de situação fiscal para incluir as informações do IBS/CBS.",
+            "destaques": []
+          },
+          {
+            "texto": "Operacional / Relatórios / Cadastros / Produtos / Produtos",
+            "destaques": []
+          }
+        ],
+        "papel": "lista",
+        "secao_id": "rotina_001",
+        "rotina": "OCORRÊNCIA: 97262"
+      },
+      {
+        "ordem": 8,
+        "id": "bloco_d7fbe76f744c",
+        "tipo": "lista",
+        "itens": [
+          {
+            "texto": "Alterado conforme a observação de Edson Jr.",
+            "destaques": []
+          },
+          {
+            "texto": "Nova versão disponível na homologação.",
+            "destaques": []
+          }
+        ],
+        "papel": "lista",
+        "secao_id": "rotina_001",
+        "rotina": "OCORRÊNCIA: 97262"
+      },
+      {
+        "ordem": 9,
+        "id": "bloco_234a348086dc",
+        "tipo": "lista",
+        "itens": [
+          {
+            "texto": "::Teste Realizado na Versão: 14.01.2.38",
+            "destaques": []
+          }
+        ],
+        "papel": "lista",
+        "secao_id": "rotina_001",
+        "rotina": "OCORRÊNCIA: 97262"
+      },
+      {
+        "ordem": 10,
+        "id": "bloco_e0a4ce8f01bd",
+        "tipo": "lista",
+        "itens": [
+          {
+            "texto": "Atualizar cliente para versão 14.1.02.038 do Gestão Empresarial",
+            "destaques": []
+          }
+        ],
+        "papel": "lista",
+        "secao_id": "rotina_001",
+        "rotina": "OCORRÊNCIA: 97262"
+      },
+      {
+        "ordem": 11,
+        "id": "bloco_55d729d07ad0",
+        "tipo": "lista",
+        "itens": [
+          {
+            "texto": "Gerado o relatório junto à cliente. Todas as informações de IBS/CBS foram destacadas conforme solicitado.",
+            "destaques": []
+          }
+        ],
+        "papel": "lista",
+        "secao_id": "rotina_001",
+        "rotina": "OCORRÊNCIA: 97262"
+      },
+      {
+        "ordem": 12,
+        "id": "bloco_ba595b110f7c",
+        "tipo": "texto",
+        "conteudo": "Acesse através do caminho:\nEMC Gestão | Operacional | Relatórios | Cadastros | Produtos | Produtos.",
+        "papel": "caminho",
+        "caminho": "EMC Gestão | Operacional | Relatórios | Cadastros | Produtos | Produtos."
       }
     ]
   },
-  "generated": false,
+  "generated": true,
   "approved": false,
-  "current_step": "Adicionar conteúdo",
+  "current_step": "Visualizar",
   "generation": {
-    "generation_id": "7c086249c3b34e078ee1418143466632",
-    "idempotency_key": "8c4282650031ef2fe8481935af1b5fe87f3f087943f5fcb46a761ffac27dde7d",
-    "status": "failed",
-    "etapa_atual": "geracao_automatica",
-    "percentual": 0.2,
-    "mensagem": "Organizando a matéria...",
-    "started_at": "2026-07-31T18:09:11-0300",
-    "finished_at": "2026-07-31T18:09:22-0300",
-    "error": "Não foi possível organizar o texto da novidade. O conteúdo original e as imagens foram preservados.",
-    "generated": false,
-    "document": {},
-    "composition": {},
-    "cover_file": ""
+    "generation_id": "b860b1fd8946465da67acf9a90285741",
+    "idempotency_key": "5aac0eccb472660c6d02ed143c71b9609fbd27022f995055371ea5f7b8c7e80f",
+    "status": "completed",
+    "etapa_atual": "completed",
+    "percentual": 1,
+    "mensagem": "Novidade gerada com sucesso.",
+    "started_at": "2026-08-03T09:05:30-0300",
+    "finished_at": "2026-08-03T09:08:36-0300",
+    "error": "",
+    "generated": true,
+    "document": {
+      "origem": "manual",
+      "titulo": "Implementada opção \"Apresentar Dados do IBS/CBS\" no Relatório de Produtos",
+      "imagens_fallback": [],
+      "capa": {
+        "solicitada": false,
+        "status": "nao_gerada",
+        "tema": "Implementada opção \"Apresentar Dados do IBS/CBS\" no Relatório de Produtos",
+        "arquivo": "",
+        "mensagem": ""
+      },
+      "revisao": {
+        "aprovada": false,
+        "status": "nao_concluida",
+        "correcao_automatica_realizada": false,
+        "avisos": [
+          "A matéria foi gerada, mas a revisão automática não pôde ser concluída. Revise o conteúdo antes de aprovar."
+        ]
+      },
+      "blocos": [
+        {
+          "ordem": 1,
+          "id": "bloco_001",
+          "tipo": "titulo",
+          "conteudo": "Implementada opção \"Apresentar Dados do IBS/CBS\" no Relatório de Produtos",
+          "secao_id": "rotina_001",
+          "rotina": "Relatório de Produtos",
+          "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+        },
+        {
+          "ordem": 2,
+          "id": "bloco_fffb830ffd9e",
+          "tipo": "texto",
+          "conteudo": "Foi implementada no Relatório de Produtos do EMC Gestão Empresarial a opção \"Apresentar Dados do IBS/CBS\", disponível em Operacional | Relatórios | Cadastros | Produtos | Produtos, quando for selecionado o Tipo de Relatório: Situação Fiscal.",
+          "secao_id": "rotina_001",
+          "rotina": "Relatório de Produtos",
+          "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+        },
+        {
+          "ordem": 3,
+          "id": "bloco_f894d83443b3",
+          "tipo": "texto",
+          "conteudo": "Quando a opção \"Apresentar Dados do IBS/CBS\" for marcada, as colunas referentes ao PIS/COFINS são substituídas pelas colunas do IBS/CBS. Com isso, o relatório passa a apresentar as seguintes informações:",
+          "secao_id": "rotina_001",
+          "rotina": "Relatório de Produtos",
+          "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+        },
+        {
+          "ordem": 4,
+          "id": "bloco_004",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "CST de IBS/CBS",
+              "destaques": [
+                "CST de IBS/CBS"
+              ]
+            },
+            {
+              "texto": "Class Trib",
+              "destaques": [
+                "Class Trib"
+              ]
+            },
+            {
+              "texto": "% CBS",
+              "destaques": [
+                "% CBS"
+              ]
+            },
+            {
+              "texto": "% IBS Est",
+              "destaques": [
+                "% IBS Est"
+              ]
+            },
+            {
+              "texto": "%IBS Mun",
+              "destaques": [
+                "%IBS Mun"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001",
+          "rotina": "Relatório de Produtos",
+          "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+        },
+        {
+          "ordem": 5,
+          "id": "bloco_d8f8c5320060",
+          "tipo": "texto",
+          "conteudo": "A opção está disponível na versão 14.1.02.038 do EMC Gestão Empresarial.",
+          "secao_id": "rotina_001",
+          "rotina": "Relatório de Produtos",
+          "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+        },
+        {
+          "ordem": 6,
+          "id": "bloco_6ec0ad75cccf",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Finalizando OC, conforme observação do Suporte:",
+              "destaques": []
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001",
+          "rotina": "OCORRÊNCIA: 97262"
+        },
+        {
+          "ordem": 7,
+          "id": "bloco_da6d265f744d",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Necessidade de melhoria em Relatório de Produtos. Isto atenderá inúmeros clientes. Estas informações são importantíssimas para as empresas, principalmente no momento atual onde todos estão organizando os seus cadastros. Além de ter relatórios constando estes dados, precisamos também de relatórios onde poderemos conseguir filtrar por estes dados.",
+              "destaques": []
+            },
+            {
+              "texto": "Vamos adaptar o relatório de situação fiscal para incluir as informações do IBS/CBS.",
+              "destaques": []
+            },
+            {
+              "texto": "Operacional / Relatórios / Cadastros / Produtos / Produtos",
+              "destaques": []
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001",
+          "rotina": "OCORRÊNCIA: 97262"
+        },
+        {
+          "ordem": 8,
+          "id": "bloco_d7fbe76f744c",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Alterado conforme a observação de Edson Jr.",
+              "destaques": []
+            },
+            {
+              "texto": "Nova versão disponível na homologação.",
+              "destaques": []
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001",
+          "rotina": "OCORRÊNCIA: 97262"
+        },
+        {
+          "ordem": 9,
+          "id": "bloco_234a348086dc",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "::Teste Realizado na Versão: 14.01.2.38",
+              "destaques": []
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001",
+          "rotina": "OCORRÊNCIA: 97262"
+        },
+        {
+          "ordem": 10,
+          "id": "bloco_e0a4ce8f01bd",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Atualizar cliente para versão 14.1.02.038 do Gestão Empresarial",
+              "destaques": []
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001",
+          "rotina": "OCORRÊNCIA: 97262"
+        },
+        {
+          "ordem": 11,
+          "id": "bloco_55d729d07ad0",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Gerado o relatório junto à cliente. Todas as informações de IBS/CBS foram destacadas conforme solicitado.",
+              "destaques": []
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001",
+          "rotina": "OCORRÊNCIA: 97262"
+        },
+        {
+          "ordem": 12,
+          "id": "bloco_ba595b110f7c",
+          "tipo": "texto",
+          "conteudo": "Acesse através do caminho:\nEMC Gestão | Operacional | Relatórios | Cadastros | Produtos | Produtos.",
+          "papel": "caminho",
+          "caminho": "EMC Gestão | Operacional | Relatórios | Cadastros | Produtos | Produtos."
+        }
+      ]
+    },
+    "composition": {
+      "origem": "manual",
+      "titulo": "Implementada opção \"Apresentar Dados do IBS/CBS\" no Relatório de Produtos",
+      "imagens_fallback": [],
+      "capa": {
+        "solicitada": false,
+        "status": "nao_gerada",
+        "tema": "Implementada opção \"Apresentar Dados do IBS/CBS\" no Relatório de Produtos",
+        "arquivo": "",
+        "mensagem": ""
+      },
+      "revisao": {
+        "aprovada": false,
+        "status": "nao_concluida",
+        "correcao_automatica_realizada": false,
+        "avisos": [
+          "A matéria foi gerada, mas a revisão automática não pôde ser concluída. Revise o conteúdo antes de aprovar."
+        ]
+      },
+      "blocos": [
+        {
+          "ordem": 1,
+          "id": "bloco_001",
+          "tipo": "titulo",
+          "conteudo": "Implementada opção \"Apresentar Dados do IBS/CBS\" no Relatório de Produtos",
+          "secao_id": "rotina_001",
+          "rotina": "Relatório de Produtos",
+          "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+        },
+        {
+          "ordem": 2,
+          "id": "bloco_fffb830ffd9e",
+          "tipo": "texto",
+          "conteudo": "Foi implementada no Relatório de Produtos do EMC Gestão Empresarial a opção \"Apresentar Dados do IBS/CBS\", disponível em Operacional | Relatórios | Cadastros | Produtos | Produtos, quando for selecionado o Tipo de Relatório: Situação Fiscal.",
+          "secao_id": "rotina_001",
+          "rotina": "Relatório de Produtos",
+          "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+        },
+        {
+          "ordem": 3,
+          "id": "bloco_f894d83443b3",
+          "tipo": "texto",
+          "conteudo": "Quando a opção \"Apresentar Dados do IBS/CBS\" for marcada, as colunas referentes ao PIS/COFINS são substituídas pelas colunas do IBS/CBS. Com isso, o relatório passa a apresentar as seguintes informações:",
+          "secao_id": "rotina_001",
+          "rotina": "Relatório de Produtos",
+          "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+        },
+        {
+          "ordem": 4,
+          "id": "bloco_004",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "CST de IBS/CBS",
+              "destaques": [
+                "CST de IBS/CBS"
+              ]
+            },
+            {
+              "texto": "Class Trib",
+              "destaques": [
+                "Class Trib"
+              ]
+            },
+            {
+              "texto": "% CBS",
+              "destaques": [
+                "% CBS"
+              ]
+            },
+            {
+              "texto": "% IBS Est",
+              "destaques": [
+                "% IBS Est"
+              ]
+            },
+            {
+              "texto": "%IBS Mun",
+              "destaques": [
+                "%IBS Mun"
+              ]
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001",
+          "rotina": "Relatório de Produtos",
+          "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+        },
+        {
+          "ordem": 5,
+          "id": "bloco_d8f8c5320060",
+          "tipo": "texto",
+          "conteudo": "A opção está disponível na versão 14.1.02.038 do EMC Gestão Empresarial.",
+          "secao_id": "rotina_001",
+          "rotina": "Relatório de Produtos",
+          "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+        },
+        {
+          "ordem": 6,
+          "id": "bloco_6ec0ad75cccf",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Finalizando OC, conforme observação do Suporte:",
+              "destaques": []
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001",
+          "rotina": "OCORRÊNCIA: 97262"
+        },
+        {
+          "ordem": 7,
+          "id": "bloco_da6d265f744d",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Necessidade de melhoria em Relatório de Produtos. Isto atenderá inúmeros clientes. Estas informações são importantíssimas para as empresas, principalmente no momento atual onde todos estão organizando os seus cadastros. Além de ter relatórios constando estes dados, precisamos também de relatórios onde poderemos conseguir filtrar por estes dados.",
+              "destaques": []
+            },
+            {
+              "texto": "Vamos adaptar o relatório de situação fiscal para incluir as informações do IBS/CBS.",
+              "destaques": []
+            },
+            {
+              "texto": "Operacional / Relatórios / Cadastros / Produtos / Produtos",
+              "destaques": []
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001",
+          "rotina": "OCORRÊNCIA: 97262"
+        },
+        {
+          "ordem": 8,
+          "id": "bloco_d7fbe76f744c",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Alterado conforme a observação de Edson Jr.",
+              "destaques": []
+            },
+            {
+              "texto": "Nova versão disponível na homologação.",
+              "destaques": []
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001",
+          "rotina": "OCORRÊNCIA: 97262"
+        },
+        {
+          "ordem": 9,
+          "id": "bloco_234a348086dc",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "::Teste Realizado na Versão: 14.01.2.38",
+              "destaques": []
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001",
+          "rotina": "OCORRÊNCIA: 97262"
+        },
+        {
+          "ordem": 10,
+          "id": "bloco_e0a4ce8f01bd",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Atualizar cliente para versão 14.1.02.038 do Gestão Empresarial",
+              "destaques": []
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001",
+          "rotina": "OCORRÊNCIA: 97262"
+        },
+        {
+          "ordem": 11,
+          "id": "bloco_55d729d07ad0",
+          "tipo": "lista",
+          "itens": [
+            {
+              "texto": "Gerado o relatório junto à cliente. Todas as informações de IBS/CBS foram destacadas conforme solicitado.",
+              "destaques": []
+            }
+          ],
+          "papel": "lista",
+          "secao_id": "rotina_001",
+          "rotina": "OCORRÊNCIA: 97262"
+        },
+        {
+          "ordem": 12,
+          "id": "bloco_ba595b110f7c",
+          "tipo": "texto",
+          "conteudo": "Acesse através do caminho:\nEMC Gestão | Operacional | Relatórios | Cadastros | Produtos | Produtos.",
+          "papel": "caminho",
+          "caminho": "EMC Gestão | Operacional | Relatórios | Cadastros | Produtos | Produtos."
+        }
+      ]
+    },
+    "cover_file": "",
+    "dados_visualizacao": {
+      "composition": {
+        "origem": "manual",
+        "titulo": "Implementada opção \"Apresentar Dados do IBS/CBS\" no Relatório de Produtos",
+        "imagens_fallback": [],
+        "capa": {
+          "solicitada": false,
+          "status": "nao_gerada",
+          "tema": "Implementada opção \"Apresentar Dados do IBS/CBS\" no Relatório de Produtos",
+          "arquivo": "",
+          "mensagem": ""
+        },
+        "revisao": {
+          "aprovada": false,
+          "status": "nao_concluida",
+          "correcao_automatica_realizada": false,
+          "avisos": [
+            "A matéria foi gerada, mas a revisão automática não pôde ser concluída. Revise o conteúdo antes de aprovar."
+          ]
+        },
+        "blocos": [
+          {
+            "ordem": 1,
+            "id": "bloco_001",
+            "tipo": "titulo",
+            "conteudo": "Implementada opção \"Apresentar Dados do IBS/CBS\" no Relatório de Produtos",
+            "secao_id": "rotina_001",
+            "rotina": "Relatório de Produtos",
+            "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+          },
+          {
+            "ordem": 2,
+            "id": "bloco_fffb830ffd9e",
+            "tipo": "texto",
+            "conteudo": "Foi implementada no Relatório de Produtos do EMC Gestão Empresarial a opção \"Apresentar Dados do IBS/CBS\", disponível em Operacional | Relatórios | Cadastros | Produtos | Produtos, quando for selecionado o Tipo de Relatório: Situação Fiscal.",
+            "secao_id": "rotina_001",
+            "rotina": "Relatório de Produtos",
+            "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+          },
+          {
+            "ordem": 3,
+            "id": "bloco_f894d83443b3",
+            "tipo": "texto",
+            "conteudo": "Quando a opção \"Apresentar Dados do IBS/CBS\" for marcada, as colunas referentes ao PIS/COFINS são substituídas pelas colunas do IBS/CBS. Com isso, o relatório passa a apresentar as seguintes informações:",
+            "secao_id": "rotina_001",
+            "rotina": "Relatório de Produtos",
+            "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+          },
+          {
+            "ordem": 4,
+            "id": "bloco_004",
+            "tipo": "lista",
+            "itens": [
+              {
+                "texto": "CST de IBS/CBS",
+                "destaques": [
+                  "CST de IBS/CBS"
+                ]
+              },
+              {
+                "texto": "Class Trib",
+                "destaques": [
+                  "Class Trib"
+                ]
+              },
+              {
+                "texto": "% CBS",
+                "destaques": [
+                  "% CBS"
+                ]
+              },
+              {
+                "texto": "% IBS Est",
+                "destaques": [
+                  "% IBS Est"
+                ]
+              },
+              {
+                "texto": "%IBS Mun",
+                "destaques": [
+                  "%IBS Mun"
+                ]
+              }
+            ],
+            "papel": "lista",
+            "secao_id": "rotina_001",
+            "rotina": "Relatório de Produtos",
+            "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+          },
+          {
+            "ordem": 5,
+            "id": "bloco_d8f8c5320060",
+            "tipo": "texto",
+            "conteudo": "A opção está disponível na versão 14.1.02.038 do EMC Gestão Empresarial.",
+            "secao_id": "rotina_001",
+            "rotina": "Relatório de Produtos",
+            "caminho": "Operacional | Relatórios | Cadastros | Produtos | Produtos"
+          },
+          {
+            "ordem": 6,
+            "id": "bloco_6ec0ad75cccf",
+            "tipo": "lista",
+            "itens": [
+              {
+                "texto": "Finalizando OC, conforme observação do Suporte:",
+                "destaques": []
+              }
+            ],
+            "papel": "lista",
+            "secao_id": "rotina_001",
+            "rotina": "OCORRÊNCIA: 97262"
+          },
+          {
+            "ordem": 7,
+            "id": "bloco_da6d265f744d",
+            "tipo": "lista",
+            "itens": [
+              {
+                "texto": "Necessidade de melhoria em Relatório de Produtos. Isto atenderá inúmeros clientes. Estas informações são importantíssimas para as empresas, principalmente no momento atual onde todos estão organizando os seus cadastros. Além de ter relatórios constando estes dados, precisamos também de relatórios onde poderemos conseguir filtrar por estes dados.",
+                "destaques": []
+              },
+              {
+                "texto": "Vamos adaptar o relatório de situação fiscal para incluir as informações do IBS/CBS.",
+                "destaques": []
+              },
+              {
+                "texto": "Operacional / Relatórios / Cadastros / Produtos / Produtos",
+                "destaques": []
+              }
+            ],
+            "papel": "lista",
+            "secao_id": "rotina_001",
+            "rotina": "OCORRÊNCIA: 97262"
+          },
+          {
+            "ordem": 8,
+            "id": "bloco_d7fbe76f744c",
+            "tipo": "lista",
+            "itens": [
+              {
+                "texto": "Alterado conforme a observação de Edson Jr.",
+                "destaques": []
+              },
+              {
+                "texto": "Nova versão disponível na homologação.",
+                "destaques": []
+              }
+            ],
+            "papel": "lista",
+            "secao_id": "rotina_001",
+            "rotina": "OCORRÊNCIA: 97262"
+          },
+          {
+            "ordem": 9,
+            "id": "bloco_234a348086dc",
+            "tipo": "lista",
+            "itens": [
+              {
+                "texto": "::Teste Realizado na Versão: 14.01.2.38",
+                "destaques": []
+              }
+            ],
+            "papel": "lista",
+            "secao_id": "rotina_001",
+            "rotina": "OCORRÊNCIA: 97262"
+          },
+          {
+            "ordem": 10,
+            "id": "bloco_e0a4ce8f01bd",
+            "tipo": "lista",
+            "itens": [
+              {
+                "texto": "Atualizar cliente para versão 14.1.02.038 do Gestão Empresarial",
+                "destaques": []
+              }
+            ],
+            "papel": "lista",
+            "secao_id": "rotina_001",
+            "rotina": "OCORRÊNCIA: 97262"
+          },
+          {
+            "ordem": 11,
+            "id": "bloco_55d729d07ad0",
+            "tipo": "lista",
+            "itens": [
+              {
+                "texto": "Gerado o relatório junto à cliente. Todas as informações de IBS/CBS foram destacadas conforme solicitado.",
+                "destaques": []
+              }
+            ],
+            "papel": "lista",
+            "secao_id": "rotina_001",
+            "rotina": "OCORRÊNCIA: 97262"
+          },
+          {
+            "ordem": 12,
+            "id": "bloco_ba595b110f7c",
+            "tipo": "texto",
+            "conteudo": "Acesse através do caminho:\nEMC Gestão | Operacional | Relatórios | Cadastros | Produtos | Produtos.",
+            "papel": "caminho",
+            "caminho": "EMC Gestão | Operacional | Relatórios | Cadastros | Produtos | Produtos."
+          }
+        ]
+      }
+    }
   },
   "html_override": "",
   "settings": {
-    "provider": "gemini",
-    "text_model": "gemini-flash-latest",
-    "image_model": "gemini-3.1-flash-image",
+    "provider": "openai",
+    "text_model": "gpt-5-mini",
+    "image_model": "gpt-image-1.5",
     "cover_requested": false,
     "whatsapp_public_link": ""
   },

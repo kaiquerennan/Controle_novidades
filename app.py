@@ -33,7 +33,7 @@ if __name__ in {'__main__', '__mp_main__'}:
     _ensure_project_venv()
 
 
-from nicegui import events, run, ui
+from nicegui import app as ui_app, events, run, ui
 from PIL import Image
 
 from components.advanced_image_adjuster import AdvancedImageAdjuster
@@ -75,6 +75,7 @@ from services.whatsapp_service import (
     WhatsAppService,
     mask_recipient,
 )
+from services.browser_session_service import resolve_storage_secret, session_state_path
 from services.generation_control_service import GENERATION_REGISTRY
 from services.occurrence_query_service import OccurrenceSummary
 from services.providers import ProviderError, ProviderFactory
@@ -166,12 +167,18 @@ def _restored_images(values: list[dict[str, Any]]) -> list[dict[str, Any]]:
 
 @ui.page('/')
 def index() -> None:
-    state_store = ScreenStateStore()
-    saved = state_store.load() or {}
+    # Cada navegador tem a propria sessao: o id fica em um cookie assinado, e o
+    # estado da tela vai para um arquivo separado. Sem isso, dois usuarios no
+    # mesmo servidor compartilhariam texto, imagens e configuracoes.
+    stored_session = str(ui_app.storage.user.get('session_id') or '')
     try:
-        workspace = SessionWorkspace.open(str(saved.get('session_id') or ''))
+        workspace = SessionWorkspace.open(stored_session)
     except ValueError:
         workspace = SessionWorkspace.create()
+    ui_app.storage.user['session_id'] = workspace.session_id
+    state_store = ScreenStateStore(path=session_state_path(workspace.session_id))
+    saved = state_store.load() or {}
+    if str(saved.get('session_id') or '') != workspace.session_id:
         saved = {}
     try:
         composition = CompositionDocument.from_dict(dict(saved.get('composition') or {}))
@@ -1855,5 +1862,6 @@ if __name__ in {'__main__', '__mp_main__'}:
     favicon=PROJECT_ROOT / 'Logo_Emc.ico',
     reload=False,
     show=False,
+    storage_secret=resolve_storage_secret(),
 )
 

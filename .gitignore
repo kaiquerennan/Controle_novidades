@@ -12,6 +12,8 @@ data/processed/
 data/temp/
 data/exports/
 data/image_analysis_cache/
+data/sessions/
+data/storage_secret.local
 
 # Ambiente e caches
 .venv/
