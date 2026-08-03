@@ -37,7 +37,6 @@ from nicegui import app as ui_app, events, run, ui
 from PIL import Image
 
 from components.advanced_image_adjuster import AdvancedImageAdjuster
-from components.composition_builder import CompositionBuilder
 from components.image_editor import ImageEditor
 from components.novelty_preview import render_novelty_preview
 from components.occurrence_menu import render_occurrence_menu
@@ -64,6 +63,7 @@ from services.editorial_orchestration_service import (
     WRITER_ORGANIZER_PROMPT,
 )
 from services.html_export_service import build_novelty_html
+from services.plain_text_composition import apply_plain_text, composition_to_plain_text
 from services.eddie_message_service import EddieMessageService
 from services.whatsapp_config_service import (
     TOKEN_PLACEHOLDER,
@@ -995,6 +995,10 @@ def index() -> None:
                                 progress.value = 1
                                 progress.update()
                                 preview.refresh()
+                                # As abas Texto e HTML também nascem vazias antes
+                                # da geração e precisam ser remontadas aqui.
+                                text_editor.refresh()
+                                html_editor.refresh()
                                 advanced_panel.refresh()
                                 visualize_button.enable()
                                 retry_button.set_visibility(False)
@@ -1013,11 +1017,9 @@ def index() -> None:
                                         type='warning',
                                     ),
                                 )
-                            for warning in composition.review.get('avisos') or []:
-                                safe_visual_update(
-                                    'notificacao_aviso_revisao',
-                                    lambda warning=warning: ui.notify(str(warning), type='warning'),
-                                )
+                            # Os avisos da revisão não viram notificação: eles já
+                            # aparecem por inteiro no painel da pré-visualização, e
+                            # um toast por aviso cobria a tela toda.
                             if composition.cover.get('mensagem'):
                                 safe_visual_update(
                                     'notificacao_aviso_capa',
@@ -1170,9 +1172,13 @@ def index() -> None:
                     ]
                     return build_novelty_html(payload)
 
+                def has_content() -> bool:
+                    """Basta existir matéria: edição manual também vale, não só a geração."""
+                    return bool(composition.blocks) or bool(state.get('html_override'))
+
                 @ui.refreshable
                 def html_editor() -> None:
-                    if not state['generated']:
+                    if not has_content():
                         ui.label('Gere a novidade para ver o HTML.').classes('p-10 muted')
                         return
                     editado = bool(str(state.get('html_override') or '').strip())
@@ -1251,18 +1257,34 @@ def index() -> None:
                     with ui.tab_panel(editor_text_tab):
                         @ui.refreshable
                         def text_editor() -> None:
-                            if not state['generated']:
+                            if not has_content():
                                 ui.label('Gere a novidade para editar o texto.').classes(
                                     'p-10 muted'
                                 )
                                 return
                             ui.label(
-                                'Edite o t\u00edtulo e os par\u00e1grafos gerados pela IA. '
-                                'As altera\u00e7\u00f5es aparecem na pr\u00e9-visualiza\u00e7\u00e3o.'
+                                'Texto da novidade como ele ser\u00e1 publicado. A primeira '
+                                'linha \u00e9 o t\u00edtulo, par\u00e1grafos s\u00e3o separados por linha em '
+                                'branco e listas usam "- " no in\u00edcio da linha.'
                             ).classes('text-sm muted')
-                            CompositionBuilder(
-                                composition, lambda: state['images'], content_changed
-                            ).render()
+                            corpo = ui.textarea(
+                                value=composition_to_plain_text(composition)
+                            ).props('rows=26 outlined').classes('w-full text-base')
+
+                            def aplicar_texto() -> None:
+                                apply_plain_text(composition, str(corpo.value or ''))
+                                content_changed()
+                                text_editor.refresh()
+                                ui.notify('Texto aplicado \u00e0 mat\u00e9ria.', type='positive')
+
+                            with ui.row().classes('w-full justify-end gap-2'):
+                                ui.button(
+                                    'Descartar altera\u00e7\u00f5es', icon='restart_alt',
+                                    on_click=text_editor.refresh,
+                                ).props('flat')
+                                ui.button(
+                                    'Aplicar texto', icon='save', on_click=aplicar_texto
+                                ).props('color=primary')
 
                         text_editor()
                     with ui.tab_panel(editor_html_tab):
@@ -1380,13 +1402,6 @@ def index() -> None:
                     ui.button(
                         'Refazer organização', icon='redo', on_click=redo_organization
                     ).props('outline')
-
-                def approve() -> None:
-                    if not state['generated']:
-                        return
-                    state['approved'] = True
-                    persist_screen_state(step='Aprovar e exportar')
-                    stepper.next()
 
                 def generate_again() -> None:
                     state['approved'] = False
@@ -1704,8 +1719,6 @@ def index() -> None:
                 with ui.row().classes('w-full justify-center gap-2 mt-5'):
                     ui.button('Voltar', icon='arrow_back', on_click=stepper.previous).props('flat')
                     ui.button('Gerar novamente', icon='refresh', on_click=generate_again).props('outline')
-                    ui.button('Aprovar', icon='check_circle', on_click=approve)
-                    ui.button('Exportar', icon='download', on_click=export_novelty).props('outline')
                     ui.button('Enviar pelo WhatsApp', icon='send', on_click=open_whatsapp_flow).props('outline color=green')
 
             with ui.step('Aprovar e exportar', icon='task_alt'):
@@ -1808,6 +1821,8 @@ def index() -> None:
                 progress.set_visibility(False)
                 progress_label.set_text('')
                 preview.refresh()
+                text_editor.refresh()
+                html_editor.refresh()
                 advanced_panel.refresh()
                 visualize_button.enable()
                 retry_button.set_visibility(False)

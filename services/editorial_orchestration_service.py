@@ -107,6 +107,13 @@ Antes de redigir, analise internamente toda a entrada e classifique as informaç
 Escreva a matéria somente com base nas alterações, correções e melhorias efetivamente
 confirmadas pela entrada.
 
+A entrada vem dividida em blocos. O bloco "A MUDANÇA" é a fonte da matéria. O bloco
+"REGISTRO INTERNO DO CHAMADO" é o histórico da equipe: use-o apenas para entender o
+comportamento da funcionalidade e nunca reproduza o seu conteúdo. Não publique
+análises de viabilidade, pedidos de verificação, valores usados em teste, nomes de
+cadastros de teste, versões testadas, endereços de ambientes de teste nem qualquer
+frase dirigida à equipe interna.
+
 Utilize testes, cálculos, valores, exemplos, XML, consultas ao banco de dados, versões,
 hipóteses, diagnósticos, números de IC, OC, chamados e tarefas internas apenas para
 compreender o contexto. Não transforme essas informações em conteúdo da matéria.

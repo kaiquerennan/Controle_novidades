@@ -35,6 +35,37 @@ _SECTION_PATTERN = re.compile(
 )
 
 
+# Secoes da DESCRICAO que descrevem a mudanca em si.
+CHANGE_SECTIONS = ('CAMINHO', 'SOLICITACAO', 'JUSTIFICATIVA', 'ATENDIMENTO', 'PROBLEMA', 'MOTIVO')
+
+# Linhas de controle do chamado: servem para a equipe, nunca para o cliente
+# final. Sao descartadas antes de o texto chegar na IA.
+ADMINISTRATIVE_PATTERNS = tuple(
+    re.compile(padrao, re.IGNORECASE)
+    for padrao in (
+        r'risco comercial',
+        r'altera[c]ao de status',
+        r'teste[s]? realizado',
+        r'realizar teste',
+        r'favor verificar',
+        r'versao testada',
+        r'em homologacao',
+        r'disponivel para teste',
+        r'disponibilizado para teste',
+        r'^::.*::$',
+        # A URL pode vir precedida do marcador de lista da propria observacao.
+        r'^https?://\S+$',
+        # Ambientes de homologacao e arquivos de teste compartilhados. Links
+        # publicos da EMC continuam passando: eles servem ao cliente final.
+        r'https?://\S*(hml|homolog)',
+        r'https?://\S*(drive|docs)\.google\.',
+        r'https?://\S*(dropbox|wetransfer|1drv\.ms|onedrive)',
+    )
+)
+
+_LEADING_BULLET = re.compile(r'^[-•*–—\s]+')
+
+
 def _strip_accents(value: str) -> str:
     normalized = unicodedata.normalize('NFKD', value)
     return ''.join(char for char in normalized if not unicodedata.combining(char))
@@ -42,6 +73,32 @@ def _strip_accents(value: str) -> str:
 
 def section_key(label: str) -> str:
     return _strip_accents(str(label or '')).upper().strip()
+
+
+def is_administrative_line(line: str) -> bool:
+    """Linha de controle do chamado, sem valor para o cliente final."""
+    alvo = _strip_accents(str(line or '')).strip()
+    if not alvo:
+        return True
+    return any(padrao.search(alvo) for padrao in ADMINISTRATIVE_PATTERNS)
+
+
+def relevant_lines(text: str, seen: set[str] | None = None) -> list[str]:
+    """Remove linhas administrativas e repetidas, preservando a ordem."""
+    vistas = seen if seen is not None else set()
+    mantidas: list[str] = []
+    for linha in str(text or '').splitlines():
+        # O marcador de lista da origem sai antes da checagem: senao "- URL"
+        # escaparia do padrao ancorado no inicio da linha.
+        limpa = _LEADING_BULLET.sub('', linha).strip()
+        if is_administrative_line(limpa):
+            continue
+        chave = _strip_accents(limpa).casefold()
+        if chave in vistas:
+            continue
+        vistas.add(chave)
+        mantidas.append(limpa)
+    return mantidas
 
 
 def parse_description_sections(description: str) -> dict[str, str]:
@@ -104,22 +161,48 @@ class OccurrenceSummary:
         return self.opened_at.strftime('%d/%m/%Y') if self.opened_at else ''
 
     def as_raw_text(self) -> str:
-        """Contexto da ocorrencia em texto corrido, para alimentar a geração."""
+        """Contexto da ocorrencia para alimentar a geração.
+
+        A mudanca em si vem das secoes da DESCRICAO. O historico do chamado
+        entra depois, marcado como registro interno, porque mistura discussao
+        da equipe, testes e controle de status com informacao funcional. As
+        linhas puramente administrativas sao descartadas aqui, antes de chegar
+        na IA.
+        """
         partes: list[str] = [f'OCORRÊNCIA: {self.number}']
         if self.system:
             partes.append(f'SISTEMA: {self.system}')
         if self.module:
             partes.append(f'MÓDULO: {self.module}')
-        if self.description:
-            partes.append(f'\n{self.description.strip()}')
-        if self.complement.strip():
-            partes.append(f'\nCOMPLEMENTO:\n{self.complement.strip()}')
-        if self.observations:
-            linhas = [
-                f'- {item.text.strip()}' for item in self.observations if item.text.strip()
-            ]
+
+        vistas: set[str] = set()
+        mudanca: list[str] = []
+        for chave in CHANGE_SECTIONS:
+            conteudo = self.sections.get(chave, '')
+            linhas = relevant_lines(conteudo, vistas)
             if linhas:
-                partes.append('\nOBSERVAÇÕES:\n' + '\n'.join(linhas))
+                mudanca.append(f'{chave}:\n' + '\n'.join(linhas))
+        if not mudanca:
+            linhas = relevant_lines(self.description, vistas)
+            if linhas:
+                mudanca.append('\n'.join(linhas))
+        if mudanca:
+            partes.append('\nA MUDANÇA:\n\n' + '\n\n'.join(mudanca))
+
+        complemento = relevant_lines(self.complement, vistas)
+        if complemento:
+            partes.append('\nCOMPLEMENTO:\n' + '\n'.join(complemento))
+
+        historico: list[str] = []
+        for item in self.observations:
+            historico.extend(relevant_lines(item.text, vistas))
+        if historico:
+            partes.append(
+                '\nREGISTRO INTERNO DO CHAMADO (contexto para entender a mudança; '
+                'não publique este conteúdo, use apenas o que for comportamento '
+                'efetivo da funcionalidade):\n'
+                + '\n'.join(f'- {linha}' for linha in historico)
+            )
         return '\n'.join(partes).strip()
 
 
@@ -219,8 +302,12 @@ class OccurrenceQueryService:
 
 
 __all__ = [
+    'ADMINISTRATIVE_PATTERNS',
+    'CHANGE_SECTIONS',
     'DEFAULT_LIMIT',
     'DEFAULT_MONTHS',
+    'is_administrative_line',
+    'relevant_lines',
     'OCCURRENCE_VIEW',
     'OccurrenceObservation',
     'OccurrenceQueryService',
