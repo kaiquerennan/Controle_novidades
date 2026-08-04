@@ -18,6 +18,9 @@ PROVIDER_LABELS = {
     'deepseek': 'DeepSeek',
 }
 
+# Provedor pré-selecionado quando a aplicação abre sem preferência salva.
+DEFAULT_PROVIDER = 'openai'
+
 # A DeepSeek expoe uma API compativel com a da OpenAI, mas apenas em Chat
 # Completions e somente para texto: nao gera nem interpreta imagens.
 DEEPSEEK_BASE_URL = 'https://api.deepseek.com'

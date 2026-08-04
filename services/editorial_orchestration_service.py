@@ -979,8 +979,13 @@ Use apenas correcoes e trechos_fonte do payload. Não invente informações.
     ) -> CompositionDocument:
         provider_name = getattr(provider, 'name', provider.__class__.__name__).lower()
         text_model = configured_text_model(provider_name, text_model)
-        image_model = configured_image_model(provider_name, image_model)
-        routed_models = f'text={text_model}|image={image_model}'
+        # O modelo de imagem só é exigido quando a capa for gerada. Provedores
+        # somente texto, como a DeepSeek, não têm um, e cobrá-lo aqui impediria
+        # até a geração sem capa.
+        image_model = (
+            configured_image_model(provider_name, image_model) if cover_requested else ''
+        )
+        routed_models = f'text={text_model}|image={image_model or "não utilizado"}'
         generation_id = generation_id or uuid4().hex
         preparation_started = time.perf_counter()
         prepared_images, id_to_hash, fingerprints = await run_sync(
@@ -1004,7 +1009,7 @@ Use apenas correcoes e trechos_fonte do payload. Não invente informações.
             len(raw_text.encode('utf-8')), len(images), bool(cover_requested),
         )
         logger.info('[MODELOS] Texto: Modelo: %s', text_model)
-        logger.info('[MODELOS] Imagem: Modelo: %s', image_model)
+        logger.info('[MODELOS] Imagem: Modelo: %s', image_model or 'não utilizado')
 
         def progress(stage: str) -> None:
             nonlocal active_stage, stage_started

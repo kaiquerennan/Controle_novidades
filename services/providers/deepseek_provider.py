@@ -25,6 +25,20 @@ SCHEMA_INSTRUCTIONS = (
     'Nao acrescente campos fora do esquema.'
 )
 
+# Sem structured outputs estrito, o modelo cumpre o esquema mas ignora a estrutura
+# esperada da materia. Estas exigencias vao explicitas para nao voltar um plano
+# sem titulo, que o fluxo editorial recusa.
+PLAN_STRUCTURE_REQUIREMENTS = (
+    '\n\nEXIGENCIAS DE ESTRUTURA, obrigatorias:\n'
+    '- O primeiro item de "blocos" precisa ter "tipo": "titulo", com o titulo da '
+    'materia em "conteudo".\n'
+    '- Depois do titulo, inclua ao menos um item com "tipo": "texto" contendo o '
+    'primeiro paragrafo, e marque esse item com "papel": "introducao".\n'
+    '- Use "tipo": "texto" para os demais paragrafos e "tipo": "lista" apenas '
+    'para enumeracoes, preenchendo "itens" com objetos {"texto": "..."}.\n'
+    '- Nao devolva um plano apenas com um bloco de texto.'
+)
+
 IMAGE_UNSUPPORTED = (
     'O provedor DeepSeek nao processa nem gera imagens. Use Gemini ou OpenAI '
     'para operacoes de imagem.'
@@ -54,11 +68,12 @@ class DeepSeekProvider(AIProvider):
         schema: dict,
         max_output_tokens: int | None,
         timeout: float,
+        extra_instructions: str = '',
     ) -> str:
         client = self._client(api_key, timeout)
         instrucoes = prompt + '\n\n' + SCHEMA_INSTRUCTIONS.format(
             schema=json.dumps(schema, ensure_ascii=False)
-        )
+        ) + extra_instructions
         response = client.chat.completions.create(
             model=model,
             messages=[
@@ -111,8 +126,15 @@ class DeepSeekProvider(AIProvider):
                 schema=NoveltyPlan.model_json_schema(),
                 max_output_tokens=max_output_tokens,
                 timeout=180.0,
+                extra_instructions=PLAN_STRUCTURE_REQUIREMENTS,
             )
-            return NoveltyPlan.model_validate_json(conteudo)
+            plano = NoveltyPlan.model_validate_json(conteudo)
+            if not any(bloco.tipo == 'titulo' for bloco in plano.blocos):
+                raise ProviderError(
+                    'A DeepSeek devolveu a materia sem titulo.',
+                    code='invalid_schema_response',
+                )
+            return plano
         except ProviderError:
             raise
         except Exception as exc:

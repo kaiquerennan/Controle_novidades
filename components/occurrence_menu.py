@@ -205,9 +205,7 @@ def render_occurrence_menu(
         with ui.row().classes('w-full items-center justify-between no-wrap gap-3'):
             with ui.column().classes('gap-0'):
                 ui.label('Ocorrências de mudança').classes('text-2xl font-bold')
-                ui.label(
-                    f'Tipo MUDANÇA dos últimos {months} meses, direto do banco de ocorrências.'
-                ).classes('muted text-sm')
+
             with ui.row().classes('items-center gap-2 no-wrap'):
                 search = ui.input(
                     placeholder='Buscar por número ou texto',

@@ -6,6 +6,7 @@
 // neste processo. A aplicacao conversa com ele por HTTP em 127.0.0.1: nada e
 // exposto para fora da maquina.
 
+const fs = require('fs')
 const path = require('path')
 const express = require('express')
 const pino = require('pino')
@@ -39,6 +40,18 @@ function registrar(conexao, extra = {}) {
   estado.conexao = conexao
   estado.atualizadoEm = new Date().toISOString()
   Object.assign(estado, extra)
+}
+
+function limparSessao() {
+  // Depois de um logout as credenciais gravadas ficam invalidas. Enquanto elas
+  // existirem o Baileys tenta reusa-las e nunca emite um QR novo, deixando a
+  // tela presa em "aguardando o codigo".
+  try {
+    fs.rmSync(AUTH_DIR, { recursive: true, force: true })
+    console.log('[whatsapp-gateway] sessao anterior removida')
+  } catch (erro) {
+    console.error('[whatsapp-gateway] falha ao limpar a sessao:', erro)
+  }
 }
 
 async function iniciar() {
@@ -87,13 +100,20 @@ async function iniciar() {
         qr: '',
         telefone: deslogado ? '' : estado.telefone,
         ultimoErro: deslogado
-          ? 'A conta foi desconectada no aparelho. Leia o QR novamente.'
+          ? 'A conta foi desconectada no aparelho. Leia o QR abaixo para vincular de novo.'
           : 'Conexao encerrada; tentando reconectar.',
       })
-      // Sem sessao valida nao adianta reconectar: e preciso ler o QR de novo.
-      if (!deslogado && !encerrando) {
-        setTimeout(() => iniciar().catch(() => {}), 3000)
+      if (encerrando) {
+        return
       }
+      // Apos o logout a sessao gravada nao serve mais: e preciso apaga-la antes
+      // de reiniciar, senao o Baileys insiste nela e nenhum QR e emitido.
+      if (deslogado) {
+        limparSessao()
+      }
+      setTimeout(() => iniciar().catch((erro) => {
+        registrar('desconectado', { ultimoErro: String(erro.message || erro) })
+      }), deslogado ? 1000 : 3000)
     }
   })
 }
@@ -162,6 +182,7 @@ app.post('/send', async (req, res) => {
 })
 
 app.post('/logout', async (req, res) => {
+  encerrando = true
   try {
     if (socket) {
       await socket.logout()
@@ -169,8 +190,21 @@ app.post('/logout', async (req, res) => {
   } catch (erro) {
     logger.warn({ erro: String(erro) }, 'falha ao desconectar')
   }
+  try {
+    if (socket) {
+      socket.ev.removeAllListeners('connection.update')
+      socket.end(undefined)
+    }
+  } catch (erro) {
+    logger.warn({ erro: String(erro) }, 'falha ao encerrar o socket')
+  }
+  socket = null
+  limparSessao()
   registrar('desconectado', { qr: '', telefone: '', ultimoErro: '' })
-  setTimeout(() => iniciar().catch(() => {}), 1000)
+  encerrando = false
+  setTimeout(() => iniciar().catch((erro) => {
+    registrar('desconectado', { ultimoErro: String(erro.message || erro) })
+  }), 500)
   res.json({ ok: true })
 })
 

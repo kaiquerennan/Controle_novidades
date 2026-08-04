@@ -43,6 +43,7 @@ from components.novelty_history_panel import render_novelty_history
 from services.novelty_history_service import NoveltyHistoryService
 from core.config import (
     API_KEY_ENVIRONMENTS,
+    DEFAULT_PROVIDER,
     IMAGE_MODELS,
     PROVIDER_LABELS,
     TEXT_MODELS,
@@ -250,7 +251,7 @@ def index() -> None:
             'generation': dict(state.get('generation') or {}),
             'html_override': str(state.get('html_override') or ''),
             'settings': {
-                'provider': str(controls['provider'].value or 'gemini'),
+                'provider': str(controls['provider'].value or DEFAULT_PROVIDER),
                 'text_model': str(controls['text_model'].value or ''),
                 'image_model': str(controls['image_model'].value or ''),
                 'cover_requested': bool(controls['cover'].value),
@@ -363,12 +364,7 @@ def index() -> None:
                 ).props('flat round color=white')
                 with ui.column().classes('gap-0'):
                     ui.label(APP_NAME).classes('text-xl font-bold')
-                    ui.label(
-                        'Crie uma novidade pronta a partir de imagens e texto bruto.'
-                    ).classes('text-sm text-slate-300')
-            ui.button(
-                'Nova Novidade', icon='note_add', on_click=new_novelty_dialog.open
-            ).props('outline color=white')
+
 
     with ui.column().classes('w-full px-6 py-5 gap-4'):
 
@@ -503,9 +499,11 @@ def index() -> None:
                 ui.label(
                     'Provedor de IA, chave de acesso e modelos usados na geração.'
                 ).classes('muted text-sm')
-                restored_provider = str(saved_settings.get('provider') or 'gemini')
+                restored_provider = str(
+                    saved_settings.get('provider') or DEFAULT_PROVIDER
+                )
                 if restored_provider not in PROVIDER_LABELS:
-                    restored_provider = 'gemini'
+                    restored_provider = DEFAULT_PROVIDER
                 provider_name = ui.select(
                     PROVIDER_LABELS, value=restored_provider, label='Provedor'
                 ).classes('w-52')
@@ -1686,4 +1684,3 @@ if __name__ in {'__main__', '__mp_main__'}:
     show=False,
     storage_secret=resolve_storage_secret(),
 )
-
