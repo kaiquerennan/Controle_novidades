@@ -5631,3 +5631,76 @@ Traceback (most recent call last):
   File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\element.py", line 150, in parent_slot
     raise RuntimeError(f'The parent slot of {name}(id={self.id}{markers}) has been deleted.')
 RuntimeError: The parent slot of Timer(id=103) has been deleted.
+2026-08-05 11:37:13,045 WARNING http://localhost:8510/robots.txt not found
+2026-08-05 15:18:59,350 INFO [PROCESSAMENTO] Interface iniciada; sessao=708ea256267d43ac966acb6261b7da9d
+2026-08-05 15:19:02,794 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-05T18:19:02.792+00:00","generation":"8dadfe34610f477a86e0c047ab828c78","stage":"preparacao","endpoint":"local","duration_seconds":0.004669,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-05 15:19:02,794 INFO [PROCESSAMENTO] Início; geracao=8dadfe34610f477a86e0c047ab828c78 idempotencia=1170883aa74a117175b5c5376721bac77431bd5521f735342ae29fadd52225b3 sessao=708ea256267d43ac966acb6261b7da9d provider=deepseek texto_bytes=2469 imagens=0 capa=False
+2026-08-05 15:19:02,794 INFO [MODELOS] Texto: Modelo: deepseek-chat
+2026-08-05 15:19:02,794 INFO [MODELOS] Imagem: Modelo: não utilizado
+2026-08-05 15:19:02,795 INFO [PROCESSAMENTO] organizacao iniciada
+2026-08-05 15:19:02,803 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=8dadfe34610f477a86e0c047ab828c78 operacao=organizacao modelo=deepseek-chat endpoint=/v1/responses tentativa=1 de 3 texto_bytes=22604 imagens_bytes=0
+2026-08-05 15:19:08,657 INFO HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-08-05 15:19:14,561 INFO [PROCESSAMENTO] Chamada IA 1 concluída em 11.76 s; operacao=organizacao endpoint=/v1/responses recebido_bytes=0
+2026-08-05 15:19:14,562 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-05T18:19:14.562+00:00","generation_id":"8dadfe34610f477a86e0c047ab828c78","idempotency_key":"1170883aa74a117175b5c5376721bac77431bd5521f735342ae29fadd52225b3","stage":"organizacao","endpoint":"/v1/responses","model":"deepseek-chat","logical_call":1,"started_at":"2026-08-05T18:19:02.803+00:00","attempts":0,"request_id":"","duration_seconds":11.758468099986203,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-08-05 15:19:14,563 INFO [PROCESSAMENTO] organizacao concluída em 11.77 s
+2026-08-05 15:19:14,564 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-05T18:19:14.564+00:00","generation":"8dadfe34610f477a86e0c047ab828c78","stage":"organizacao","endpoint":"local","duration_seconds":11.768383,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-05 15:19:14,564 INFO [PROCESSAMENTO] revisao iniciada
+2026-08-05 15:19:14,573 INFO [PROCESSAMENTO] Chamada IA 2 iniciada; geracao=8dadfe34610f477a86e0c047ab828c78 operacao=revisao modelo=deepseek-chat endpoint=/v1/responses tentativa=1 de 3 texto_bytes=13024 imagens_bytes=0
+2026-08-05 15:19:17,847 INFO HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-08-05 15:19:18,931 INFO [PROCESSAMENTO] Chamada IA 2 concluída em 4.36 s; operacao=revisao endpoint=/v1/responses recebido_bytes=0
+2026-08-05 15:19:18,931 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-05T18:19:18.931+00:00","generation_id":"8dadfe34610f477a86e0c047ab828c78","idempotency_key":"1170883aa74a117175b5c5376721bac77431bd5521f735342ae29fadd52225b3","stage":"revisao","endpoint":"/v1/responses","model":"deepseek-chat","logical_call":2,"started_at":"2026-08-05T18:19:14.572+00:00","attempts":0,"request_id":"","duration_seconds":4.358891800016863,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-08-05 15:19:18,933 INFO [PROCESSAMENTO] revisao concluída em 4.37 s
+2026-08-05 15:19:18,933 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-05T18:19:18.933+00:00","generation":"8dadfe34610f477a86e0c047ab828c78","stage":"revisao","endpoint":"local","duration_seconds":4.369055,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-05 15:19:18,933 INFO [PROCESSAMENTO] preparacao_visualizacao iniciada
+2026-08-05 15:19:18,948 INFO [PROCESSAMENTO] preparacao_visualizacao concluída em 0.02 s
+2026-08-05 15:19:18,948 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-05T18:19:18.948+00:00","generation":"8dadfe34610f477a86e0c047ab828c78","stage":"preparacao_visualizacao","endpoint":"local","duration_seconds":0.015001,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-05 15:19:18,949 INFO [PROCESSAMENTO] Total concluído em 16.15 s; chamadas_ia=2
+2026-08-05 15:19:18,949 INFO =========================
+2026-08-05 15:19:18,949 INFO Resumo da geração
+2026-08-05 15:19:18,949 INFO =========================
+2026-08-05 15:19:18,949 INFO Geração: 8dadfe34610f477a86e0c047ab828c78
+2026-08-05 15:19:18,949 INFO Tempo total: 16.16 s
+2026-08-05 15:19:18,950 INFO Quantidade de chamadas: 2
+2026-08-05 15:19:18,950 INFO /v1/responses: 2
+2026-08-05 15:19:18,950 INFO /v1/images: 0
+2026-08-05 15:19:18,951 INFO Tentativas HTTP: 0
+2026-08-05 15:19:18,951 INFO Tokens entrada: 0
+2026-08-05 15:19:18,951 INFO Tokens saída: 0
+2026-08-05 15:19:18,951 INFO Tokens cache: 0
+2026-08-05 15:19:18,951 INFO Tokens raciocínio: 0
+2026-08-05 15:19:18,951 INFO Tokens imagem: 0
+2026-08-05 15:19:18,952 INFO Custo aproximado: US$ 0.000000
+2026-08-05 15:19:18,952 INFO =========================
+2026-08-05 15:19:18,952 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-08-05T18:19:18.952+00:00","generation":"8dadfe34610f477a86e0c047ab828c78","idempotency_key":"1170883aa74a117175b5c5376721bac77431bd5521f735342ae29fadd52225b3","duration_seconds":16.16087590000825,"logical_calls":2,"http_attempts":0,"responses_calls":2,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.004669000016292557,"organizacao":11.768383299990091,"revisao":4.369055199989816,"preparacao_visualizacao":0.015000800020061433}}
+2026-08-05 15:19:18,952 INFO [PROCESSAMENTO] Orquestração recebida pela interface em 19.61 s
+2026-08-05 15:19:18,965 INFO [PROCESSAMENTO] Gravação de estado concluída em 0.01 s
+2026-08-05 15:19:18,965 INFO [PROCESSAMENTO] Visualização/UI concluída em 0.00 s; total=19.63 s
+2026-08-05 15:19:18,966 INFO [PROCESSAMENTO] Interface encerrada em 19.63 s; sucesso=True
+2026-08-05 15:35:34,052 ERROR The parent slot of Timer(id=67) has been deleted.
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\background_tasks.py", line 152, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 76, in _run_once
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\elements\timer.py", line 15, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\element.py", line 150, in parent_slot
+    raise RuntimeError(f'The parent slot of {name}(id={self.id}{markers}) has been deleted.')
+RuntimeError: The parent slot of Timer(id=67) has been deleted.
+2026-08-05 15:35:34,067 ERROR The parent slot of Timer(id=103) has been deleted.
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\background_tasks.py", line 152, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 76, in _run_once
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\elements\timer.py", line 15, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\element.py", line 150, in parent_slot
+    raise RuntimeError(f'The parent slot of {name}(id={self.id}{markers}) has been deleted.')
+RuntimeError: The parent slot of Timer(id=103) has been deleted.

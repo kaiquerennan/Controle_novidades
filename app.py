@@ -485,7 +485,7 @@ def index() -> None:
             open_whatsapp_dialog(novelty.display_title)
 
         with ui.column().classes('w-full gap-4') as novelty_panel:
-            render_novelty_history(
+            refresh_novelty_history = render_novelty_history(
                 on_send_whatsapp=send_launched_novelty,
                 on_edit=edit_launched_novelty,
             )
@@ -1504,7 +1504,7 @@ def index() -> None:
                     dialog.open()
 
 
-                def export_novelty(download: bool = True) -> None:
+                def export_novelty(download: bool = True, *, announce: bool = True) -> None:
                     if not state['generated']:
                         ui.notify('Gere a novidade primeiro.', type='warning')
                         return
@@ -1519,14 +1519,45 @@ def index() -> None:
                         html_override=str(state.get('html_override') or ''),
                     )
                     persist_screen_state()
-                    ui.notify('Arquivos gerados com sucesso.', type='positive')
+                    if announce:
+                        ui.notify('Arquivos gerados com sucesso.', type='positive')
                     if download:
                         ui.download(str(state['exports']['zip']))
+
+                def approve_novelty() -> None:
+                    """Aprova a matéria: exporta os arquivos e a publica no histórico.
+
+                    A aba "Novidades lançadas" lê o que existe em data/exports, entao
+                    a aprovacao precisa gravar os arquivos para a novidade aparecer la.
+                    """
+                    if not state['generated']:
+                        ui.notify('Gere a novidade primeiro.', type='warning')
+                        return
+                    try:
+                        export_novelty(download=False, announce=False)
+                    except ValueError as exc:
+                        ui.notify(str(exc), type='negative')
+                        return
+                    state['approved'] = True
+                    persist_screen_state(step='Aprovar e exportar')
+                    refresh_novelty_history()
+                    stepper.next()
+                    ui.notify(
+                        'Novidade aprovada e disponível em Novidades lançadas.',
+                        type='positive',
+                    )
+                    logger.info(
+                        '[PROCESSAMENTO] Novidade aprovada na sessao %s; titulo=%s',
+                        workspace.session_id, composition.title or 'sem titulo',
+                    )
 
                 with ui.row().classes('w-full justify-center gap-2 mt-5'):
                     ui.button('Voltar', icon='arrow_back', on_click=stepper.previous).props('flat')
                     ui.button('Gerar novamente', icon='refresh', on_click=generate_again).props('outline')
                     ui.button('Enviar pelo WhatsApp', icon='send', on_click=open_whatsapp_flow).props('outline color=green')
+                    ui.button(
+                        'Aprovar novidade', icon='task_alt', on_click=approve_novelty,
+                    ).props('color=primary').mark('aprovar-novidade')
 
             with ui.step('Aprovar e exportar', icon='task_alt'):
                 with ui.card().classes('simple-card w-full p-8 items-center text-center'):
@@ -1545,6 +1576,10 @@ def index() -> None:
                             'Enviar pelo WhatsApp', icon='send',
                             on_click=open_whatsapp_flow,
                         ).props('outline color=green')
+                        ui.button(
+                            'Ver em Novidades lançadas', icon='library_books',
+                            on_click=lambda: show_view('novidades'),
+                        ).props('outline color=primary').mark('ver-novidades-lancadas')
 
         creation_elements = [creation_header, creation_subtitle, stepper]
         # A tela inicial é sempre o painel de ocorrências.

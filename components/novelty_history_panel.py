@@ -13,8 +13,12 @@ def render_novelty_history(
     history_service: NoveltyHistoryService | None = None,
     on_send_whatsapp: Callable[[LaunchedNovelty], Any] | None = None,
     on_edit: Callable[[LaunchedNovelty], Any] | None = None,
-) -> None:
-    """Lista as novidades já exportadas por este aplicativo."""
+) -> Callable[[], None]:
+    """Lista as novidades já exportadas por este aplicativo.
+
+    Devolve a função que recarrega a lista, para que o fluxo de criação possa
+    atualizá-la assim que uma novidade for aprovada.
+    """
     history = history_service or NoveltyHistoryService()
     state: dict[str, Any] = {'search': '', 'aberta': None}
 
@@ -131,6 +135,7 @@ def render_novelty_history(
                     'flat color=primary'
                 ).tooltip('Recarregar')
         novelty_list()
+    return novelty_list.refresh
 
 
 __all__ = ['render_novelty_history']
