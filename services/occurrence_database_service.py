@@ -104,12 +104,6 @@ def assert_read_only(query: str) -> str:
 
 
 class OccurrenceDatabase:
-    """Acesso somente leitura ao SQL Server que contem as ocorrencias.
-
-    Usa pyodbc, que mantem o pool de conexoes no proprio gerenciador ODBC.
-    Nunca registra credenciais em log e recusa qualquer instrucao que nao seja
-    de consulta.
-    """
 
     def __init__(
         self,

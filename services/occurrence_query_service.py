@@ -64,9 +64,6 @@ ADMINISTRATIVE_PATTERNS = tuple(
         r'^analisando',
         r'nosso maior problema',
         r'gentileza analisar',
-        # Jargao de infraestrutura: nao interessa ao cliente final e serve de
-        # isca para a IA copiar o rascunho tecnico da equipe. Atinge 0,04% das
-        # linhas, medido sobre a base atual.
         r'\b(cache[s]?|buffer[s]?|lock[s]?|thread[s]?|heap|swap)\b',
         # A URL pode vir precedida do marcador de lista da propria observacao.
         r'^https?://\S+$',

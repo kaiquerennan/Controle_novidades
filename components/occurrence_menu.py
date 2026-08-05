@@ -81,14 +81,14 @@ def render_occurrence_menu(
         else:
             visible = [item for item in occurrences if item.number not in dismissed]
 
-        summary = (
-            f'{len(visible)} ocorrência(s) excluída(s)'
-            if state['show_dismissed']
-            else f'{len(visible)} ocorrência(s) de mudança nos últimos {months} meses'
-        )
-        if not state['show_dismissed'] and dismissed:
-            summary += f' · {len(dismissed)} excluída(s)'
-        ui.label(summary).classes('muted text-sm px-1')
+        if state['show_dismissed']:
+            summary = f'{len(visible)} ocorrência(s) excluída(s)'
+        elif dismissed:
+            summary = f'{len(dismissed)} excluída(s)'
+        else:
+            summary = ''
+        if summary:
+            ui.label(summary).classes('muted text-sm px-1')
 
         if not visible:
             ui.label(
