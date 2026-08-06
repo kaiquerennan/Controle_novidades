@@ -20,6 +20,11 @@ from services.occurrence_query_service import (
 PREVIEW_LENGTH = 320
 KIND_BADGE_COLORS = {'Erro': 'red', 'Mudança': 'teal'}
 
+# Cada card custa cerca de dez elementos no navegador. Desenhar as centenas de
+# ocorrencias de uma vez trava a tela por segundos, entao a lista e paginada: a
+# consulta continua trazendo tudo, so o desenho e que fica por pagina.
+PAGE_SIZE = 25
+
 # Controle segmentado: a faixa clara e a trilha, e so a opcao ativa ganha a
 # pastilha. Os botoes inativos precisam ficar transparentes no CSS porque o
 # q-btn-toggle sempre pinta um fundo neles.
@@ -75,6 +80,10 @@ def render_occurrence_menu(
         'error': '',
         'loading': True,
         'occurrences': [],
+        'page': 1,
+        'system': '',
+        'module': '',
+        'catalog': {},
     }
 
     def load_occurrences() -> list[OccurrenceSummary]:
@@ -82,13 +91,21 @@ def render_occurrence_menu(
             search=str(state['search']), months=months, kind=str(state['kind']),
             start_date=state['start_date'] or None,
             end_date=state['end_date'] or None,
+            system=str(state['system']), module=str(state['module']),
         )
 
     async def reload() -> None:
         """A consulta vai para outra thread para nao travar a interface."""
         state['loading'] = True
+        # Filtro novo recomeça na primeira página: manter a antiga deixaria a
+        # tela vazia sempre que o resultado encolhesse.
+        state['page'] = 1
         occurrence_list.refresh()
         try:
+            if not state['catalog']:
+                # Uma vez por sessão; o serviço ainda guarda o resultado em cache.
+                state['catalog'] = await run.io_bound(queries.list_systems_and_modules)
+                _fill_system_options()
             state['occurrences'] = await run.io_bound(load_occurrences)
             state['error'] = ''
         except OccurrenceDatabaseError as exc:
@@ -124,15 +141,6 @@ def render_occurrence_menu(
         else:
             visible = [item for item in occurrences if item.number not in dismissed]
 
-        if state['show_dismissed']:
-            summary = f'{len(visible)} ocorrência(s) excluída(s)'
-        elif dismissed:
-            summary = f'{len(dismissed)} excluída(s)'
-        else:
-            summary = ''
-        if summary:
-            ui.label(summary).classes('muted text-sm px-1')
-
         if not visible:
             ui.label(
                 'Nenhuma ocorrência excluída.'
@@ -141,11 +149,34 @@ def render_occurrence_menu(
             ).classes('muted p-4')
             return
 
+        total_paginas = max(1, -(-len(visible) // PAGE_SIZE))
+        pagina = min(max(1, int(state['page'])), total_paginas)
+        state['page'] = pagina
+        inicio = (pagina - 1) * PAGE_SIZE
+        mostradas = visible[inicio:inicio + PAGE_SIZE]
+
+        partes = [
+            f'{inicio + 1}-{inicio + len(mostradas)} de {len(visible)}'
+            + (' excluída(s)' if state['show_dismissed'] else ' ocorrência(s)')
+        ]
+        if dismissed and not state['show_dismissed']:
+            partes.append(f'{len(dismissed)} excluída(s)')
+
+        # A paginação fica acima da lista: a área de rolagem ocupa quase toda a
+        # janela, e embaixo dela o controle cairia fora da vista.
+        with ui.row().classes('w-full items-center justify-between no-wrap gap-3 px-1'):
+            ui.label(' · '.join(partes)).classes('muted text-sm')
+            if total_paginas > 1:
+                ui.pagination(
+                    1, total_paginas, value=pagina, direction_links=True,
+                    on_change=lambda event: change_page(event.value),
+                ).props('max-pages=7 boundary-numbers').mark('paginacao-ocorrencia')
+
         # Ocupa a altura restante da janela em vez de uma faixa fixa.
         with ui.column().classes(
-            'w-full gap-2 max-h-[calc(100vh-20rem)] min-h-[24rem] overflow-y-auto pr-1'
+            'w-full gap-2 max-h-[calc(100vh-22rem)] min-h-[24rem] overflow-y-auto pr-1'
         ):
-            for occurrence in visible:
+            for occurrence in mostradas:
                 _occurrence_row(occurrence)
 
     def _occurrence_row(occurrence: OccurrenceSummary) -> None:
@@ -266,9 +297,55 @@ def render_occurrence_menu(
         state['kind'] = escolhido
         await reload()
 
+    def _fill_system_options() -> None:
+        select_sistema.options = sorted(state['catalog'])
+        select_sistema.update()
+        _fill_module_options()
+
+    def _fill_module_options() -> None:
+        """Sem sistema escolhido, oferece os módulos de todos eles."""
+        sistema = str(state['system'])
+        if sistema:
+            modulos = sorted(state['catalog'].get(sistema) or [])
+        else:
+            modulos = sorted(
+                {modulo for lista in state['catalog'].values() for modulo in lista}
+            )
+        select_modulo.options = modulos
+        select_modulo.update()
+
+    async def apply_system(value: Any) -> None:
+        novo = str(value or '')
+        if novo == state['system']:
+            return
+        state['system'] = novo
+        # O módulo escolhido pode não pertencer ao novo sistema; nesse caso ele
+        # sai, senão a consulta cruzaria sistema e módulo incompatíveis e não
+        # traria linha alguma.
+        if state['module'] and state['module'] not in (state['catalog'].get(novo) or []):
+            state['module'] = ''
+            select_modulo.value = None
+        _fill_module_options()
+        await reload()
+
+    async def apply_module(value: Any) -> None:
+        novo = str(value or '')
+        if novo == state['module']:
+            return
+        state['module'] = novo
+        await reload()
+
+    def change_page(value: Any) -> None:
+        nova = int(value or 1)
+        if nova == state['page']:
+            return
+        state['page'] = nova
+        occurrence_list.refresh()
+
     def toggle_dismissed(value: bool) -> None:
         # As excluidas ja estao na lista carregada; basta trocar o filtro local.
         state['show_dismissed'] = bool(value)
+        state['page'] = 1
         occurrence_list.refresh()
 
     # Um unico dialogo reaproveitado; recriar a cada clique deixaria copias no DOM.
@@ -315,6 +392,19 @@ def render_occurrence_menu(
                 'flat dense color=grey-7'
             ).tooltip(f'Limpar as datas e voltar aos últimos {months} meses')
             ui.space()
+            select_sistema = ui.select(
+                [], label='Sistema', with_input=True, clearable=True,
+                on_change=lambda event: apply_system(event.value),
+            ).props('outlined dense options-dense style="min-width: 15rem"').mark(
+                'filtro-sistema-ocorrencia'
+            )
+            select_modulo = ui.select(
+                [], label='Módulo', with_input=True, clearable=True,
+                on_change=lambda event: apply_module(event.value),
+            ).props('outlined dense options-dense style="min-width: 17rem"').mark(
+                'filtro-modulo-ocorrencia'
+            )
+        with ui.row().classes('w-full items-center gap-2 no-wrap'):
             # "color" pinta os botoes nao selecionados e "toggle-color" o ativo.
             ui.toggle(
                 KIND_FILTER_LABELS, value=KIND_ANY,

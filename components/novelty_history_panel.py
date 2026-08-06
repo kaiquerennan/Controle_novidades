@@ -9,11 +9,15 @@ from components.date_field import render_date_field
 from components.novelty_preview import render_novelty_preview
 from services.launched_novelty_query_service import LaunchedNoveltyQueryService
 from services.novelty_history_service import LaunchedNovelty, NoveltyHistoryService
-from services.occurrence_query_service import parse_filter_date
+from services.occurrence_query_service import OccurrenceQueryService, parse_filter_date
 
 
 ORIGIN_LABELS = {'aplicativo': 'Gerada aqui', 'cadastro': 'Publicada'}
 ORIGIN_COLORS = {'aplicativo': 'primary', 'cadastro': 'deep-purple'}
+
+# O painel e construido junto com a pagina, mesmo escondido: desenhar as
+# centenas de novidades de uma vez pesava na abertura do aplicativo inteiro.
+PAGE_SIZE = 25
 
 WHATSAPP_LOGO_PATH = Path(__file__).resolve().parents[1] / 'WhatsApp_Logo.png'
 # A rota e registrada uma vez, no import. Passar o caminho local direto para o
@@ -57,10 +61,13 @@ def render_novelty_history(
     """
     history = history_service or NoveltyHistoryService()
     queries = novelty_query_service or LaunchedNoveltyQueryService()
+    # O catálogo de sistemas/módulos é o mesmo da view das ocorrências.
+    catalog_service = OccurrenceQueryService(database=queries.database)
     state: dict[str, Any] = {
         'search': '', 'aberta': None,
         'start_date': '', 'end_date': '',
-        'loading': True, 'published': [], 'aviso': '',
+        'loading': True, 'published': [], 'aviso': '', 'page': 1,
+        'system': '', 'module': '', 'catalog': {},
     }
 
     def load_published() -> list[LaunchedNovelty]:
@@ -68,13 +75,18 @@ def render_novelty_history(
             search=str(state['search']),
             start_date=state['start_date'] or None,
             end_date=state['end_date'] or None,
+            system=str(state['system']), module=str(state['module']),
         )
 
     async def reload() -> None:
         """As publicadas vêm do banco; as locais são lidas do disco no render."""
         state['loading'] = True
+        state['page'] = 1
         novelty_list.refresh()
         try:
+            if not state['catalog']:
+                state['catalog'] = await run.io_bound(catalog_service.list_systems_and_modules)
+                _fill_system_options()
             state['published'] = await run.io_bound(load_published)
             state['aviso'] = ''
         except Exception as exc:
@@ -98,6 +110,48 @@ def render_novelty_history(
         state['aberta'] = None
         linha_filtros.set_visibility(True)
         novelty_list.refresh()
+
+    def change_page(value: Any) -> None:
+        nova = int(value or 1)
+        if nova == state['page']:
+            return
+        state['page'] = nova
+        novelty_list.refresh()
+
+    def _fill_system_options() -> None:
+        select_sistema.options = sorted(state['catalog'])
+        select_sistema.update()
+        _fill_module_options()
+
+    def _fill_module_options() -> None:
+        """Sem sistema escolhido, oferece os módulos de todos eles."""
+        sistema = str(state['system'])
+        if sistema:
+            modulos = sorted(state['catalog'].get(sistema) or [])
+        else:
+            modulos = sorted(
+                {modulo for lista in state['catalog'].values() for modulo in lista}
+            )
+        select_modulo.options = modulos
+        select_modulo.update()
+
+    async def apply_system(value: Any) -> None:
+        novo = str(value or '')
+        if novo == state['system']:
+            return
+        state['system'] = novo
+        if state['module'] and state['module'] not in (state['catalog'].get(novo) or []):
+            state['module'] = ''
+            select_modulo.value = None
+        _fill_module_options()
+        await reload()
+
+    async def apply_module(value: Any) -> None:
+        novo = str(value or '')
+        if novo == state['module']:
+            return
+        state['module'] = novo
+        await reload()
 
     def _detalhe(novelty: LaunchedNovelty) -> None:
         if novelty.from_database:
@@ -210,18 +264,28 @@ def render_novelty_history(
                 ui.icon('warning_amber').classes('text-amber-600')
                 ui.label(state['aviso']).classes('text-amber-800 text-sm')
         novelties = _combined()
-        publicadas = sum(1 for item in novelties if item.from_database)
-        ui.label(
-            f'{len(novelties)} novidade(s) · {publicadas} publicada(s) · '
-            f'{len(novelties) - publicadas} gerada(s) aqui'
-        ).classes('muted text-sm px-1')
         if not novelties:
             ui.label(
                 'Nenhuma novidade para os filtros atuais.'
             ).classes('muted p-4')
             return
+
+        total_paginas = max(1, -(-len(novelties) // PAGE_SIZE))
+        pagina = min(max(1, int(state['page'])), total_paginas)
+        state['page'] = pagina
+        inicio = (pagina - 1) * PAGE_SIZE
+        mostradas = novelties[inicio:inicio + PAGE_SIZE]
+
+        publicadas = sum(1 for item in novelties if item.from_database)
+        # Mesmo motivo do menu de ocorrências: o controle acima fica sempre à vista.
+        with ui.row().classes('w-full items-center justify-between no-wrap gap-3 px-1'):
+            if total_paginas > 1:
+                ui.pagination(
+                    1, total_paginas, value=pagina, direction_links=True,
+                    on_change=lambda event: change_page(event.value),
+                ).props('max-pages=7 boundary-numbers').mark('paginacao-novidade')
         with ui.column().classes('w-full gap-2'):
-            for novelty in novelties:
+            for novelty in mostradas:
                 _novelty_row(novelty)
 
     def _novelty_row(novelty: LaunchedNovelty) -> None:
@@ -327,6 +391,19 @@ def render_novelty_history(
             ui.button(icon='backspace', on_click=clear_dates).props(
                 'flat dense color=grey-7'
             ).tooltip('Limpar as datas')
+            ui.space()
+            select_sistema = ui.select(
+                [], label='Sistema', with_input=True, clearable=True,
+                on_change=lambda event: apply_system(event.value),
+            ).props('outlined dense options-dense style="min-width: 15rem"').mark(
+                'filtro-sistema-novidade'
+            )
+            select_modulo = ui.select(
+                [], label='Módulo', with_input=True, clearable=True,
+                on_change=lambda event: apply_module(event.value),
+            ).props('outlined dense options-dense style="min-width: 17rem"').mark(
+                'filtro-modulo-novidade'
+            )
         novelty_list()
         # A primeira carga acontece depois que a pagina existe, para nao atrasar o render.
         ui.timer(0.1, reload, once=True)

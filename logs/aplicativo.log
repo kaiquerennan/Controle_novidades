@@ -6316,3 +6316,216 @@ RuntimeError: The parent element this slot belongs to has been deleted.
 2026-08-06 12:38:03,271 INFO [PROCESSAMENTO] Gravação de estado concluída em 0.02 s
 2026-08-06 12:38:03,272 INFO [PROCESSAMENTO] Visualização/UI concluída em 0.00 s; total=11.14 s
 2026-08-06 12:38:03,272 INFO [PROCESSAMENTO] Interface encerrada em 11.14 s; sucesso=True
+2026-08-06 16:10:06,243 ERROR 'Session is disconnected' qYW5q8bLttuo-EzrAAAA (further occurrences of this error will be logged with level INFO)
+2026-08-06 16:32:52,876 WARNING Client has been deleted but is still being used. This is most likely a bug in your application code. See https://github.com/zauberzeug/nicegui/issues/3028 for more information.
+Stack (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1885, in <module>
+    ui.run(
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 77, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\kaique.alves.EMCSISTEMAS\AppData\Local\Programs\Python\Python314\Lib\asyncio\runners.py", line 204, in run
+    return runner.run(main)
+  File "C:\Users\kaique.alves.EMCSISTEMAS\AppData\Local\Programs\Python\Python314\Lib\asyncio\runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Users\kaique.alves.EMCSISTEMAS\AppData\Local\Programs\Python\Python314\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Users\kaique.alves.EMCSISTEMAS\AppData\Local\Programs\Python\Python314\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Users\kaique.alves.EMCSISTEMAS\AppData\Local\Programs\Python\Python314\Lib\asyncio\base_events.py", line 2046, in _run_once
+    handle._run()
+  File "C:\Users\kaique.alves.EMCSISTEMAS\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\awaitable_response.py", line 27, in _fire
+    self.fire_and_forget()
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\functions\refreshable.py", line 100, in fire_and_forget
+    if awaitables := self._execute_refresh(args, kwargs, instance=instance):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\functions\refreshable.py", line 119, in _execute_refresh
+    result = target.run(self.func)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\functions\refreshable.py", line 38, in run
+    result = func(*self.args, **self.kwargs)
+  File "C:\EMC_Novidade_Visual_IA\components\whatsapp_panel.py", line 165, in painel
+    with ui.row().classes('w-full items-center gap-3'):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\elements\row.py", line 19, in __init__
+    super().__init__('div')
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\elements\mixins\sortable_element.py", line 15, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\element.py", line 85, in __init__
+    client.outbox.enqueue_update(self)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\outbox.py", line 65, in enqueue_update
+    self.client.check_existence()
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\client.py", line 478, in check_existence
+    helpers.warn_once('Client has been deleted but is still being used. '
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\helpers\warnings.py", line 9, in warn_once
+    log.warning(message, stack_info=stack_info)
+2026-08-06 16:33:14,607 ERROR The parent slot of Timer(id=86) has been deleted.
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\background_tasks.py", line 152, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 76, in _run_once
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\elements\timer.py", line 15, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\element.py", line 150, in parent_slot
+    raise RuntimeError(f'The parent slot of {name}(id={self.id}{markers}) has been deleted.')
+RuntimeError: The parent slot of Timer(id=86) has been deleted.
+2026-08-06 16:33:14,654 ERROR The parent slot of Timer(id=116) has been deleted.
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\background_tasks.py", line 152, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 76, in _run_once
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\elements\timer.py", line 15, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\element.py", line 150, in parent_slot
+    raise RuntimeError(f'The parent slot of {name}(id={self.id}{markers}) has been deleted.')
+RuntimeError: The parent slot of Timer(id=116) has been deleted.
+2026-08-06 16:33:14,658 ERROR The parent slot of Timer(id=125) has been deleted.
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\background_tasks.py", line 152, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 90, in _run_in_loop
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\elements\timer.py", line 15, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\element.py", line 150, in parent_slot
+    raise RuntimeError(f'The parent slot of {name}(id={self.id}{markers}) has been deleted.')
+RuntimeError: The parent slot of Timer(id=125) has been deleted.
+2026-08-06 16:33:14,662 ERROR The parent slot of Timer(id=126) has been deleted.
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\background_tasks.py", line 152, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 76, in _run_once
+    with self._get_context():
+         ~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\elements\timer.py", line 15, in _get_context
+    return self.parent_slot or nullcontext()
+           ^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\element.py", line 150, in parent_slot
+    raise RuntimeError(f'The parent slot of {name}(id={self.id}{markers}) has been deleted.')
+RuntimeError: The parent slot of Timer(id=126) has been deleted.
+2026-08-06 16:34:59,509 ERROR The client this element belongs to has been deleted.
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\background_tasks.py", line 152, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\awaitable_response.py", line 27, in _fire
+    self.fire_and_forget()
+    ~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\functions\refreshable.py", line 100, in fire_and_forget
+    if awaitables := self._execute_refresh(args, kwargs, instance=instance):
+                     ~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\functions\refreshable.py", line 115, in _execute_refresh
+    target.container.clear()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\element.py", line 493, in clear
+    self.client.remove_elements(self.descendants())
+    ^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\element.py", line 138, in client
+    raise RuntimeError('The client this element belongs to has been deleted.')
+RuntimeError: The client this element belongs to has been deleted.
+2026-08-06 16:40:53,516 WARNING Client has been deleted but is still being used. This is most likely a bug in your application code. See https://github.com/zauberzeug/nicegui/issues/3028 for more information.
+Stack (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\app.py", line 1885, in <module>
+    ui.run(
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\ui_run.py", line 311, in run
+    Server.instance.run()
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\server.py", line 49, in run
+    super().run(sockets=sockets)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\uvicorn\server.py", line 77, in run
+    return asyncio_run(self.serve(sockets=sockets), loop_factory=self.config.get_loop_factory())
+  File "C:\Users\kaique.alves.EMCSISTEMAS\AppData\Local\Programs\Python\Python314\Lib\asyncio\runners.py", line 204, in run
+    return runner.run(main)
+  File "C:\Users\kaique.alves.EMCSISTEMAS\AppData\Local\Programs\Python\Python314\Lib\asyncio\runners.py", line 127, in run
+    return self._loop.run_until_complete(task)
+  File "C:\Users\kaique.alves.EMCSISTEMAS\AppData\Local\Programs\Python\Python314\Lib\asyncio\base_events.py", line 706, in run_until_complete
+    self.run_forever()
+  File "C:\Users\kaique.alves.EMCSISTEMAS\AppData\Local\Programs\Python\Python314\Lib\asyncio\base_events.py", line 677, in run_forever
+    self._run_once()
+  File "C:\Users\kaique.alves.EMCSISTEMAS\AppData\Local\Programs\Python\Python314\Lib\asyncio\base_events.py", line 2046, in _run_once
+    handle._run()
+  File "C:\Users\kaique.alves.EMCSISTEMAS\AppData\Local\Programs\Python\Python314\Lib\asyncio\events.py", line 94, in _run
+    self._context.run(self._callback, *self._args)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\awaitable_response.py", line 27, in _fire
+    self.fire_and_forget()
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\functions\refreshable.py", line 100, in fire_and_forget
+    if awaitables := self._execute_refresh(args, kwargs, instance=instance):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\functions\refreshable.py", line 119, in _execute_refresh
+    result = target.run(self.func)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\functions\refreshable.py", line 38, in run
+    result = func(*self.args, **self.kwargs)
+  File "C:\EMC_Novidade_Visual_IA\components\whatsapp_panel.py", line 165, in painel
+    with ui.row().classes('w-full items-center gap-3'):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\elements\row.py", line 19, in __init__
+    super().__init__('div')
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\elements\mixins\sortable_element.py", line 15, in __init__
+    super().__init__(*args, **kwargs)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\element.py", line 85, in __init__
+    client.outbox.enqueue_update(self)
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\outbox.py", line 65, in enqueue_update
+    self.client.check_existence()
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\client.py", line 478, in check_existence
+    helpers.warn_once('Client has been deleted but is still being used. '
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\helpers\warnings.py", line 9, in warn_once
+    log.warning(message, stack_info=stack_info)
+2026-08-06 16:44:05,797 ERROR The parent element this slot belongs to has been deleted.
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 113, in _invoke_callback
+    await result
+  File "C:\EMC_Novidade_Visual_IA\components\whatsapp_panel.py", line 82, in refresh_state
+    await run.io_bound(service.qr_code) if situacao.has_qr else ''
+                                           ^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'has_qr'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 96, in _run_in_loop
+    await self._current_invocation
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 115, in _invoke_callback
+    core.app.handle_exception(e)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\app\app.py", line 178, in handle_exception
+    if context.slot_stack and context.client is not None:
+                              ^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\context.py", line 41, in client
+    return self.slot.parent.client
+           ^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\slot.py", line 31, in parent
+    raise RuntimeError('The parent element this slot belongs to has been deleted.')
+RuntimeError: The parent element this slot belongs to has been deleted.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\background_tasks.py", line 152, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 102, in _run_in_loop
+    core.app.handle_exception(e)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\app\app.py", line 178, in handle_exception
+    if context.slot_stack and context.client is not None:
+                              ^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\context.py", line 41, in client
+    return self.slot.parent.client
+           ^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\slot.py", line 31, in parent
+    raise RuntimeError('The parent element this slot belongs to has been deleted.')
+RuntimeError: The parent element this slot belongs to has been deleted.
+2026-08-06 16:48:40,730 ERROR 'Session is disconnected' Qi9pkJ_ABMrG86YQAAAA (further occurrences of this error will be logged with level INFO)
+2026-08-06 18:19:24,411 ERROR 'Session is disconnected' YplDl1zCnutDxjuqAAAA (further occurrences of this error will be logged with level INFO)
+2026-08-06 18:20:54,545 ERROR Erro ao executar a consulta no banco 191.252.197.44,1433/emcsistemas1: ('08S01', '[08S01] [Microsoft][ODBC Driver 11 for SQL Server]TCP Provider: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.\r\n (10060) (SQLGetData); [08S01] [Microsoft][ODBC Driver 11 for SQL Server]Communication link failure (10060)')

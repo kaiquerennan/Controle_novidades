@@ -487,7 +487,11 @@ def index() -> None:
             ui.notify('Novidade aberta para edição.', type='positive')
 
         def send_launched_novelty(novelty: Any) -> None:
-            open_whatsapp_dialog(novelty.display_title)
+            # As publicadas no portal levam o link logo abaixo do título; as
+            # geradas aqui ainda não têm endereço público, então vai só o título.
+            open_whatsapp_dialog(
+                novelty.display_title, mensagem_inicial=novelty.whatsapp_message,
+            )
 
         with ui.column().classes('w-full gap-4') as novelty_panel:
             refresh_novelty_history = render_novelty_history(
@@ -1441,7 +1445,9 @@ def index() -> None:
                         return
                     open_whatsapp_dialog(composition.title or 'Novidade EMC')
 
-                def open_whatsapp_dialog(titulo: str) -> None:
+                def open_whatsapp_dialog(
+                    titulo: str, *, mensagem_inicial: str = '',
+                ) -> None:
                     """Tela de envio: resumo editável, para um contato ou um grupo."""
                     situacao = whatsapp_gateway.status()
                     if not situacao.connected:
@@ -1454,6 +1460,7 @@ def index() -> None:
                         return
 
                     titulo = str(titulo or 'Novidade EMC')
+                    texto_inicial = str(mensagem_inicial or '').strip() or titulo
                     destino: dict[str, Any] = {
                         'tipo': 'Contato',
                         'grupos': [],
@@ -1598,7 +1605,7 @@ def index() -> None:
                         area_grupo.set_visibility(False)
 
                         mensagem = ui.textarea(
-                            'Mensagem', value=titulo,
+                            'Mensagem', value=texto_inicial,
                         ).props('rows=8 outlined').classes('w-full').mark('whatsapp-mensagem')
                         resultado = ui.label('').classes('text-sm muted')
                         enviando = ui.spinner(size='lg')

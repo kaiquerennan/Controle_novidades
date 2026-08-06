@@ -17,6 +17,11 @@ METADATA_NAME = 'novidade.json'
 ORIGIN_APPLICATION = 'aplicativo'
 ORIGIN_DATABASE = 'cadastro'
 
+# Pagina publica da novidade no portal da EMC, pelo codigo do item.
+PUBLIC_URL_TEMPLATE = (
+    'https://www.emcsistemas.com.br/Comunicacao/emcNovidadesView?itn={code}'
+)
+
 
 @dataclass(slots=True)
 class LaunchedNovelty:
@@ -32,10 +37,26 @@ class LaunchedNovelty:
     zip_path: Path | None = None
     origin: str = ORIGIN_APPLICATION
     occurrence_number: int = 0
+    code: int = 0
+    system: str = ''
+    module: str = ''
 
     @property
     def from_database(self) -> bool:
         return self.origin == ORIGIN_DATABASE
+
+    @property
+    def public_url(self) -> str:
+        """Endereço no portal; vazio para o que ainda não foi publicado lá."""
+        if not self.from_database or not self.code:
+            return ''
+        return PUBLIC_URL_TEMPLATE.format(code=self.code)
+
+    @property
+    def whatsapp_message(self) -> str:
+        """Título e, logo abaixo, o link da novidade no portal."""
+        link = self.public_url
+        return f'{self.display_title}\n\n{link}' if link else self.display_title
 
     @property
     def identifier(self) -> str:
@@ -199,6 +220,7 @@ class NoveltyHistoryService:
 
 __all__ = [
     'EXPORTS_ROOT',
+    'PUBLIC_URL_TEMPLATE',
     'ORIGIN_APPLICATION',
     'ORIGIN_DATABASE',
     'LaunchedNovelty',

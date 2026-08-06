@@ -7,6 +7,7 @@ from services.novelty_history_service import ORIGIN_DATABASE, LaunchedNovelty
 from services.occurrence_database_service import OccurrenceDatabase
 from services.occurrence_query_service import (
     LIKE_ESCAPE,
+    OCCURRENCE_VIEW,
     escape_like,
     parse_filter_date,
 )
@@ -16,10 +17,18 @@ from services.text_sanitizer import html_to_text
 NOVELTY_TABLE = 'ITENS_NOVIDADES_EMC'
 DEFAULT_LIMIT = 500
 
+# Sistema e modulo nao existem na tabela de novidades: eles vêm da ocorrencia de
+# origem. O join e LEFT de proposito -- uma novidade cuja ocorrencia nao esteja na
+# view continua aparecendo, apenas sem essa classificacao.
 _BASE_QUERY = (
-    'SELECT ine.ITN_DATA_ALTERACAO, ine.OCO_NUMERO, ine.ITN_TITULO, ine.ITN_DESCRICAO'
+    'SELECT ine.ITN_CODIGO, ine.ITN_DATA_ALTERACAO, ine.OCO_NUMERO,'
+    ' ine.ITN_TITULO, ine.ITN_DESCRICAO,'
+    ' oco.SISTEMA, oco.MODULO'
     f' FROM {NOVELTY_TABLE} ine'
+    f' LEFT JOIN {OCCURRENCE_VIEW} oco ON oco.NUMERO_OCORRENCIA = ine.OCO_NUMERO'
 )
+_FILTER_BY_SYSTEM = 'oco.SISTEMA = ?'
+_FILTER_BY_MODULE = 'oco.MODULO = ?'
 
 # Clausulas sem o "AND": elas sao unidas no final, para que qualquer combinacao
 # de filtros gere uma query valida.
@@ -58,6 +67,8 @@ class LaunchedNoveltyQueryService:
         search: str = '',
         start_date: Any = None,
         end_date: Any = None,
+        system: str = '',
+        module: str = '',
         limit: int = DEFAULT_LIMIT,
     ) -> list[LaunchedNovelty]:
         term = str(search or '').strip()
@@ -73,6 +84,14 @@ class LaunchedNoveltyQueryService:
         if fim is not None:
             clauses.append(_TO_DATE)
             params.append(fim)
+        sistema = str(system or '').strip()
+        if sistema:
+            clauses.append(_FILTER_BY_SYSTEM)
+            params.append(sistema)
+        modulo = str(module or '').strip()
+        if modulo:
+            clauses.append(_FILTER_BY_MODULE)
+            params.append(modulo)
         if term:
             pattern = f'%{escape_like(term)}%'
             if term.isdigit():
@@ -96,13 +115,20 @@ class LaunchedNoveltyQueryService:
             numero = int(row.get('OCO_NUMERO') or 0)
         except (TypeError, ValueError):
             numero = 0
+        try:
+            codigo = int(row.get('ITN_CODIGO') or 0)
+        except (TypeError, ValueError):
+            codigo = 0
         return LaunchedNovelty(
+            code=codigo,
             # O titulo tambem passa pelo conversor: ele costuma vir com entidades
             # (&amp;, &nbsp;) mesmo quando nao tem tag alguma.
             title=html_to_text(row.get('ITN_TITULO')),
             created_at=_as_datetime(row.get('ITN_DATA_ALTERACAO')),
             text=html_to_text(row.get('ITN_DESCRICAO')),
             occurrence_number=numero,
+            system=str(row.get('SISTEMA') or '').strip(),
+            module=str(row.get('MODULO') or '').strip(),
             origin=ORIGIN_DATABASE,
         )
 

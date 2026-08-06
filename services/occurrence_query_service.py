@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 from datetime import date, datetime
 import json
 import re
+import time
 import unicodedata
 from typing import Any
 
@@ -12,12 +13,12 @@ from services.occurrence_database_service import OccurrenceDatabase
 
 # A view ja entrega somente as ocorrencias de mudanca, com todo o contexto
 OCCURRENCE_VIEW = 'VW_OCORRENCIAS_MUDANCA'
-DEFAULT_MONTHS = 3
+DEFAULT_MONTHS = 1
 DEFAULT_LIMIT = 500
 
 _COLUMNS = (
     'NUMERO_OCORRENCIA, CODIGO_CLIENTE, DATA_ABERTURA, ULTIMA_ALTERACAO,'
-    ' TIPO_OCORRENCIA, TITULO_NOVIDADE, JSON_COMPLETO'
+    ' TIPO_OCORRENCIA, SISTEMA, MODULO, TITULO_NOVIDADE, JSON_COMPLETO'
 )
 
 _BASE_QUERY = f'SELECT {_COLUMNS} FROM {OCCURRENCE_VIEW}'
@@ -38,6 +39,12 @@ KIND_FILTER_LABELS = {KIND_ANY: 'Ambos', 'M': 'Mudança', 'E': 'Erro'}
 # em memoria, ele descartaria linhas depois do limite e esconderia candidatas.
 _ONLY_WITHOUT_NOVELTY = "(TITULO_NOVIDADE IS NULL OR LTRIM(RTRIM(TITULO_NOVIDADE)) = '')"
 _FILTER_BY_KIND = 'TIPO_OCORRENCIA = ?'
+_FILTER_BY_SYSTEM = 'SISTEMA = ?'
+_FILTER_BY_MODULE = 'MODULO = ?'
+
+# Cache do catalogo de sistemas/modulos, compartilhado por todas as sessoes.
+CATALOG_TTL_SECONDS = 600
+_CATALOG_CACHE: dict[str, Any] = {'valor': None, 'em': 0.0}
 
 _SEARCH_BY_TEXT = 'JSON_COMPLETO LIKE ? ESCAPE ?'
 _SEARCH_BY_NUMBER_OR_TEXT = '(NUMERO_OCORRENCIA = ? OR JSON_COMPLETO LIKE ? ESCAPE ?)'
@@ -339,6 +346,8 @@ class OccurrenceQueryService:
         kind: str = KIND_ANY,
         start_date: Any = None,
         end_date: Any = None,
+        system: str = '',
+        module: str = '',
     ) -> list[OccurrenceSummary]:
         term = str(search or '').strip()
         # A ordem em que as clausulas entram define a ordem dos parametros.
@@ -364,6 +373,14 @@ class OccurrenceQueryService:
         if escolhido in OCCURRENCE_KINDS:
             clauses.append(_FILTER_BY_KIND)
             params.append(escolhido)
+        sistema = str(system or '').strip()
+        if sistema:
+            clauses.append(_FILTER_BY_SYSTEM)
+            params.append(sistema)
+        modulo = str(module or '').strip()
+        if modulo:
+            clauses.append(_FILTER_BY_MODULE)
+            params.append(modulo)
         if term:
             pattern = f'%{escape_like(term)}%'
             if term.isdigit():
@@ -375,6 +392,41 @@ class OccurrenceQueryService:
         query = f'{_BASE_QUERY} WHERE ' + ' AND '.join(clauses) + _ORDER
         rows = self.database.fetch_all(query, params, limit=limit)
         return [self.build_summary(row) for row in rows]
+
+    def list_systems_and_modules(self, *, refresh: bool = False) -> dict[str, list[str]]:
+        """Sistemas e os modulos de cada um, para alimentar os filtros da tela.
+
+        Vem de uma consulta propria, e nao das linhas ja carregadas: derivar as
+        opcoes do resultado faria a lista encolher a cada filtro aplicado, ate
+        sobrar so o que ja esta selecionado.
+
+        O resultado e guardado por alguns minutos porque a tela pede esta lista
+        em toda abertura, e sistemas e modulos praticamente nao mudam.
+        """
+        agora = time.monotonic()
+        if (
+            not refresh
+            and _CATALOG_CACHE['valor'] is not None
+            and agora - float(_CATALOG_CACHE['em']) < CATALOG_TTL_SECONDS
+        ):
+            return dict(_CATALOG_CACHE['valor'])
+        rows = self.database.fetch_all(
+            f'SELECT DISTINCT SISTEMA, MODULO FROM {OCCURRENCE_VIEW}'
+            ' WHERE SISTEMA IS NOT NULL ORDER BY SISTEMA, MODULO',
+            limit=None,
+        )
+        catalogo: dict[str, list[str]] = {}
+        for row in rows:
+            sistema = str(row.get('SISTEMA') or '').strip()
+            if not sistema:
+                continue
+            modulos = catalogo.setdefault(sistema, [])
+            modulo = str(row.get('MODULO') or '').strip()
+            if modulo and modulo not in modulos:
+                modulos.append(modulo)
+        _CATALOG_CACHE['valor'] = catalogo
+        _CATALOG_CACHE['em'] = agora
+        return dict(catalogo)
 
     def get(self, number: int) -> OccurrenceSummary | None:
         row = self.database.fetch_one(
@@ -413,8 +465,9 @@ class OccurrenceQueryService:
             changed_at=_parse_datetime(
                 row.get('ULTIMA_ALTERACAO') or payload.get('ULTIMA_ALTERACAO')
             ),
-            system=str(payload.get('SISTEMA') or ''),
-            module=str(payload.get('MODULO') or ''),
+            # As colunas da view mandam; o JSON fica so como reserva.
+            system=str(row.get('SISTEMA') or payload.get('SISTEMA') or '').strip(),
+            module=str(row.get('MODULO') or payload.get('MODULO') or '').strip(),
             kind=str(
                 row.get('TIPO_OCORRENCIA') or payload.get('TIPO_OCORRENCIA') or ''
             ).strip().upper(),
