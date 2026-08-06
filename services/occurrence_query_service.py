@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from datetime import datetime
+from datetime import date, datetime
 import json
 import re
 import unicodedata
@@ -20,23 +20,27 @@ _COLUMNS = (
     ' TIPO_OCORRENCIA, TITULO_NOVIDADE, JSON_COMPLETO'
 )
 
-_BASE_QUERY = (
-    f'SELECT {_COLUMNS}'
-    f' FROM {OCCURRENCE_VIEW}'
-    ' WHERE ULTIMA_ALTERACAO >= DATEADD(MONTH, ?, GETDATE())'
-)
+_BASE_QUERY = f'SELECT {_COLUMNS} FROM {OCCURRENCE_VIEW}'
+
+# As clausulas sao guardadas sem o "AND" e unidas no final: assim cada filtro
+# opcional entra ou nao sem deixar conectivo solto na query.
+_LAST_MONTHS = 'ULTIMA_ALTERACAO >= DATEADD(MONTH, ?, GETDATE())'
+_FROM_DATE = 'ULTIMA_ALTERACAO >= ?'
+# O fim do intervalo inclui o dia inteiro: comparar com a data crua descartaria
+# tudo o que foi alterado depois da meia-noite do ultimo dia escolhido.
+_TO_DATE = 'ULTIMA_ALTERACAO < DATEADD(DAY, 1, ?)'
 
 OCCURRENCE_KINDS = {'M': 'Mudança', 'E': 'Erro'}
 KIND_ANY = 'ambos'
 KIND_FILTER_LABELS = {KIND_ANY: 'Ambos', 'M': 'Mudança', 'E': 'Erro'}
 
-_ONLY_WITHOUT_NOVELTY = (
-    " AND (TITULO_NOVIDADE IS NULL OR LTRIM(RTRIM(TITULO_NOVIDADE)) = '')"
-)
-_FILTER_BY_KIND = ' AND TIPO_OCORRENCIA = ?'
+# A ocorrencia que ja virou novidade sai da lista. O filtro fica no SQL: aplicado
+# em memoria, ele descartaria linhas depois do limite e esconderia candidatas.
+_ONLY_WITHOUT_NOVELTY = "(TITULO_NOVIDADE IS NULL OR LTRIM(RTRIM(TITULO_NOVIDADE)) = '')"
+_FILTER_BY_KIND = 'TIPO_OCORRENCIA = ?'
 
-_SEARCH_BY_TEXT = ' AND JSON_COMPLETO LIKE ? ESCAPE ?'
-_SEARCH_BY_NUMBER_OR_TEXT = ' AND (NUMERO_OCORRENCIA = ? OR JSON_COMPLETO LIKE ? ESCAPE ?)'
+_SEARCH_BY_TEXT = 'JSON_COMPLETO LIKE ? ESCAPE ?'
+_SEARCH_BY_NUMBER_OR_TEXT = '(NUMERO_OCORRENCIA = ? OR JSON_COMPLETO LIKE ? ESCAPE ?)'
 _ORDER = ' ORDER BY ULTIMA_ALTERACAO DESC'
 
 LIKE_ESCAPE = '\\'
@@ -292,6 +296,23 @@ def escape_like(term: str) -> str:
     return escaped
 
 
+def parse_filter_date(value: Any) -> date | None:
+    """Aceita date, datetime, ISO (AAAA-MM-DD) e o formato da tela (DD/MM/AAAA)."""
+    if isinstance(value, datetime):
+        return value.date()
+    if isinstance(value, date):
+        return value
+    texto = str(value or '').strip()
+    if not texto:
+        return None
+    for formato in ('%Y-%m-%d', '%d/%m/%Y'):
+        try:
+            return datetime.strptime(texto, formato).date()
+        except ValueError:
+            continue
+    return None
+
+
 def _parse_datetime(value: Any) -> datetime | None:
     if isinstance(value, datetime):
         return value
@@ -316,25 +337,43 @@ class OccurrenceQueryService:
         months: int = DEFAULT_MONTHS,
         limit: int = DEFAULT_LIMIT,
         kind: str = KIND_ANY,
+        start_date: Any = None,
+        end_date: Any = None,
     ) -> list[OccurrenceSummary]:
         term = str(search or '').strip()
-        window = max(1, min(120, int(months)))
-        params: list[Any] = [-window]
-        # A ordem dos parametros acompanha a ordem em que as clausulas entram.
-        query = _BASE_QUERY + _ONLY_WITHOUT_NOVELTY
+        # A ordem em que as clausulas entram define a ordem dos parametros.
+        clauses: list[str] = [_ONLY_WITHOUT_NOVELTY]
+        params: list[Any] = []
+
+        inicio = parse_filter_date(start_date)
+        fim = parse_filter_date(end_date)
+        if inicio is not None or fim is not None:
+            # Datas informadas substituem a janela de meses; qualquer uma das
+            # duas pontas sozinha ja define um intervalo aberto do outro lado.
+            if inicio is not None:
+                clauses.append(_FROM_DATE)
+                params.append(inicio)
+            if fim is not None:
+                clauses.append(_TO_DATE)
+                params.append(fim)
+        else:
+            clauses.append(_LAST_MONTHS)
+            params.append(-max(1, min(120, int(months))))
+
         escolhido = str(kind or '').strip().upper()
         if escolhido in OCCURRENCE_KINDS:
-            query += _FILTER_BY_KIND
+            clauses.append(_FILTER_BY_KIND)
             params.append(escolhido)
         if term:
             pattern = f'%{escape_like(term)}%'
             if term.isdigit():
-                query += _SEARCH_BY_NUMBER_OR_TEXT
+                clauses.append(_SEARCH_BY_NUMBER_OR_TEXT)
                 params.extend([int(term), pattern, LIKE_ESCAPE])
             else:
-                query += _SEARCH_BY_TEXT
+                clauses.append(_SEARCH_BY_TEXT)
                 params.extend([pattern, LIKE_ESCAPE])
-        rows = self.database.fetch_all(query + _ORDER, params, limit=limit)
+        query = f'{_BASE_QUERY} WHERE ' + ' AND '.join(clauses) + _ORDER
+        rows = self.database.fetch_all(query, params, limit=limit)
         return [self.build_summary(row) for row in rows]
 
     def get(self, number: int) -> OccurrenceSummary | None:
@@ -406,5 +445,6 @@ __all__ = [
     'OccurrenceSummary',
     'escape_like',
     'parse_description_sections',
+    'parse_filter_date',
     'section_key',
 ]

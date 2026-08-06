@@ -6063,3 +6063,256 @@ Traceback (most recent call last):
     ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^
 ConnectionResetError: [WinError 10054] An existing connection was forcibly closed by the remote host
 2026-08-06 11:03:55,244 ERROR Erro ao executar a consulta no banco 191.252.197.44,1433/emcsistemas1: ('08S01', '[08S01] [Microsoft][ODBC Driver 11 for SQL Server]TCP Provider: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.\r\n (10060) (SQLGetData); [08S01] [Microsoft][ODBC Driver 11 for SQL Server]Communication link failure (10060)')
+2026-08-06 11:27:38,614 INFO [PROCESSAMENTO] Interface iniciada; sessao=708ea256267d43ac966acb6261b7da9d
+2026-08-06 11:27:41,251 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T14:27:41.251+00:00","generation":"c48862a5058742969ad796e7b74a6b8a","stage":"preparacao","endpoint":"local","duration_seconds":0.005115,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 11:27:41,252 INFO [PROCESSAMENTO] Início; geracao=c48862a5058742969ad796e7b74a6b8a idempotencia=14942199c525a6c63d8ec3a042db068bb36bb0bbdbe7dcae50e16cda1e75cd5c sessao=708ea256267d43ac966acb6261b7da9d provider=deepseek texto_bytes=1700 imagens=0 capa=False
+2026-08-06 11:27:41,252 INFO [MODELOS] Texto: Modelo: deepseek-chat
+2026-08-06 11:27:41,252 INFO [MODELOS] Imagem: Modelo: não utilizado
+2026-08-06 11:27:41,253 INFO [PROCESSAMENTO] organizacao iniciada
+2026-08-06 11:27:41,264 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=c48862a5058742969ad796e7b74a6b8a operacao=organizacao modelo=deepseek-chat endpoint=/v1/responses tentativa=1 de 3 texto_bytes=20147 imagens_bytes=0
+2026-08-06 11:27:48,662 INFO HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-08-06 11:27:54,038 INFO [PROCESSAMENTO] Chamada IA 1 concluída em 12.77 s; operacao=organizacao endpoint=/v1/responses recebido_bytes=0
+2026-08-06 11:27:54,039 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-06T14:27:54.039+00:00","generation_id":"c48862a5058742969ad796e7b74a6b8a","idempotency_key":"14942199c525a6c63d8ec3a042db068bb36bb0bbdbe7dcae50e16cda1e75cd5c","stage":"organizacao","endpoint":"/v1/responses","model":"deepseek-chat","logical_call":1,"started_at":"2026-08-06T14:27:41.264+00:00","attempts":0,"request_id":"","duration_seconds":12.774271600006614,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-08-06 11:27:54,044 INFO [PROCESSAMENTO] organizacao concluída em 12.79 s
+2026-08-06 11:27:54,045 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T14:27:54.045+00:00","generation":"c48862a5058742969ad796e7b74a6b8a","stage":"organizacao","endpoint":"local","duration_seconds":12.791068,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 11:27:54,045 INFO [PROCESSAMENTO] revisao iniciada
+2026-08-06 11:27:54,055 INFO [PROCESSAMENTO] Chamada IA 2 iniciada; geracao=c48862a5058742969ad796e7b74a6b8a operacao=revisao modelo=deepseek-chat endpoint=/v1/responses tentativa=1 de 3 texto_bytes=11974 imagens_bytes=0
+2026-08-06 11:27:58,429 INFO HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-08-06 11:27:59,531 INFO [PROCESSAMENTO] Chamada IA 2 concluída em 5.48 s; operacao=revisao endpoint=/v1/responses recebido_bytes=0
+2026-08-06 11:27:59,531 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-06T14:27:59.531+00:00","generation_id":"c48862a5058742969ad796e7b74a6b8a","idempotency_key":"14942199c525a6c63d8ec3a042db068bb36bb0bbdbe7dcae50e16cda1e75cd5c","stage":"revisao","endpoint":"/v1/responses","model":"deepseek-chat","logical_call":2,"started_at":"2026-08-06T14:27:54.055+00:00","attempts":0,"request_id":"","duration_seconds":5.475531600008253,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-08-06 11:27:59,533 INFO [PROCESSAMENTO] revisao concluída em 5.49 s
+2026-08-06 11:27:59,534 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T14:27:59.534+00:00","generation":"c48862a5058742969ad796e7b74a6b8a","stage":"revisao","endpoint":"local","duration_seconds":5.489137,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 11:27:59,534 INFO [PROCESSAMENTO] preparacao_visualizacao iniciada
+2026-08-06 11:27:59,544 INFO [PROCESSAMENTO] preparacao_visualizacao concluída em 0.01 s
+2026-08-06 11:27:59,544 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T14:27:59.544+00:00","generation":"c48862a5058742969ad796e7b74a6b8a","stage":"preparacao_visualizacao","endpoint":"local","duration_seconds":0.010467,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 11:27:59,544 INFO [PROCESSAMENTO] Total concluído em 18.29 s; chamadas_ia=2
+2026-08-06 11:27:59,545 INFO =========================
+2026-08-06 11:27:59,545 INFO Resumo da geração
+2026-08-06 11:27:59,545 INFO =========================
+2026-08-06 11:27:59,545 INFO Geração: c48862a5058742969ad796e7b74a6b8a
+2026-08-06 11:27:59,545 INFO Tempo total: 18.30 s
+2026-08-06 11:27:59,546 INFO Quantidade de chamadas: 2
+2026-08-06 11:27:59,546 INFO /v1/responses: 2
+2026-08-06 11:27:59,546 INFO /v1/images: 0
+2026-08-06 11:27:59,546 INFO Tentativas HTTP: 0
+2026-08-06 11:27:59,546 INFO Tokens entrada: 0
+2026-08-06 11:27:59,546 INFO Tokens saída: 0
+2026-08-06 11:27:59,546 INFO Tokens cache: 0
+2026-08-06 11:27:59,546 INFO Tokens raciocínio: 0
+2026-08-06 11:27:59,547 INFO Tokens imagem: 0
+2026-08-06 11:27:59,547 INFO Custo aproximado: US$ 0.000000
+2026-08-06 11:27:59,547 INFO =========================
+2026-08-06 11:27:59,547 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-08-06T14:27:59.547+00:00","generation":"c48862a5058742969ad796e7b74a6b8a","idempotency_key":"14942199c525a6c63d8ec3a042db068bb36bb0bbdbe7dcae50e16cda1e75cd5c","duration_seconds":18.29904659994645,"logical_calls":2,"http_attempts":0,"responses_calls":2,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.0051148999482393265,"organizacao":12.791067800018936,"revisao":5.489137299999129,"preparacao_visualizacao":0.010466500010807067}}
+2026-08-06 11:27:59,548 INFO [PROCESSAMENTO] Orquestração recebida pela interface em 20.95 s
+2026-08-06 11:27:59,560 INFO [PROCESSAMENTO] Gravação de estado concluída em 0.01 s
+2026-08-06 11:27:59,560 INFO [PROCESSAMENTO] Visualização/UI concluída em 0.00 s; total=20.96 s
+2026-08-06 11:27:59,560 INFO [PROCESSAMENTO] Interface encerrada em 20.96 s; sucesso=True
+2026-08-06 11:29:38,727 INFO [WHATSAPP] Mensagem enviada para grupo; grupo=553182444200-1536278290@g.us id=3EB0305468410FBA1CE047
+2026-08-06 11:29:38,728 INFO [WHATSAPP] Novidade enviada; grupo=553182444200-1536278290@g.us titulo=Implementada a inserção de valor de frete para cidades com CEP único no EMC Loja Web id=3EB0305468410FBA1CE047
+2026-08-06 11:30:48,788 INFO [PROCESSAMENTO] Novidade aprovada na sessao 708ea256267d43ac966acb6261b7da9d; titulo=Implementada a inserção de valor de frete para cidades com CEP único no EMC Loja Web
+2026-08-06 11:31:25,884 INFO [PROCESSAMENTO] Interface iniciada; sessao=708ea256267d43ac966acb6261b7da9d
+2026-08-06 11:31:25,886 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T14:31:25.886+00:00","generation":"d06c2296e0b043d9a70492d5060f05dd","stage":"preparacao","endpoint":"local","duration_seconds":0.002011,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 11:31:25,887 INFO [PROCESSAMENTO] Início; geracao=d06c2296e0b043d9a70492d5060f05dd idempotencia=41239c1eb5a6b792237dd3b8476f99d30243513a41bbc284a3b65b49431cdefa sessao=708ea256267d43ac966acb6261b7da9d provider=deepseek texto_bytes=2086 imagens=0 capa=False
+2026-08-06 11:31:25,887 INFO [MODELOS] Texto: Modelo: deepseek-chat
+2026-08-06 11:31:25,887 INFO [MODELOS] Imagem: Modelo: não utilizado
+2026-08-06 11:31:25,887 INFO [PROCESSAMENTO] organizacao iniciada
+2026-08-06 11:31:25,898 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=d06c2296e0b043d9a70492d5060f05dd operacao=organizacao modelo=deepseek-chat endpoint=/v1/responses tentativa=1 de 3 texto_bytes=21065 imagens_bytes=0
+2026-08-06 11:31:29,687 INFO HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-08-06 11:31:36,402 INFO [PROCESSAMENTO] Chamada IA 1 concluída em 10.50 s; operacao=organizacao endpoint=/v1/responses recebido_bytes=0
+2026-08-06 11:31:36,403 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-06T14:31:36.403+00:00","generation_id":"d06c2296e0b043d9a70492d5060f05dd","idempotency_key":"41239c1eb5a6b792237dd3b8476f99d30243513a41bbc284a3b65b49431cdefa","stage":"organizacao","endpoint":"/v1/responses","model":"deepseek-chat","logical_call":1,"started_at":"2026-08-06T14:31:25.898+00:00","attempts":0,"request_id":"","duration_seconds":10.504400299978442,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-08-06 11:31:36,404 INFO [PROCESSAMENTO] organizacao concluída em 10.52 s
+2026-08-06 11:31:36,404 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T14:31:36.404+00:00","generation":"d06c2296e0b043d9a70492d5060f05dd","stage":"organizacao","endpoint":"local","duration_seconds":10.516254,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 11:31:36,404 INFO [PROCESSAMENTO] revisao iniciada
+2026-08-06 11:31:36,413 INFO [PROCESSAMENTO] Chamada IA 2 iniciada; geracao=d06c2296e0b043d9a70492d5060f05dd operacao=revisao modelo=deepseek-chat endpoint=/v1/responses tentativa=1 de 3 texto_bytes=12934 imagens_bytes=0
+2026-08-06 11:31:39,898 INFO HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-08-06 11:31:44,443 INFO [PROCESSAMENTO] Chamada IA 2 concluída em 8.03 s; operacao=revisao endpoint=/v1/responses recebido_bytes=0
+2026-08-06 11:31:44,443 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-06T14:31:44.443+00:00","generation_id":"d06c2296e0b043d9a70492d5060f05dd","idempotency_key":"41239c1eb5a6b792237dd3b8476f99d30243513a41bbc284a3b65b49431cdefa","stage":"revisao","endpoint":"/v1/responses","model":"deepseek-chat","logical_call":2,"started_at":"2026-08-06T14:31:36.413+00:00","attempts":0,"request_id":"","duration_seconds":8.030161200033035,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-08-06 11:31:44,450 INFO [PROCESSAMENTO] revisao concluída em 8.05 s
+2026-08-06 11:31:44,450 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T14:31:44.450+00:00","generation":"d06c2296e0b043d9a70492d5060f05dd","stage":"revisao","endpoint":"local","duration_seconds":8.045988,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 11:31:44,450 INFO [PROCESSAMENTO] correcao iniciada
+2026-08-06 11:31:44,464 INFO [PROCESSAMENTO] Chamada IA 3 iniciada; geracao=d06c2296e0b043d9a70492d5060f05dd operacao=correcao modelo=deepseek-chat endpoint=/v1/responses tentativa=1 de 3 texto_bytes=4958 imagens_bytes=0
+2026-08-06 11:31:47,919 INFO HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-08-06 11:31:52,270 INFO [PROCESSAMENTO] Chamada IA 3 concluída em 7.81 s; operacao=correcao endpoint=/v1/responses recebido_bytes=0
+2026-08-06 11:31:52,271 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-06T14:31:52.270+00:00","generation_id":"d06c2296e0b043d9a70492d5060f05dd","idempotency_key":"41239c1eb5a6b792237dd3b8476f99d30243513a41bbc284a3b65b49431cdefa","stage":"correcao","endpoint":"/v1/responses","model":"deepseek-chat","logical_call":3,"started_at":"2026-08-06T14:31:44.464+00:00","attempts":0,"request_id":"","duration_seconds":7.806104699964635,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-08-06 11:31:52,275 INFO [PROCESSAMENTO] correcao concluída em 7.83 s
+2026-08-06 11:31:52,276 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T14:31:52.275+00:00","generation":"d06c2296e0b043d9a70492d5060f05dd","stage":"correcao","endpoint":"local","duration_seconds":7.825367,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 11:31:52,276 INFO [PROCESSAMENTO] segunda_revisao iniciada
+2026-08-06 11:31:52,289 INFO [PROCESSAMENTO] Chamada IA 4 iniciada; geracao=d06c2296e0b043d9a70492d5060f05dd operacao=segunda_revisao modelo=deepseek-chat endpoint=/v1/responses tentativa=1 de 3 texto_bytes=14875 imagens_bytes=0
+2026-08-06 11:31:55,612 INFO HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-08-06 11:31:58,816 INFO [PROCESSAMENTO] Chamada IA 4 concluída em 6.53 s; operacao=segunda_revisao endpoint=/v1/responses recebido_bytes=0
+2026-08-06 11:31:58,816 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-06T14:31:58.816+00:00","generation_id":"d06c2296e0b043d9a70492d5060f05dd","idempotency_key":"41239c1eb5a6b792237dd3b8476f99d30243513a41bbc284a3b65b49431cdefa","stage":"segunda_revisao","endpoint":"/v1/responses","model":"deepseek-chat","logical_call":4,"started_at":"2026-08-06T14:31:52.288+00:00","attempts":0,"request_id":"","duration_seconds":6.527884200040717,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-08-06 11:31:58,817 INFO [PROCESSAMENTO] segunda_revisao concluída em 6.54 s
+2026-08-06 11:31:58,817 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T14:31:58.817+00:00","generation":"d06c2296e0b043d9a70492d5060f05dd","stage":"segunda_revisao","endpoint":"local","duration_seconds":6.54176,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 11:31:58,817 INFO [PROCESSAMENTO] preparacao_visualizacao iniciada
+2026-08-06 11:31:58,831 INFO [PROCESSAMENTO] preparacao_visualizacao concluída em 0.01 s
+2026-08-06 11:31:58,832 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T14:31:58.832+00:00","generation":"d06c2296e0b043d9a70492d5060f05dd","stage":"preparacao_visualizacao","endpoint":"local","duration_seconds":0.014588,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 11:31:58,832 INFO [PROCESSAMENTO] Total concluído em 32.94 s; chamadas_ia=4
+2026-08-06 11:31:58,832 INFO =========================
+2026-08-06 11:31:58,832 INFO Resumo da geração
+2026-08-06 11:31:58,833 INFO =========================
+2026-08-06 11:31:58,833 INFO Geração: d06c2296e0b043d9a70492d5060f05dd
+2026-08-06 11:31:58,833 INFO Tempo total: 32.95 s
+2026-08-06 11:31:58,833 INFO Quantidade de chamadas: 4
+2026-08-06 11:31:58,833 INFO /v1/responses: 4
+2026-08-06 11:31:58,833 INFO /v1/images: 0
+2026-08-06 11:31:58,834 INFO Tentativas HTTP: 0
+2026-08-06 11:31:58,834 INFO Tokens entrada: 0
+2026-08-06 11:31:58,834 INFO Tokens saída: 0
+2026-08-06 11:31:58,834 INFO Tokens cache: 0
+2026-08-06 11:31:58,835 INFO Tokens raciocínio: 0
+2026-08-06 11:31:58,835 INFO Tokens imagem: 0
+2026-08-06 11:31:58,835 INFO Custo aproximado: US$ 0.000000
+2026-08-06 11:31:58,835 INFO =========================
+2026-08-06 11:31:58,836 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-08-06T14:31:58.835+00:00","generation":"d06c2296e0b043d9a70492d5060f05dd","idempotency_key":"41239c1eb5a6b792237dd3b8476f99d30243513a41bbc284a3b65b49431cdefa","duration_seconds":32.94794039998669,"logical_calls":4,"http_attempts":0,"responses_calls":4,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.002011300006415695,"organizacao":10.516253800014965,"revisao":8.04598779999651,"correcao":7.82536680001067,"segunda_revisao":6.541759699990507,"preparacao_visualizacao":0.014588499965611845}}
+2026-08-06 11:31:58,836 INFO [PROCESSAMENTO] Orquestração recebida pela interface em 32.96 s
+2026-08-06 11:31:58,854 INFO [PROCESSAMENTO] Gravação de estado concluída em 0.02 s
+2026-08-06 11:31:58,855 INFO [PROCESSAMENTO] Visualização/UI concluída em 0.00 s; total=32.98 s
+2026-08-06 11:31:58,856 INFO [PROCESSAMENTO] Interface encerrada em 32.98 s; sucesso=True
+2026-08-06 12:20:30,208 INFO [PROCESSAMENTO] Interface iniciada; sessao=708ea256267d43ac966acb6261b7da9d
+2026-08-06 12:20:30,213 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T15:20:30.212+00:00","generation":"d46d8449dc054511bff718f489ca0395","stage":"preparacao","endpoint":"local","duration_seconds":0.002572,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 12:20:30,213 INFO [PROCESSAMENTO] Início; geracao=d46d8449dc054511bff718f489ca0395 idempotencia=67d43edf6143bf7b92c11441659cc427906d185594708ef6c001b74df0da88f5 sessao=708ea256267d43ac966acb6261b7da9d provider=deepseek texto_bytes=20679 imagens=0 capa=False
+2026-08-06 12:20:30,214 INFO [MODELOS] Texto: Modelo: deepseek-chat
+2026-08-06 12:20:30,214 INFO [MODELOS] Imagem: Modelo: não utilizado
+2026-08-06 12:20:30,221 INFO [PROCESSAMENTO] organizacao iniciada
+2026-08-06 12:20:30,319 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=d46d8449dc054511bff718f489ca0395 operacao=organizacao modelo=deepseek-chat endpoint=/v1/responses tentativa=1 de 3 texto_bytes=61357 imagens_bytes=0
+2026-08-06 12:20:36,840 INFO HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-08-06 12:20:52,513 INFO [PROCESSAMENTO] Chamada IA 1 concluída em 22.19 s; operacao=organizacao endpoint=/v1/responses recebido_bytes=0
+2026-08-06 12:20:52,514 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-06T15:20:52.513+00:00","generation_id":"d46d8449dc054511bff718f489ca0395","idempotency_key":"67d43edf6143bf7b92c11441659cc427906d185594708ef6c001b74df0da88f5","stage":"organizacao","endpoint":"/v1/responses","model":"deepseek-chat","logical_call":1,"started_at":"2026-08-06T15:20:30.318+00:00","attempts":0,"request_id":"","duration_seconds":22.19511169998441,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-08-06 12:20:52,522 INFO [PROCESSAMENTO] organizacao concluída em 22.30 s
+2026-08-06 12:20:52,522 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T15:20:52.522+00:00","generation":"d46d8449dc054511bff718f489ca0395","stage":"organizacao","endpoint":"local","duration_seconds":22.300495,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 12:20:52,523 INFO [PROCESSAMENTO] revisao iniciada
+2026-08-06 12:20:52,539 INFO [PROCESSAMENTO] Chamada IA 2 iniciada; geracao=d46d8449dc054511bff718f489ca0395 operacao=revisao modelo=deepseek-chat endpoint=/v1/responses tentativa=1 de 3 texto_bytes=33416 imagens_bytes=0
+2026-08-06 12:20:55,995 INFO HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-08-06 12:20:57,060 INFO [PROCESSAMENTO] Chamada IA 2 concluída em 4.52 s; operacao=revisao endpoint=/v1/responses recebido_bytes=0
+2026-08-06 12:20:57,061 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-06T15:20:57.060+00:00","generation_id":"d46d8449dc054511bff718f489ca0395","idempotency_key":"67d43edf6143bf7b92c11441659cc427906d185594708ef6c001b74df0da88f5","stage":"revisao","endpoint":"/v1/responses","model":"deepseek-chat","logical_call":2,"started_at":"2026-08-06T15:20:52.537+00:00","attempts":0,"request_id":"","duration_seconds":4.522911799955182,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-08-06 12:20:57,070 INFO [PROCESSAMENTO] revisao concluída em 4.55 s
+2026-08-06 12:20:57,071 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T15:20:57.071+00:00","generation":"d46d8449dc054511bff718f489ca0395","stage":"revisao","endpoint":"local","duration_seconds":4.548394,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 12:20:57,072 INFO [PROCESSAMENTO] correcao iniciada
+2026-08-06 12:20:57,083 INFO [PROCESSAMENTO] Chamada IA 3 iniciada; geracao=d46d8449dc054511bff718f489ca0395 operacao=correcao modelo=deepseek-chat endpoint=/v1/responses tentativa=1 de 3 texto_bytes=6005 imagens_bytes=0
+2026-08-06 12:21:00,513 INFO HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-08-06 12:21:07,559 INFO [PROCESSAMENTO] Chamada IA 3 concluída em 10.48 s; operacao=correcao endpoint=/v1/responses recebido_bytes=0
+2026-08-06 12:21:07,559 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-06T15:21:07.559+00:00","generation_id":"d46d8449dc054511bff718f489ca0395","idempotency_key":"67d43edf6143bf7b92c11441659cc427906d185594708ef6c001b74df0da88f5","stage":"correcao","endpoint":"/v1/responses","model":"deepseek-chat","logical_call":3,"started_at":"2026-08-06T15:20:57.083+00:00","attempts":0,"request_id":"","duration_seconds":10.475922199955676,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-08-06 12:21:07,563 INFO [PROCESSAMENTO] correcao concluída em 10.49 s
+2026-08-06 12:21:07,564 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T15:21:07.564+00:00","generation":"d46d8449dc054511bff718f489ca0395","stage":"correcao","endpoint":"local","duration_seconds":10.493005,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 12:21:07,564 INFO [PROCESSAMENTO] segunda_revisao iniciada
+2026-08-06 12:21:07,579 INFO [PROCESSAMENTO] Chamada IA 4 iniciada; geracao=d46d8449dc054511bff718f489ca0395 operacao=segunda_revisao modelo=deepseek-chat endpoint=/v1/responses tentativa=1 de 3 texto_bytes=34164 imagens_bytes=0
+2026-08-06 12:21:11,475 INFO HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-08-06 12:21:14,509 INFO [PROCESSAMENTO] Chamada IA 4 concluída em 6.93 s; operacao=segunda_revisao endpoint=/v1/responses recebido_bytes=0
+2026-08-06 12:21:14,510 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-06T15:21:14.510+00:00","generation_id":"d46d8449dc054511bff718f489ca0395","idempotency_key":"67d43edf6143bf7b92c11441659cc427906d185594708ef6c001b74df0da88f5","stage":"segunda_revisao","endpoint":"/v1/responses","model":"deepseek-chat","logical_call":4,"started_at":"2026-08-06T15:21:07.579+00:00","attempts":0,"request_id":"","duration_seconds":6.930816099978983,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-08-06 12:21:14,510 INFO [PROCESSAMENTO] segunda_revisao concluída em 6.95 s
+2026-08-06 12:21:14,510 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T15:21:14.510+00:00","generation":"d46d8449dc054511bff718f489ca0395","stage":"segunda_revisao","endpoint":"local","duration_seconds":6.946526,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 12:21:14,510 INFO [PROCESSAMENTO] preparacao_visualizacao iniciada
+2026-08-06 12:21:14,523 INFO [PROCESSAMENTO] preparacao_visualizacao concluída em 0.01 s
+2026-08-06 12:21:14,523 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T15:21:14.523+00:00","generation":"d46d8449dc054511bff718f489ca0395","stage":"preparacao_visualizacao","endpoint":"local","duration_seconds":0.013045,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 12:21:14,523 INFO [PROCESSAMENTO] Total concluído em 44.31 s; chamadas_ia=4
+2026-08-06 12:21:14,523 INFO =========================
+2026-08-06 12:21:14,524 INFO Resumo da geração
+2026-08-06 12:21:14,524 INFO =========================
+2026-08-06 12:21:14,524 INFO Geração: d46d8449dc054511bff718f489ca0395
+2026-08-06 12:21:14,524 INFO Tempo total: 44.31 s
+2026-08-06 12:21:14,524 INFO Quantidade de chamadas: 4
+2026-08-06 12:21:14,524 INFO /v1/responses: 4
+2026-08-06 12:21:14,524 INFO /v1/images: 0
+2026-08-06 12:21:14,524 INFO Tentativas HTTP: 0
+2026-08-06 12:21:14,524 INFO Tokens entrada: 0
+2026-08-06 12:21:14,524 INFO Tokens saída: 0
+2026-08-06 12:21:14,524 INFO Tokens cache: 0
+2026-08-06 12:21:14,525 INFO Tokens raciocínio: 0
+2026-08-06 12:21:14,525 INFO Tokens imagem: 0
+2026-08-06 12:21:14,525 INFO Custo aproximado: US$ 0.000000
+2026-08-06 12:21:14,525 INFO =========================
+2026-08-06 12:21:14,525 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-08-06T15:21:14.525+00:00","generation":"d46d8449dc054511bff718f489ca0395","idempotency_key":"67d43edf6143bf7b92c11441659cc427906d185594708ef6c001b74df0da88f5","duration_seconds":44.31432570004836,"logical_calls":4,"http_attempts":0,"responses_calls":4,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.002572300028987229,"organizacao":22.300494899973273,"revisao":4.548393600038253,"correcao":10.493004699994344,"segunda_revisao":6.946526099985931,"preparacao_visualizacao":0.013044899969827384}}
+2026-08-06 12:21:14,525 INFO [PROCESSAMENTO] Orquestração recebida pela interface em 44.43 s
+2026-08-06 12:21:14,539 INFO [PROCESSAMENTO] Gravação de estado concluída em 0.01 s
+2026-08-06 12:21:14,540 INFO [PROCESSAMENTO] Visualização/UI concluída em 0.00 s; total=44.45 s
+2026-08-06 12:21:14,540 INFO [PROCESSAMENTO] Interface encerrada em 44.45 s; sucesso=True
+2026-08-06 12:23:22,247 INFO [WHATSAPP] Conta desconectada.
+2026-08-06 12:30:35,297 ERROR The parent element this slot belongs to has been deleted.
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 113, in _invoke_callback
+    await result
+  File "C:\EMC_Novidade_Visual_IA\components\whatsapp_panel.py", line 82, in refresh_state
+    await run.io_bound(service.qr_code) if situacao.has_qr else ''
+                                           ^^^^^^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'has_qr'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 96, in _run_in_loop
+    await self._current_invocation
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 115, in _invoke_callback
+    core.app.handle_exception(e)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\app\app.py", line 178, in handle_exception
+    if context.slot_stack and context.client is not None:
+                              ^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\context.py", line 41, in client
+    return self.slot.parent.client
+           ^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\slot.py", line 31, in parent
+    raise RuntimeError('The parent element this slot belongs to has been deleted.')
+RuntimeError: The parent element this slot belongs to has been deleted.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\background_tasks.py", line 152, in _handle_exceptions
+    task.result()
+    ~~~~~~~~~~~^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\timer.py", line 102, in _run_in_loop
+    core.app.handle_exception(e)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\app\app.py", line 178, in handle_exception
+    if context.slot_stack and context.client is not None:
+                              ^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\context.py", line 41, in client
+    return self.slot.parent.client
+           ^^^^^^^^^^^^^^^^
+  File "C:\EMC_Novidade_Visual_IA\.venv\Lib\site-packages\nicegui\slot.py", line 31, in parent
+    raise RuntimeError('The parent element this slot belongs to has been deleted.')
+RuntimeError: The parent element this slot belongs to has been deleted.
+2026-08-06 12:37:52,140 INFO [PROCESSAMENTO] Interface iniciada; sessao=708ea256267d43ac966acb6261b7da9d
+2026-08-06 12:37:52,144 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T15:37:52.144+00:00","generation":"38586a547d014ca79bf385a026e1a2d6","stage":"preparacao","endpoint":"local","duration_seconds":0.003119,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 12:37:52,145 INFO [PROCESSAMENTO] Início; geracao=38586a547d014ca79bf385a026e1a2d6 idempotencia=19535cbdb0c6ca1c15add8b821d76b2223df27d4980ce22a6965977b5df51faf sessao=708ea256267d43ac966acb6261b7da9d provider=deepseek texto_bytes=3005 imagens=0 capa=False
+2026-08-06 12:37:52,145 INFO [MODELOS] Texto: Modelo: deepseek-chat
+2026-08-06 12:37:52,145 INFO [MODELOS] Imagem: Modelo: não utilizado
+2026-08-06 12:37:52,146 INFO [PROCESSAMENTO] organizacao iniciada
+2026-08-06 12:37:52,162 INFO [PROCESSAMENTO] Chamada IA 1 iniciada; geracao=38586a547d014ca79bf385a026e1a2d6 operacao=organizacao modelo=deepseek-chat endpoint=/v1/responses tentativa=1 de 3 texto_bytes=22927 imagens_bytes=0
+2026-08-06 12:37:56,365 INFO HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-08-06 12:37:58,806 INFO [PROCESSAMENTO] Chamada IA 1 concluída em 6.64 s; operacao=organizacao endpoint=/v1/responses recebido_bytes=0
+2026-08-06 12:37:58,807 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-06T15:37:58.806+00:00","generation_id":"38586a547d014ca79bf385a026e1a2d6","idempotency_key":"19535cbdb0c6ca1c15add8b821d76b2223df27d4980ce22a6965977b5df51faf","stage":"organizacao","endpoint":"/v1/responses","model":"deepseek-chat","logical_call":1,"started_at":"2026-08-06T15:37:52.161+00:00","attempts":0,"request_id":"","duration_seconds":6.645173900004011,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-08-06 12:37:58,808 INFO [PROCESSAMENTO] organizacao concluída em 6.66 s
+2026-08-06 12:37:58,808 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T15:37:58.808+00:00","generation":"38586a547d014ca79bf385a026e1a2d6","stage":"organizacao","endpoint":"local","duration_seconds":6.66147,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 12:37:58,808 INFO [PROCESSAMENTO] revisao iniciada
+2026-08-06 12:37:58,906 INFO [PROCESSAMENTO] Chamada IA 2 iniciada; geracao=38586a547d014ca79bf385a026e1a2d6 operacao=revisao modelo=deepseek-chat endpoint=/v1/responses tentativa=1 de 3 texto_bytes=12591 imagens_bytes=0
+2026-08-06 12:38:02,334 INFO HTTP Request: POST https://api.deepseek.com/chat/completions "HTTP/1.1 200 OK"
+2026-08-06 12:38:03,242 INFO [PROCESSAMENTO] Chamada IA 2 concluída em 4.34 s; operacao=revisao endpoint=/v1/responses recebido_bytes=0
+2026-08-06 12:38:03,242 INFO [API_AUDIT] {"event":"api_call","timestamp":"2026-08-06T15:38:03.242+00:00","generation_id":"38586a547d014ca79bf385a026e1a2d6","idempotency_key":"19535cbdb0c6ca1c15add8b821d76b2223df27d4980ce22a6965977b5df51faf","stage":"revisao","endpoint":"/v1/responses","model":"deepseek-chat","logical_call":2,"started_at":"2026-08-06T15:37:58.905+00:00","attempts":0,"request_id":"","duration_seconds":4.336444600019604,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"cost_method":"preco_nao_configurado","status":"success","error_type":""}
+2026-08-06 12:38:03,242 INFO [PROCESSAMENTO] revisao concluída em 4.43 s
+2026-08-06 12:38:03,242 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T15:38:03.242+00:00","generation":"38586a547d014ca79bf385a026e1a2d6","stage":"revisao","endpoint":"local","duration_seconds":4.434562,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 12:38:03,242 INFO [PROCESSAMENTO] preparacao_visualizacao iniciada
+2026-08-06 12:38:03,253 INFO [PROCESSAMENTO] preparacao_visualizacao concluída em 0.01 s
+2026-08-06 12:38:03,254 INFO [API_AUDIT] {"event":"stage_usage","timestamp":"2026-08-06T15:38:03.254+00:00","generation":"38586a547d014ca79bf385a026e1a2d6","stage":"preparacao_visualizacao","endpoint":"local","duration_seconds":0.011322,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"estimated_cost_usd":0.0}
+2026-08-06 12:38:03,254 INFO [PROCESSAMENTO] Total concluído em 11.11 s; chamadas_ia=2
+2026-08-06 12:38:03,254 INFO =========================
+2026-08-06 12:38:03,254 INFO Resumo da geração
+2026-08-06 12:38:03,254 INFO =========================
+2026-08-06 12:38:03,254 INFO Geração: 38586a547d014ca79bf385a026e1a2d6
+2026-08-06 12:38:03,255 INFO Tempo total: 11.11 s
+2026-08-06 12:38:03,255 INFO Quantidade de chamadas: 2
+2026-08-06 12:38:03,255 INFO /v1/responses: 2
+2026-08-06 12:38:03,255 INFO /v1/images: 0
+2026-08-06 12:38:03,255 INFO Tentativas HTTP: 0
+2026-08-06 12:38:03,255 INFO Tokens entrada: 0
+2026-08-06 12:38:03,255 INFO Tokens saída: 0
+2026-08-06 12:38:03,255 INFO Tokens cache: 0
+2026-08-06 12:38:03,255 INFO Tokens raciocínio: 0
+2026-08-06 12:38:03,255 INFO Tokens imagem: 0
+2026-08-06 12:38:03,255 INFO Custo aproximado: US$ 0.000000
+2026-08-06 12:38:03,256 INFO =========================
+2026-08-06 12:38:03,256 INFO [API_AUDIT] {"event":"generation_summary","timestamp":"2026-08-06T15:38:03.256+00:00","generation":"38586a547d014ca79bf385a026e1a2d6","idempotency_key":"19535cbdb0c6ca1c15add8b821d76b2223df27d4980ce22a6965977b5df51faf","duration_seconds":11.112836999993306,"logical_calls":2,"http_attempts":0,"responses_calls":2,"images_calls":0,"input_tokens":0,"cached_tokens":0,"output_tokens":0,"reasoning_tokens":0,"image_tokens":0,"input_image_tokens":0,"output_image_tokens":0,"estimated_cost_usd":0.0,"stages":{"preparacao":0.0031193000031635165,"organizacao":6.6614697999903,"revisao":4.4345624999841675,"preparacao_visualizacao":0.011322300008032471}}
+2026-08-06 12:38:03,256 INFO [PROCESSAMENTO] Orquestração recebida pela interface em 11.13 s
+2026-08-06 12:38:03,271 INFO [PROCESSAMENTO] Gravação de estado concluída em 0.02 s
+2026-08-06 12:38:03,272 INFO [PROCESSAMENTO] Visualização/UI concluída em 0.00 s; total=11.14 s
+2026-08-06 12:38:03,272 INFO [PROCESSAMENTO] Interface encerrada em 11.14 s; sucesso=True

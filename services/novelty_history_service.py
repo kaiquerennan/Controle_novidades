@@ -12,10 +12,15 @@ from services.image_service import DATA_ROOT, safe_path
 EXPORTS_ROOT = DATA_ROOT / 'exports'
 METADATA_NAME = 'novidade.json'
 
+# A tela reúne duas procedências: o que este aplicativo exportou e o que já está
+# publicado no cadastro da EMC. O campo distingue as duas na hora de montar o card.
+ORIGIN_APPLICATION = 'aplicativo'
+ORIGIN_DATABASE = 'cadastro'
+
 
 @dataclass(slots=True)
 class LaunchedNovelty:
-    session_id: str
+    session_id: str = ''
     title: str = ''
     created_at: datetime | None = None
     text: str = ''
@@ -25,6 +30,19 @@ class LaunchedNovelty:
     html_path: Path | None = None
     xml_path: Path | None = None
     zip_path: Path | None = None
+    origin: str = ORIGIN_APPLICATION
+    occurrence_number: int = 0
+
+    @property
+    def from_database(self) -> bool:
+        return self.origin == ORIGIN_DATABASE
+
+    @property
+    def identifier(self) -> str:
+        """Chave estável do card; as duas procedências não compartilham espaço."""
+        if self.from_database:
+            return f'oco-{self.occurrence_number}'
+        return f'ses-{self.session_id[:8]}'
 
     @property
     def created_at_label(self) -> str:
@@ -32,7 +50,12 @@ class LaunchedNovelty:
 
     @property
     def display_title(self) -> str:
-        return self.title.strip() or f'Sem título (sessão {self.session_id[:8]})'
+        titulo = self.title.strip()
+        if titulo:
+            return titulo
+        if self.occurrence_number:
+            return f'Novidade da ocorrência #{self.occurrence_number}'
+        return f'Sem título (sessão {self.session_id[:8]})'
 
     @property
     def excerpt(self) -> str:
@@ -174,4 +197,10 @@ class NoveltyHistoryService:
             return None
 
 
-__all__ = ['EXPORTS_ROOT', 'LaunchedNovelty', 'NoveltyHistoryService']
+__all__ = [
+    'EXPORTS_ROOT',
+    'ORIGIN_APPLICATION',
+    'ORIGIN_DATABASE',
+    'LaunchedNovelty',
+    'NoveltyHistoryService',
+]

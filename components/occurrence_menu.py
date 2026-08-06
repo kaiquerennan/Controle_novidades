@@ -4,6 +4,7 @@ from typing import Any, Callable
 
 from nicegui import run, ui
 
+from components.date_field import render_date_field
 from services.occurrence_database_service import OccurrenceDatabaseError
 from services.occurrence_dismissal_service import OccurrenceDismissalService
 from services.occurrence_query_service import (
@@ -12,6 +13,7 @@ from services.occurrence_query_service import (
     KIND_FILTER_LABELS,
     OccurrenceQueryService,
     OccurrenceSummary,
+    parse_filter_date,
 )
 
 
@@ -67,6 +69,8 @@ def render_occurrence_menu(
     state: dict[str, Any] = {
         'search': '',
         'kind': KIND_ANY,
+        'start_date': '',
+        'end_date': '',
         'show_dismissed': False,
         'error': '',
         'loading': True,
@@ -76,6 +80,8 @@ def render_occurrence_menu(
     def load_occurrences() -> list[OccurrenceSummary]:
         return queries.list_changes(
             search=str(state['search']), months=months, kind=str(state['kind']),
+            start_date=state['start_date'] or None,
+            end_date=state['end_date'] or None,
         )
 
     async def reload() -> None:
@@ -225,6 +231,33 @@ def render_occurrence_menu(
         state['search'] = term
         await reload()
 
+    async def apply_dates(campo: str, value: str) -> None:
+        novo = str(value or '').strip()
+        if novo == state[campo]:
+            return
+        # Data pela metade durante a digitação não vira consulta: sem isso, um
+        # "05/08" recém-digitado limparia o filtro e recarregaria a lista inteira.
+        if novo and parse_filter_date(novo) is None:
+            return
+        state[campo] = novo
+        inicio = parse_filter_date(state['start_date'])
+        fim = parse_filter_date(state['end_date'])
+        if inicio and fim and inicio > fim:
+            ui.notify(
+                'A data inicial não pode ser maior que a final.', type='warning',
+            )
+            return
+        await reload()
+
+    async def clear_dates() -> None:
+        if not state['start_date'] and not state['end_date']:
+            return
+        state['start_date'] = ''
+        state['end_date'] = ''
+        campo_inicio.value = ''
+        campo_fim.value = ''
+        await reload()
+
     async def apply_kind(value: str) -> None:
         # O tipo é filtrado no banco, então trocar a opção exige nova consulta.
         escolhido = str(value or KIND_ANY)
@@ -269,7 +302,19 @@ def render_occurrence_menu(
                 ui.button(icon='refresh', on_click=reload).props('flat color=primary').tooltip(
                     'Recarregar do banco'
                 )
-        with ui.row().classes('w-full items-center gap-4 no-wrap'):
+        with ui.row().classes('w-full items-center gap-2 no-wrap'):
+            campo_inicio = render_date_field(
+                'De', lambda valor: apply_dates('start_date', valor),
+                mark='data-inicio-ocorrencia',
+            )
+            campo_fim = render_date_field(
+                'Até', lambda valor: apply_dates('end_date', valor),
+                mark='data-fim-ocorrencia',
+            )
+            ui.button(icon='backspace', on_click=clear_dates).props(
+                'flat dense color=grey-7'
+            ).tooltip(f'Limpar as datas e voltar aos últimos {months} meses')
+            ui.space()
             # "color" pinta os botoes nao selecionados e "toggle-color" o ativo.
             ui.toggle(
                 KIND_FILTER_LABELS, value=KIND_ANY,
