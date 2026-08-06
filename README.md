@@ -124,9 +124,16 @@ Depois abra **WhatsApp** no menu lateral e leia o QR com o celular, em
 **Aparelhos conectados**. O vínculo fica salvo em `data/whatsapp_session/`, então
 só é preciso repetir se a conta for desconectada no aparelho.
 
-Com a conta vinculada, o botão **Enviar pelo WhatsApp** abre uma tela com o número
-do destinatário e a mensagem, já preenchida com o título da novidade e editável
-antes do envio. Números sem código do país são tratados como brasileiros.
+Com a conta vinculada, o botão **Enviar pelo WhatsApp** abre uma tela com a
+mensagem já preenchida com o título da novidade e editável antes do envio. O
+destino pode ser:
+
+- **Contato** — o número do destinatário. Sem código do país, o número é tratado
+  como brasileiro.
+- **Grupo** — a lista dos grupos dos quais a conta participa, com busca pelo nome.
+  A lista é lida do WhatsApp na primeira vez que a aba é aberta e fica guardada por
+  um minuto; **Recarregar** força uma releitura. Grupos em que só administradores
+  podem escrever aparecem marcados e o envio é bloqueado antes da tentativa.
 
 ---
 
