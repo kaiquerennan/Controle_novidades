@@ -15,11 +15,25 @@ OCCURRENCE_VIEW = 'VW_OCORRENCIAS_MUDANCA'
 DEFAULT_MONTHS = 3
 DEFAULT_LIMIT = 500
 
+_COLUMNS = (
+    'NUMERO_OCORRENCIA, CODIGO_CLIENTE, DATA_ABERTURA, ULTIMA_ALTERACAO,'
+    ' TIPO_OCORRENCIA, TITULO_NOVIDADE, JSON_COMPLETO'
+)
+
 _BASE_QUERY = (
-    'SELECT NUMERO_OCORRENCIA, CODIGO_CLIENTE, DATA_ABERTURA, ULTIMA_ALTERACAO, JSON_COMPLETO'
+    f'SELECT {_COLUMNS}'
     f' FROM {OCCURRENCE_VIEW}'
     ' WHERE ULTIMA_ALTERACAO >= DATEADD(MONTH, ?, GETDATE())'
 )
+
+OCCURRENCE_KINDS = {'M': 'Mudança', 'E': 'Erro'}
+KIND_ANY = 'ambos'
+KIND_FILTER_LABELS = {KIND_ANY: 'Ambos', 'M': 'Mudança', 'E': 'Erro'}
+
+_ONLY_WITHOUT_NOVELTY = (
+    " AND (TITULO_NOVIDADE IS NULL OR LTRIM(RTRIM(TITULO_NOVIDADE)) = '')"
+)
+_FILTER_BY_KIND = ' AND TIPO_OCORRENCIA = ?'
 
 _SEARCH_BY_TEXT = ' AND JSON_COMPLETO LIKE ? ESCAPE ?'
 _SEARCH_BY_NUMBER_OR_TEXT = ' AND (NUMERO_OCORRENCIA = ? OR JSON_COMPLETO LIKE ? ESCAPE ?)'
@@ -27,8 +41,6 @@ _ORDER = ' ORDER BY ULTIMA_ALTERACAO DESC'
 
 LIKE_ESCAPE = '\\'
 
-# A DESCRICAO vem com rotulos em caixa alta: CAMINHO, SOLICITACAO, JUSTIFICATIVA,
-# ATENDIMENTO, OBSERVACAO. Nem toda ocorrencia traz todos eles.
 _SECTION_PATTERN = re.compile(
     r'^[ \t]*([A-ZÀ-Ú][A-ZÀ-Ú0-9 ./_-]{2,40}?)[ \t]*:[ \t]*',
     re.MULTILINE,
@@ -155,6 +167,8 @@ class OccurrenceSummary:
     changed_at: datetime | None = None
     system: str = ''
     module: str = ''
+    kind: str = ''
+    novelty_title: str = ''
     description: str = ''
     complement: str = ''
     observations: list[OccurrenceObservation] = field(default_factory=list)
@@ -172,6 +186,14 @@ class OccurrenceSummary:
     @property
     def path(self) -> str:
         return self.sections.get('CAMINHO', '')
+
+    @property
+    def kind_label(self) -> str:
+        return OCCURRENCE_KINDS.get(self.kind, '')
+
+    @property
+    def has_novelty(self) -> bool:
+        return bool(str(self.novelty_title or '').strip())
 
     @property
     def changed_at_label(self) -> str:
@@ -210,6 +232,9 @@ class OccurrenceSummary:
             partes.append(f'SISTEMA: {self.system}')
         if self.module:
             partes.append(f'MÓDULO: {self.module}')
+        # Corrigir um erro e alterar um comportamento pedem materias diferentes.
+        if self.kind_label:
+            partes.append(f'TIPO: {self.kind_label}')
         # Extremos da linha do tempo: dao a escala do atendimento antes de a IA
         # ler as observacoes datadas.
         if self.opened_at:
@@ -290,11 +315,17 @@ class OccurrenceQueryService:
         search: str = '',
         months: int = DEFAULT_MONTHS,
         limit: int = DEFAULT_LIMIT,
+        kind: str = KIND_ANY,
     ) -> list[OccurrenceSummary]:
         term = str(search or '').strip()
         window = max(1, min(120, int(months)))
         params: list[Any] = [-window]
-        query = _BASE_QUERY
+        # A ordem dos parametros acompanha a ordem em que as clausulas entram.
+        query = _BASE_QUERY + _ONLY_WITHOUT_NOVELTY
+        escolhido = str(kind or '').strip().upper()
+        if escolhido in OCCURRENCE_KINDS:
+            query += _FILTER_BY_KIND
+            params.append(escolhido)
         if term:
             pattern = f'%{escape_like(term)}%'
             if term.isdigit():
@@ -308,8 +339,7 @@ class OccurrenceQueryService:
 
     def get(self, number: int) -> OccurrenceSummary | None:
         row = self.database.fetch_one(
-            'SELECT NUMERO_OCORRENCIA, CODIGO_CLIENTE, DATA_ABERTURA, ULTIMA_ALTERACAO,'
-            f' JSON_COMPLETO FROM {OCCURRENCE_VIEW} WHERE NUMERO_OCORRENCIA = ?',
+            f'SELECT {_COLUMNS} FROM {OCCURRENCE_VIEW} WHERE NUMERO_OCORRENCIA = ?',
             (int(number),),
         )
         return self.build_summary(row) if row else None
@@ -346,6 +376,12 @@ class OccurrenceQueryService:
             ),
             system=str(payload.get('SISTEMA') or ''),
             module=str(payload.get('MODULO') or ''),
+            kind=str(
+                row.get('TIPO_OCORRENCIA') or payload.get('TIPO_OCORRENCIA') or ''
+            ).strip().upper(),
+            novelty_title=str(
+                row.get('TITULO_NOVIDADE') or payload.get('TITULO_NOVIDADE') or ''
+            ).strip(),
             description=description,
             complement=str(payload.get('COMPLEMENTO') or ''),
             observations=observations,
@@ -359,6 +395,9 @@ __all__ = [
     'CHANGE_SECTIONS',
     'DEFAULT_LIMIT',
     'DEFAULT_MONTHS',
+    'KIND_ANY',
+    'KIND_FILTER_LABELS',
+    'OCCURRENCE_KINDS',
     'is_administrative_line',
     'relevant_lines',
     'OCCURRENCE_VIEW',

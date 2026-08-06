@@ -116,6 +116,42 @@ def render_whatsapp_panel(gateway: WhatsAppGatewayService | None = None) -> None
             ui.notify(exc.user_message, type='negative')
         await refresh_state()
 
+    async def force_new_qr() -> None:
+        """Descarta a sessao gravada para o gateway emitir um QR novo.
+
+        Enquanto as credenciais existirem o Baileys insiste nelas e nao emite
+        codigo algum, entao esta e a unica forma de forcar um novo pareamento.
+        """
+        try:
+            await run.io_bound(service.logout)
+            ui.notify(
+                'Sessão anterior descartada. O novo código aparece em instantes.',
+                type='warning',
+            )
+        except WhatsAppGatewayError as exc:
+            ui.notify(exc.user_message, type='negative')
+        await refresh_state()
+
+    def confirm_new_qr() -> None:
+        with ui.dialog() as dialog, ui.card().classes('p-5 gap-3 max-w-md'):
+            ui.label('Gerar um novo código?').classes('text-lg font-bold')
+            ui.label(
+                'A sessão gravada é descartada e a conta precisa ser vinculada de '
+                'novo pelo celular. Use apenas quando a reconexão não concluir '
+                'sozinha.'
+            ).classes('text-sm muted')
+
+            async def confirmar() -> None:
+                dialog.close()
+                await force_new_qr()
+
+            with ui.row().classes('w-full justify-end gap-2'):
+                ui.button('Cancelar', on_click=dialog.close).props('flat')
+                ui.button(
+                    'Gerar novo código', on_click=confirmar,
+                ).props('color=negative')
+        dialog.open()
+
     @ui.refreshable
     def painel() -> None:
         situacao = state['status']
@@ -178,9 +214,20 @@ def render_whatsapp_panel(gateway: WhatsAppGatewayService | None = None) -> None
             ).classes('text-xs muted')
             return
 
+        # Sem QR e sem conexão: o Baileys está tentando voltar. Ele reconecta
+        # sozinho quando as credenciais gravadas ainda valem e emite um código
+        # novo quando não valem -- e o polling coloca esse código na tela assim
+        # que ele existir, sem o usuário pedir.
+        with ui.row().classes('items-center gap-3 py-2'):
+            ui.spinner(size='md')
+            ui.label('Reconectando ao WhatsApp...').classes('text-sm')
         ui.label(
-            'Aguardando o código de vinculação. Use Atualizar em alguns segundos.'
+            'Se for necessário vincular de novo, o código aparece aqui '
+            'automaticamente. Se a reconexão não concluir, gere um código novo.'
         ).classes('muted text-sm')
+        ui.button(
+            'Gerar novo código', icon='qr_code_2', on_click=confirm_new_qr,
+        ).props('outline color=primary').mark('novo-qr-whatsapp')
 
     ui.add_head_html(CONNECTION_ANIMATION_CSS)
     with ui.card().classes('simple-card w-full p-5 gap-3'):

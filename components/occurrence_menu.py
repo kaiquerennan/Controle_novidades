@@ -8,12 +8,46 @@ from services.occurrence_database_service import OccurrenceDatabaseError
 from services.occurrence_dismissal_service import OccurrenceDismissalService
 from services.occurrence_query_service import (
     DEFAULT_MONTHS,
+    KIND_ANY,
+    KIND_FILTER_LABELS,
     OccurrenceQueryService,
     OccurrenceSummary,
 )
 
 
 PREVIEW_LENGTH = 320
+KIND_BADGE_COLORS = {'Erro': 'red', 'Mudança': 'teal'}
+
+# Controle segmentado: a faixa clara e a trilha, e so a opcao ativa ganha a
+# pastilha. Os botoes inativos precisam ficar transparentes no CSS porque o
+# q-btn-toggle sempre pinta um fundo neles.
+SEGMENTED_CSS = '''
+    <style>
+      .emc-segmented {
+        background: #eef1f6;
+        border: 1px solid #e4e9f2;
+        border-radius: 9999px;
+        padding: 3px;
+      }
+      .emc-segmented .q-btn {
+        border-radius: 9999px !important;
+        min-height: 30px;
+        padding: 0 18px;
+        font-weight: 600;
+        transition: background-color .18s ease, color .18s ease, box-shadow .18s ease;
+      }
+      .emc-segmented .q-btn:not(.q-btn--active) {
+        background: transparent !important;
+      }
+      .emc-segmented .q-btn:not(.q-btn--active):hover {
+        background: rgba(15, 23, 42, .06) !important;
+      }
+      .emc-segmented .q-btn--active {
+        box-shadow: 0 1px 3px rgba(16, 24, 40, .2);
+      }
+      .emc-segmented .q-btn .q-focus-helper { display: none; }
+    </style>
+'''
 
 
 def render_occurrence_menu(
@@ -32,6 +66,7 @@ def render_occurrence_menu(
     dismissals = dismissal_service or OccurrenceDismissalService()
     state: dict[str, Any] = {
         'search': '',
+        'kind': KIND_ANY,
         'show_dismissed': False,
         'error': '',
         'loading': True,
@@ -39,7 +74,9 @@ def render_occurrence_menu(
     }
 
     def load_occurrences() -> list[OccurrenceSummary]:
-        return queries.list_changes(search=str(state['search']), months=months)
+        return queries.list_changes(
+            search=str(state['search']), months=months, kind=str(state['kind']),
+        )
 
     async def reload() -> None:
         """A consulta vai para outra thread para nao travar a interface."""
@@ -110,6 +147,10 @@ def render_occurrence_menu(
             with ui.row().classes('w-full items-center justify-between no-wrap gap-3'):
                 with ui.row().classes('items-center gap-2 no-wrap'):
                     ui.label(f'#{occurrence.number}').classes('text-lg font-bold')
+                    if occurrence.kind_label:
+                        ui.badge(occurrence.kind_label).props(
+                            f'color={KIND_BADGE_COLORS.get(occurrence.kind_label, "grey")}'
+                        )
                     if occurrence.changed_at_label:
                         ui.label(occurrence.changed_at_label).classes('muted text-sm')
                     if occurrence.system:
@@ -184,6 +225,14 @@ def render_occurrence_menu(
         state['search'] = term
         await reload()
 
+    async def apply_kind(value: str) -> None:
+        # O tipo é filtrado no banco, então trocar a opção exige nova consulta.
+        escolhido = str(value or KIND_ANY)
+        if escolhido == state['kind']:
+            return
+        state['kind'] = escolhido
+        await reload()
+
     def toggle_dismissed(value: bool) -> None:
         # As excluidas ja estao na lista carregada; basta trocar o filtro local.
         state['show_dismissed'] = bool(value)
@@ -201,10 +250,14 @@ def render_occurrence_menu(
                 'color=negative'
             ).mark('confirmar-exclusao')
 
+    ui.add_head_html(SEGMENTED_CSS)
     with ui.card().classes('simple-card w-full p-5 gap-3'):
         with ui.row().classes('w-full items-center justify-between no-wrap gap-3'):
             with ui.column().classes('gap-0'):
-                ui.label('Ocorrências de mudança').classes('text-2xl font-bold')
+                ui.label('Ocorrências').classes('text-2xl font-bold')
+                ui.label(
+                    'Apenas as que ainda não viraram novidade.'
+                ).classes('muted text-sm')
 
             with ui.row().classes('items-center gap-2 no-wrap'):
                 search = ui.input(
@@ -216,9 +269,19 @@ def render_occurrence_menu(
                 ui.button(icon='refresh', on_click=reload).props('flat color=primary').tooltip(
                     'Recarregar do banco'
                 )
-        ui.switch('Ver excluídas', on_change=lambda event: toggle_dismissed(event.value)).props(
-            'dense'
-        )
+        with ui.row().classes('w-full items-center gap-4 no-wrap'):
+            # "color" pinta os botoes nao selecionados e "toggle-color" o ativo.
+            ui.toggle(
+                KIND_FILTER_LABELS, value=KIND_ANY,
+                on_change=lambda event: apply_kind(event.value),
+            ).props(
+                'no-caps unelevated dense rounded text-color=grey-8 '
+                'toggle-color=primary toggle-text-color=white'
+            ).classes('emc-segmented').mark('filtro-tipo-ocorrencia')
+            ui.space()
+            ui.switch(
+                'Ver excluídas', on_change=lambda event: toggle_dismissed(event.value),
+            ).props('dense')
         occurrence_list()
         # A primeira carga acontece depois que a pagina existe, para nao atrasar o render.
         ui.timer(0.1, reload, once=True)
