@@ -133,6 +133,18 @@ class OccurrenceObservation:
     text: str = ''
     user: str = ''
 
+    @property
+    def moment(self) -> datetime | None:
+        return _parse_datetime(self.date)
+
+    @property
+    def timestamp_label(self) -> str:
+        """Data e hora do registro; cai no valor de origem quando nao for legivel."""
+        momento = self.moment
+        if momento is not None:
+            return momento.strftime('%d/%m/%Y %H:%M')
+        return str(self.date or '').strip() or 'sem data'
+
 
 @dataclass(slots=True)
 class OccurrenceSummary:
@@ -169,6 +181,21 @@ class OccurrenceSummary:
     def opened_at_label(self) -> str:
         return self.opened_at.strftime('%d/%m/%Y') if self.opened_at else ''
 
+    def observations_in_order(self) -> list[OccurrenceObservation]:
+        """Historico em ordem cronologica, do mais antigo para o mais recente.
+
+        Sem essa ordem a "linha do tempo" pedida no prompt nao existe de fato. As
+        observacoes sem data legivel ficam no fim, preservando a ordem de origem.
+        O tzinfo e descartado na comparacao para nao misturar datas com e sem fuso.
+        """
+        return sorted(
+            self.observations,
+            key=lambda item: (
+                item.moment is None,
+                item.moment.replace(tzinfo=None) if item.moment else datetime.min,
+            ),
+        )
+
     def as_raw_text(self) -> str:
         """Contexto da ocorrencia para alimentar a geração.
 
@@ -183,6 +210,12 @@ class OccurrenceSummary:
             partes.append(f'SISTEMA: {self.system}')
         if self.module:
             partes.append(f'MÓDULO: {self.module}')
+        # Extremos da linha do tempo: dao a escala do atendimento antes de a IA
+        # ler as observacoes datadas.
+        if self.opened_at:
+            partes.append(f'ABERTA EM: {self.opened_at.strftime("%d/%m/%Y %H:%M")}')
+        if self.changed_at:
+            partes.append(f'ÚLTIMA ALTERAÇÃO: {self.changed_at_label}')
 
         vistas: set[str] = set()
         mudanca: list[str] = []
@@ -203,14 +236,25 @@ class OccurrenceSummary:
             partes.append('\nCOMPLEMENTO:\n' + '\n'.join(complemento))
 
         historico: list[str] = []
-        for item in self.observations:
-            historico.extend(relevant_lines(item.text, vistas))
+        for item in self.observations_in_order():
+            linhas = relevant_lines(item.text, vistas)
+            if not linhas:
+                continue
+            # Cada registro carrega a sua data e hora: e por ela que a IA
+            # distingue o que foi pedido no inicio do que foi entregue no fim.
+            historico.append(
+                f'[{item.timestamp_label}]\n'
+                + '\n'.join(f'  {linha}' for linha in linhas)
+            )
         if historico:
             partes.append(
-                '\nREGISTRO INTERNO DO CHAMADO (contexto para entender a mudança; '
-                'não publique este conteúdo, use apenas o que for comportamento '
-                'efetivo da funcionalidade):\n'
-                + '\n'.join(f'- {linha}' for linha in historico)
+                '\nREGISTRO INTERNO DO CHAMADO (linha do tempo do atendimento, do mais '
+                'antigo para o mais recente; cada entrada traz a data e a hora em que '
+                'foi registrada). Contexto para entender a mudança: não publique este '
+                'conteúdo, use apenas o que for comportamento efetivo da '
+                'funcionalidade, e considere que os registros mais recentes descrevem '
+                'o que foi realmente entregue:\n\n'
+                + '\n\n'.join(historico)
             )
         return '\n'.join(partes).strip()
 

@@ -169,6 +169,23 @@ análises de viabilidade, pedidos de verificação, valores usados em teste, nom
 cadastros de teste, versões testadas, endereços de ambientes de teste nem qualquer
 frase dirigida à equipe interna.
 
+LINHA DO TEMPO DO ATENDIMENTO
+
+Cada entrada do "REGISTRO INTERNO DO CHAMADO" vem precedida da data e da hora em que
+foi registrada, em ordem cronológica, do mais antigo para o mais recente. Leia o
+histórico inteiro como uma linha do tempo antes de decidir o que a matéria afirma.
+
+O que foi pedido na abertura é a intenção inicial, não o resultado. Durante o
+atendimento a solução costuma mudar: o escopo é reduzido, ampliado, adiado, substituído
+ou resolvido por outro caminho. Quando os registros mais recentes divergirem da
+solicitação original, o comportamento válido é o dos registros mais recentes.
+
+A matéria descreve o que o sistema faz ao final da linha do tempo. Um trecho antigo que
+descreva uma solução depois substituída não entra na matéria, nem como contexto.
+
+Quando a linha do tempo não deixar claro se algo chegou a ser entregue, não afirme a
+entrega.
+
 Utilize testes, cálculos, valores, exemplos, XML, consultas ao banco de dados, versões,
 hipóteses, diagnósticos, números de IC, OC, chamados e tarefas internas apenas para
 compreender o contexto. Não transforme essas informações em conteúdo da matéria.

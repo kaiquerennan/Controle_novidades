@@ -1565,9 +1565,15 @@ def index() -> None:
                         ui.label(f'Conta vinculada: {situacao.phone or "não informada"}').classes(
                             'text-sm muted'
                         )
+                        # No q-btn-toggle, "color" pinta os botoes NAO selecionados e
+                        # "toggle-color" o escolhido: usar primary nos dois deixa a
+                        # opcao ativa indistinguivel da outra.
                         ui.toggle(
                             ['Contato', 'Grupo'], value='Contato', on_change=trocar_destino,
-                        ).props('no-caps unelevated color=primary').mark('whatsapp-destino')
+                        ).props(
+                            'no-caps unelevated color=grey-4 text-color=grey-9 '
+                            'toggle-color=primary toggle-text-color=white'
+                        ).mark('whatsapp-destino')
 
                         with ui.column().classes('w-full gap-1') as area_contato:
                             numero = ui.input(

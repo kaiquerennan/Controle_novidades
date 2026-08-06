@@ -178,9 +178,21 @@ class WhatsAppGatewayService:
         except error.HTTPError as exc:
             corpo = exc.read().decode('utf-8', errors='replace')
             try:
-                mensagem = str(json.loads(corpo).get('erro') or corpo)
+                mensagem = str(json.loads(corpo).get('erro') or '').strip()
             except json.JSONDecodeError:
-                mensagem = corpo
+                mensagem = ''
+            if not mensagem:
+                # Resposta fora do padrao do gateway: a pagina de erro do Express e
+                # HTML e nao diz nada ao usuario. Ela fica so no log, e a tela recebe
+                # a orientacao que resolve o caso comum -- servico desatualizado.
+                logger.warning(
+                    '[WHATSAPP] Resposta %s em %s sem corpo JSON: %s',
+                    exc.code, path, corpo[:200].replace('\n', ' '),
+                )
+                mensagem = (
+                    f'O servico do WhatsApp respondeu {exc.code} em {path}. '
+                    'Se o aplicativo foi atualizado, reinicie o servico na aba WhatsApp.'
+                )
             raise WhatsAppGatewayError(mensagem, technical_detail=f'HTTP {exc.code}') from exc
         except (error.URLError, TimeoutError, socket.timeout) as exc:
             raise WhatsAppGatewayError(
