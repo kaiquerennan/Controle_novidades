@@ -65,10 +65,7 @@ ADMINISTRATIVE_PATTERNS = tuple(
         r'nosso maior problema',
         r'gentileza analisar',
         r'\b(cache[s]?|buffer[s]?|lock[s]?|thread[s]?|heap|swap)\b',
-        # A URL pode vir precedida do marcador de lista da propria observacao.
         r'^https?://\S+$',
-        # Ambientes de homologacao e arquivos de teste compartilhados. Links
-        # publicos da EMC continuam passando: eles servem ao cliente final.
         r'https?://\S*(hml|homolog)',
         r'https?://\S*(drive|docs)\.google\.',
         r'https?://\S*(dropbox|wetransfer|1drv\.ms|onedrive)',

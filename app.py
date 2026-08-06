@@ -447,10 +447,15 @@ def index() -> None:
                 ).props('flat color=primary')
             render_occurrence_menu(launch_from_occurrence)
         # A sessão anterior fica acessível por um botão, sem roubar a tela inicial.
+        # Depois de aprovada a novidade deixa de ser rascunho: ela passa a viver em
+        # "Novidades lançadas" e retomá-la aqui só reabriria o que já foi lançado.
         resume_row.set_visibility(
-            bool(str(saved.get('raw_text') or '').strip())
-            or bool(state['images'])
-            or bool(state['generated'])
+            not state['approved']
+            and (
+                bool(str(saved.get('raw_text') or '').strip())
+                or bool(state['images'])
+                or bool(state['generated'])
+            )
         )
 
         def edit_launched_novelty(novelty: Any) -> None:
@@ -1540,6 +1545,9 @@ def index() -> None:
                         return
                     state['approved'] = True
                     persist_screen_state(step='Aprovar e exportar')
+                    # O rascunho terminou aqui: retomar esta sessão reabriria uma
+                    # novidade que já foi lançada.
+                    resume_row.set_visibility(False)
                     refresh_novelty_history()
                     stepper.next()
                     ui.notify(
