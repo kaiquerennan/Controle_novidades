@@ -17,18 +17,81 @@ STATUS_COLORS = {
     'desconectado': 'grey',
 }
 
+# Enquanto a conta nao esta vinculada a tela precisa acompanhar o gateway de perto:
+# o QR e trocado a cada 60 s e o pareamento acontece no celular, sem nada avisar o
+# navegador. Ja conectada, uma verificacao esparsa basta para perceber uma queda.
+POLL_WAITING_SECONDS = 3.0
+POLL_CONNECTED_SECONDS = 20.0
+CELEBRATION_SECONDS = 5.0
+
+CONNECTION_ANIMATION_CSS = '''
+    <style>
+      @keyframes emc-connected-pop {
+        0%   { transform: scale(0.4); opacity: 0; }
+        60%  { transform: scale(1.12); opacity: 1; }
+        100% { transform: scale(1); opacity: 1; }
+      }
+      @keyframes emc-connected-ring {
+        0%   { transform: scale(0.6); opacity: 0.55; }
+        100% { transform: scale(1.9); opacity: 0; }
+      }
+      @keyframes emc-connected-fade {
+        0%   { transform: translateY(6px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+      }
+      .emc-connected-ring {
+        position: relative; display: flex;
+        align-items: center; justify-content: center;
+      }
+      .emc-connected-ring::after {
+        content: ''; position: absolute; inset: -10px;
+        border-radius: 9999px; border: 3px solid #21ba45;
+        animation: emc-connected-ring 1.1s ease-out 2;
+      }
+      .emc-connected-icon {
+        animation: emc-connected-pop 0.6s cubic-bezier(.22, 1.2, .36, 1) both;
+      }
+      .emc-connected-text {
+        animation: emc-connected-fade 0.5s ease-out 0.25s both;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .emc-connected-icon, .emc-connected-text { animation: none; }
+        .emc-connected-ring::after { animation: none; opacity: 0; }
+      }
+    </style>
+'''
+
 
 def render_whatsapp_panel(gateway: WhatsAppGatewayService | None = None) -> None:
     """Vinculo da conta do WhatsApp, por leitura do QR."""
     service = gateway or WhatsAppGatewayService()
-    state: dict[str, Any] = {'status': None, 'qr': '', 'busy': False}
+    state: dict[str, Any] = {
+        'status': None, 'qr': '', 'busy': False,
+        'just_connected': False, 'poll': None,
+    }
+
+    def end_celebration() -> None:
+        state['just_connected'] = False
+        painel.refresh()
 
     async def refresh_state() -> None:
+        anterior = state['status']
         state['status'] = await run.io_bound(service.status)
         situacao = state['status']
         state['qr'] = (
             await run.io_bound(service.qr_code) if situacao.has_qr else ''
         )
+        # Só comemora a transição. Sem o estado anterior a animação dispararia a
+        # cada abertura de tela com a conta já vinculada, virando ruído.
+        if situacao.connected and anterior is not None and not anterior.connected:
+            state['just_connected'] = True
+            ui.notify('WhatsApp conectado!', type='positive')
+            ui.timer(CELEBRATION_SECONDS, end_celebration, once=True)
+        poll = state['poll']
+        if poll is not None:
+            poll.interval = (
+                POLL_CONNECTED_SECONDS if situacao.connected else POLL_WAITING_SECONDS
+            )
         painel.refresh()
 
     async def start_service() -> None:
@@ -86,6 +149,15 @@ def render_whatsapp_panel(gateway: WhatsAppGatewayService | None = None) -> None
             return
 
         if situacao.connected:
+            if state['just_connected']:
+                with ui.column().classes('w-full items-center gap-2 py-4'):
+                    with ui.element('div').classes('emc-connected-ring'):
+                        ui.icon(
+                            'check_circle', size='72px', color='positive',
+                        ).classes('emc-connected-icon').mark('animacao-conectado')
+                    ui.label('Conectado!').classes(
+                        'text-2xl font-bold text-green-700 emc-connected-text'
+                    )
             ui.label(
                 'A conta está vinculada. As novidades podem ser enviadas pelo WhatsApp.'
             ).classes('text-sm')
@@ -102,7 +174,7 @@ def render_whatsapp_panel(gateway: WhatsAppGatewayService | None = None) -> None
             ).classes('text-sm muted')
             ui.image(state['qr']).classes('w-72 h-72').mark('qr-whatsapp')
             ui.label(
-                'O código expira em cerca de 20 segundos. Use Atualizar para gerar outro.'
+                'O código expira em cerca de 60 segundos. Use Atualizar para gerar outro.'
             ).classes('text-xs muted')
             return
 
@@ -110,10 +182,12 @@ def render_whatsapp_panel(gateway: WhatsAppGatewayService | None = None) -> None
             'Aguardando o código de vinculação. Use Atualizar em alguns segundos.'
         ).classes('muted text-sm')
 
+    ui.add_head_html(CONNECTION_ANIMATION_CSS)
     with ui.card().classes('simple-card w-full p-5 gap-3'):
         with ui.column().classes('gap-0'):
             ui.label('WhatsApp').classes('text-2xl font-bold')
         painel()
+        state['poll'] = ui.timer(POLL_WAITING_SECONDS, refresh_state)
         ui.timer(0.1, refresh_state, once=True)
 
 

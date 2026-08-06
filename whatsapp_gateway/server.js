@@ -75,6 +75,11 @@ async function iniciar() {
     auth: state,
     logger,
     printQRInTerminal: false,
+    // Sem esta opcao o Baileys da 60s ao primeiro QR e apenas 20s a cada QR
+    // seguinte, tempo curto demais para quem precisa pegar o celular. Fixando o
+    // valor, todos duram 60s -- o limite que o proprio servidor do WhatsApp
+    // aceita para o codigo de pareamento.
+    qrTimeout: 60000,
     browser: ['EMC Central de Novidades', 'Chrome', '1.0.0'],
     syncFullHistory: false,
     markOnlineOnConnect: false,
