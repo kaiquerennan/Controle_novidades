@@ -16,6 +16,7 @@ const {
   useMultiFileAuthState,
   DisconnectReason,
   fetchLatestBaileysVersion,
+  jidNormalizedUser,
 } = require('@whiskeysockets/baileys')
 
 const PORT = Number(process.env.EMC_WHATSAPP_PORT || 8511)
@@ -36,10 +37,21 @@ const estado = {
 let socket = null
 let encerrando = false
 
+// Buscar os grupos no servidor do WhatsApp e lento e a lista muda pouco, entao
+// guardamos o resultado por um tempo curto. A tela pode pedir /groups?atualizar=1
+// quando o usuario quiser forcar uma releitura.
+const GRUPOS_TTL_MS = 60000
+const cacheGrupos = { itens: [], atualizadoEm: 0 }
+
 function registrar(conexao, extra = {}) {
   estado.conexao = conexao
   estado.atualizadoEm = new Date().toISOString()
   Object.assign(estado, extra)
+}
+
+function esquecerGrupos() {
+  cacheGrupos.itens = []
+  cacheGrupos.atualizadoEm = 0
 }
 
 function limparSessao() {
@@ -70,6 +82,11 @@ async function iniciar() {
 
   socket.ev.on('creds.update', saveCreds)
 
+  // Entrou/saiu de um grupo ou alguem renomeou: o cache precisa ser refeito.
+  socket.ev.on('groups.upsert', esquecerGrupos)
+  socket.ev.on('groups.update', esquecerGrupos)
+  socket.ev.on('group-participants.update', esquecerGrupos)
+
   socket.ev.on('connection.update', async (update) => {
     const { connection, lastDisconnect, qr } = update
 
@@ -92,6 +109,7 @@ async function iniciar() {
     }
 
     if (connection === 'close') {
+      esquecerGrupos()
       const codigo = lastDisconnect && lastDisconnect.error
         ? lastDisconnect.error.output?.statusCode
         : undefined
@@ -131,6 +149,44 @@ function comoJid(numero) {
   return `${digitos}@s.whatsapp.net`
 }
 
+const JID_GRUPO = /^\d+(-\d+)?@g\.us$/
+
+function comoJidGrupo(identificador) {
+  const bruto = String(identificador || '').trim()
+  if (!JID_GRUPO.test(bruto)) {
+    throw new Error('Selecione um grupo valido.')
+  }
+  return bruto
+}
+
+async function listarGrupos(forcar = false) {
+  const agora = Date.now()
+  if (!forcar && cacheGrupos.atualizadoEm && agora - cacheGrupos.atualizadoEm < GRUPOS_TTL_MS) {
+    return cacheGrupos.itens
+  }
+  const metadados = await socket.groupFetchAllParticipating()
+  const eu = socket.user && socket.user.id ? jidNormalizedUser(socket.user.id) : ''
+  const itens = Object.values(metadados || {}).map((grupo) => {
+    const participantes = Array.isArray(grupo.participants) ? grupo.participants : []
+    const meuRegistro = participantes.find((p) => jidNormalizedUser(p.id || '') === eu)
+    const souAdmin = Boolean(meuRegistro && (meuRegistro.admin === 'admin' || meuRegistro.admin === 'superadmin'))
+    // Em grupos com "somente administradores" o envio e recusado pelo servidor,
+    // entao a tela precisa saber disso antes de tentar.
+    const somenteAdmin = Boolean(grupo.announce)
+    return {
+      id: grupo.id,
+      nome: String(grupo.subject || '').trim() || grupo.id,
+      participantes: participantes.length,
+      somente_admin: somenteAdmin,
+      posso_enviar: !somenteAdmin || souAdmin,
+    }
+  })
+  itens.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'))
+  cacheGrupos.itens = itens
+  cacheGrupos.atualizadoEm = agora
+  return itens
+}
+
 const app = express()
 app.use(express.json({ limit: '1mb' }))
 
@@ -159,14 +215,37 @@ app.get('/qr', (req, res) => {
   res.json({ qr: estado.qr })
 })
 
+app.get('/groups', async (req, res) => {
+  if (estado.conexao !== 'conectado') {
+    return res.status(409).json({ erro: 'WhatsApp nao esta conectado.' })
+  }
+  try {
+    const grupos = await listarGrupos(req.query.atualizar === '1')
+    res.json({ grupos })
+  } catch (erro) {
+    res.status(400).json({ erro: String(erro.message || erro) })
+  }
+})
+
 app.post('/send', async (req, res) => {
   const { to, message } = req.body || {}
+  const grupoId = (req.body || {}).group_id
   if (estado.conexao !== 'conectado') {
     return res.status(409).json({ erro: 'WhatsApp nao esta conectado.' })
   }
   const texto = String(message || '').trim()
   if (!texto) {
     return res.status(400).json({ erro: 'A mensagem nao pode ficar vazia.' })
+  }
+  if (grupoId) {
+    // Grupo: o JID ja vem da listagem, entao nao ha o que consultar em onWhatsApp.
+    try {
+      const jid = comoJidGrupo(grupoId)
+      const enviado = await socket.sendMessage(jid, { text: texto })
+      return res.json({ id: enviado?.key?.id || '', para: jid })
+    } catch (erro) {
+      return res.status(400).json({ erro: String(erro.message || erro) })
+    }
   }
   try {
     const jid = comoJid(to)
@@ -199,6 +278,7 @@ app.post('/logout', async (req, res) => {
     logger.warn({ erro: String(erro) }, 'falha ao encerrar o socket')
   }
   socket = null
+  esquecerGrupos()
   limparSessao()
   registrar('desconectado', { qr: '', telefone: '', ultimoErro: '' })
   encerrando = false

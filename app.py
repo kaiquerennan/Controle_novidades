@@ -1437,7 +1437,7 @@ def index() -> None:
                     open_whatsapp_dialog(composition.title or 'Novidade EMC')
 
                 def open_whatsapp_dialog(titulo: str) -> None:
-                    """Tela de envio: resumo editável e número do destinatário."""
+                    """Tela de envio: resumo editável, para um contato ou um grupo."""
                     situacao = whatsapp_gateway.status()
                     if not situacao.connected:
                         ui.notify(
@@ -1449,17 +1449,143 @@ def index() -> None:
                         return
 
                     titulo = str(titulo or 'Novidade EMC')
+                    destino: dict[str, Any] = {
+                        'tipo': 'Contato',
+                        'grupos': [],
+                        'selecionado': None,
+                        'filtro': '',
+                        'carregando': False,
+                        'erro': '',
+                    }
+
+                    def selecionar_grupo(grupo: Any) -> None:
+                        destino['selecionado'] = grupo
+                        lista_grupos.refresh()
+
+                    def filtrar_grupos(valor: str) -> None:
+                        destino['filtro'] = str(valor or '')
+                        lista_grupos.refresh()
+
+                    @ui.refreshable
+                    def lista_grupos() -> None:
+                        if destino['carregando']:
+                            with ui.row().classes('items-center gap-2 p-2'):
+                                ui.spinner(size='sm')
+                                ui.label('Carregando os grupos...').classes('muted text-sm')
+                            return
+                        if destino['erro']:
+                            ui.label(destino['erro']).classes('text-sm text-amber-800')
+                            return
+                        if not destino['grupos']:
+                            ui.label(
+                                'Nenhum grupo encontrado nesta conta. Se você acabou de '
+                                'entrar em um, use Recarregar.'
+                            ).classes('muted text-sm p-2')
+                            return
+                        filtro = str(destino['filtro'] or '').strip().lower()
+                        visiveis = [
+                            grupo for grupo in destino['grupos']
+                            if filtro in grupo.name.lower()
+                        ]
+                        if not visiveis:
+                            ui.label(
+                                f'Nenhum grupo com "{destino["filtro"]}".'
+                            ).classes('muted text-sm p-2')
+                            return
+                        ui.label(f'{len(visiveis)} grupo(s)').classes('muted text-xs px-1')
+                        escolhido = destino['selecionado']
+                        with ui.list().props('bordered separator').classes(
+                            'w-full max-h-64 overflow-y-auto rounded-lg'
+                        ).mark('whatsapp-grupos'):
+                            for grupo in visiveis:
+                                atual = escolhido is not None and escolhido.id == grupo.id
+                                item = ui.item(
+                                    on_click=lambda _, g=grupo: selecionar_grupo(g),
+                                ).props('clickable')
+                                if atual:
+                                    item.classes('bg-green-50')
+                                with item:
+                                    with ui.item_section().props('avatar'):
+                                        ui.icon(
+                                            'check_circle' if atual else 'groups'
+                                        ).classes(
+                                            'text-green-600' if atual else 'text-slate-500'
+                                        )
+                                    with ui.item_section():
+                                        ui.item_label(grupo.name)
+                                        if grupo.summary:
+                                            ui.item_label(grupo.summary).props('caption')
+                                    if not grupo.can_send:
+                                        with ui.item_section().props('side'):
+                                            ui.badge('sem permissão').props(
+                                                'color=orange outline'
+                                            )
+
+                    async def carregar_grupos(*, forcar: bool = False) -> None:
+                        if destino['carregando']:
+                            return
+                        destino['carregando'] = True
+                        destino['erro'] = ''
+                        lista_grupos.refresh()
+                        try:
+                            destino['grupos'] = await run.io_bound(
+                                lambda: whatsapp_gateway.list_groups(refresh=forcar)
+                            )
+                        except WhatsAppGatewayError as exc:
+                            destino['grupos'] = []
+                            destino['erro'] = exc.user_message
+                        finally:
+                            destino['carregando'] = False
+                            lista_grupos.refresh()
+
+                    async def recarregar_grupos() -> None:
+                        destino['selecionado'] = None
+                        await carregar_grupos(forcar=True)
+
+                    async def trocar_destino(event: Any) -> None:
+                        destino['tipo'] = str(event.value or 'Contato')
+                        area_contato.set_visibility(destino['tipo'] == 'Contato')
+                        area_grupo.set_visibility(destino['tipo'] == 'Grupo')
+                        # A lista só é buscada quando o usuário pede grupos: em contas
+                        # com muitos grupos a consulta demora alguns segundos.
+                        if (
+                            destino['tipo'] == 'Grupo'
+                            and not destino['grupos']
+                            and not destino['erro']
+                        ):
+                            await carregar_grupos()
+
                     with ui.dialog() as dialog, ui.card().classes('w-full max-w-2xl p-6 gap-4'):
                         ui.label('Enviar novidade pelo WhatsApp').classes('text-2xl font-bold')
                         ui.label(f'Conta vinculada: {situacao.phone or "não informada"}').classes(
                             'text-sm muted'
                         )
-                        numero = ui.input(
-                            'Número do destinatário', placeholder='31999999999',
-                        ).props('outlined').classes('w-full').mark('whatsapp-numero')
-                        ui.label(
-                            'Sem o código do país, o número é tratado como brasileiro.'
-                        ).classes('text-xs muted')
+                        ui.toggle(
+                            ['Contato', 'Grupo'], value='Contato', on_change=trocar_destino,
+                        ).props('no-caps unelevated color=primary').mark('whatsapp-destino')
+
+                        with ui.column().classes('w-full gap-1') as area_contato:
+                            numero = ui.input(
+                                'Número do destinatário', placeholder='31999999999',
+                            ).props('outlined').classes('w-full').mark('whatsapp-numero')
+                            ui.label(
+                                'Sem o código do país, o número é tratado como brasileiro.'
+                            ).classes('text-xs muted')
+
+                        with ui.column().classes('w-full gap-2') as area_grupo:
+                            with ui.row().classes('w-full items-center no-wrap gap-2'):
+                                ui.input(
+                                    placeholder='Buscar grupo pelo nome',
+                                    on_change=lambda event: filtrar_grupos(event.value),
+                                ).props(
+                                    'outlined dense clearable debounce=300 prepend-icon=search'
+                                ).classes('grow').mark('whatsapp-busca-grupo')
+                                ui.button(
+                                    icon='refresh', on_click=recarregar_grupos,
+                                ).props('flat color=primary').tooltip('Recarregar os grupos')
+                            lista_grupos()
+                        area_grupo.set_visibility(False)
+
                         mensagem = ui.textarea(
                             'Mensagem', value=titulo,
                         ).props('rows=8 outlined').classes('w-full').mark('whatsapp-mensagem')
@@ -1470,23 +1596,55 @@ def index() -> None:
                         async def enviar() -> None:
                             if state.get('whatsapp_sending'):
                                 return
+                            grupo = (
+                                destino['selecionado'] if destino['tipo'] == 'Grupo' else None
+                            )
+                            if destino['tipo'] == 'Grupo':
+                                if grupo is None:
+                                    resultado.set_text('Selecione um grupo da lista.')
+                                    ui.notify('Selecione um grupo da lista.', type='warning')
+                                    return
+                                if not grupo.can_send:
+                                    aviso = (
+                                        f'Em "{grupo.name}" somente administradores podem '
+                                        'enviar mensagens.'
+                                    )
+                                    resultado.set_text(aviso)
+                                    ui.notify(aviso, type='warning')
+                                    return
                             state['whatsapp_sending'] = True
                             botao_enviar.disable()
                             enviando.set_visibility(True)
                             resultado.set_text('Enviando...')
                             try:
-                                identificador = await run.io_bound(
-                                    lambda: whatsapp_gateway.send(
-                                        recipient=str(numero.value or ''),
-                                        message=str(mensagem.value or ''),
+                                if grupo is not None:
+                                    identificador = await run.io_bound(
+                                        lambda: whatsapp_gateway.send_to_group(
+                                            group_id=grupo.id,
+                                            message=str(mensagem.value or ''),
+                                        )
                                     )
-                                )
-                                ui.notify('Novidade enviada pelo WhatsApp.', type='positive')
-                                logger.info(
-                                    '[WHATSAPP] Novidade enviada; destinatario=%s titulo=%s id=%s',
-                                    mask_phone(str(numero.value or '')), titulo,
-                                    identificador or 'nao informado',
-                                )
+                                    ui.notify(
+                                        f'Novidade enviada para o grupo {grupo.name}.',
+                                        type='positive',
+                                    )
+                                    logger.info(
+                                        '[WHATSAPP] Novidade enviada; grupo=%s titulo=%s id=%s',
+                                        grupo.id, titulo, identificador or 'nao informado',
+                                    )
+                                else:
+                                    identificador = await run.io_bound(
+                                        lambda: whatsapp_gateway.send(
+                                            recipient=str(numero.value or ''),
+                                            message=str(mensagem.value or ''),
+                                        )
+                                    )
+                                    ui.notify('Novidade enviada pelo WhatsApp.', type='positive')
+                                    logger.info(
+                                        '[WHATSAPP] Novidade enviada; destinatario=%s titulo=%s id=%s',
+                                        mask_phone(str(numero.value or '')), titulo,
+                                        identificador or 'nao informado',
+                                    )
                                 dialog.close()
                             except WhatsAppGatewayError as exc:
                                 resultado.set_text(exc.user_message)

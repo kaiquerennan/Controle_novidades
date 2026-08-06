@@ -22,6 +22,8 @@ DEFAULT_PORT = 8511
 DEFAULT_TIMEOUT = 20.0
 STARTUP_TIMEOUT = 40.0
 
+GROUP_JID_PATTERN = re.compile(r'\d+(-\d+)?@g\.us')
+
 CONNECTION_LABELS = {
     'conectado': 'Conectado',
     'aguardando_qr': 'Aguardando leitura do QR',
@@ -51,6 +53,28 @@ class GatewayStatus:
         if not self.running:
             return 'Serviço do WhatsApp parado'
         return CONNECTION_LABELS.get(self.connection, self.connection)
+
+
+@dataclass(slots=True, frozen=True)
+class WhatsAppGroup:
+    """Grupo do qual a conta vinculada participa."""
+
+    id: str
+    name: str
+    participants: int = 0
+    only_admins: bool = False
+    can_send: bool = True
+
+    @property
+    def summary(self) -> str:
+        partes = [f'{self.participants} participante(s)'] if self.participants else []
+        if self.only_admins:
+            partes.append(
+                'somente administradores enviam'
+                if not self.can_send else
+                'somente administradores enviam (você é admin)'
+            )
+        return ' · '.join(partes)
 
 
 def normalize_phone(value: str, *, default_country_code: str = '55') -> str:
@@ -200,6 +224,44 @@ class WhatsAppGatewayService:
         )
         return identificador
 
+    def list_groups(self, *, refresh: bool = False) -> list[WhatsAppGroup]:
+        """Grupos dos quais a conta vinculada participa, em ordem alfabética.
+
+        O gateway guarda a lista por um minuto; ``refresh`` força uma releitura.
+        """
+        caminho = '/groups?atualizar=1' if refresh else '/groups'
+        dados = self._request('GET', caminho)
+        grupos: list[WhatsAppGroup] = []
+        for item in dados.get('grupos') or []:
+            identificador = str(item.get('id') or '')
+            if not identificador:
+                continue
+            grupos.append(WhatsAppGroup(
+                id=identificador,
+                name=str(item.get('nome') or identificador),
+                participants=int(item.get('participantes') or 0),
+                only_admins=bool(item.get('somente_admin')),
+                can_send=bool(item.get('posso_enviar', True)),
+            ))
+        return grupos
+
+    def send_to_group(self, *, group_id: str, message: str) -> str:
+        identificador = str(group_id or '').strip()
+        if not GROUP_JID_PATTERN.fullmatch(identificador):
+            raise WhatsAppGatewayError('Selecione um grupo da lista para enviar.')
+        texto = str(message or '').strip()
+        if not texto:
+            raise WhatsAppGatewayError('A mensagem nao pode ficar vazia.')
+        resposta = self._request(
+            'POST', '/send', {'group_id': identificador, 'message': texto},
+        )
+        registro = str(resposta.get('id') or '')
+        logger.info(
+            '[WHATSAPP] Mensagem enviada para grupo; grupo=%s id=%s',
+            identificador, registro or 'nao informado',
+        )
+        return registro
+
     def logout(self) -> None:
         self._request('POST', '/logout')
         logger.info('[WHATSAPP] Conta desconectada.')
@@ -209,10 +271,12 @@ __all__ = [
     'CONNECTION_LABELS',
     'DEFAULT_PORT',
     'GATEWAY_DIR',
+    'GROUP_JID_PATTERN',
     'GatewayStatus',
     'SESSION_DIR',
     'WhatsAppGatewayError',
     'WhatsAppGatewayService',
+    'WhatsAppGroup',
     'mask_phone',
     'normalize_phone',
 ]
