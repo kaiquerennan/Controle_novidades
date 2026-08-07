@@ -56,7 +56,7 @@ class LaunchedNovelty:
     def whatsapp_message(self) -> str:
         """Título e, logo abaixo, o link da novidade no portal."""
         link = self.public_url
-        return f'{self.display_title}\n\n{link}' if link else self.display_title
+        return f'{self.display_title}\n\nSaiba mais detalhes em: {link}' if link else self.display_title
 
     @property
     def identifier(self) -> str:
