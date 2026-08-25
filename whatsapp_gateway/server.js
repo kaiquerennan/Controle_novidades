@@ -164,26 +164,52 @@ function comoJidGrupo(identificador) {
   return bruto
 }
 
+// A conta tem duas identidades: o numero (@s.whatsapp.net) e o LID
+// (@lid), o identificador anonimo que o WhatsApp passou a usar nos grupos.
+// Qual delas aparece na lista de participantes depende do modo de
+// enderecamento do grupo, entao guardamos as duas para comparar.
+function minhasIdentidades() {
+  const usuario = socket && socket.user ? socket.user : {}
+  return new Set(
+    [usuario.id, usuario.lid]
+      .filter(Boolean)
+      .map((valor) => jidNormalizedUser(String(valor)))
+      .filter(Boolean),
+  )
+}
+
+function souEu(participante, identidades) {
+  // Em grupos com enderecamento LID o `id` e o proprio LID e o numero fica em
+  // `jid`; em grupos por numero acontece o contrario. Comparar so um dos campos
+  // faz o participante "sumir" da lista e a conta parecer nao-admin.
+  return [participante.id, participante.jid, participante.lid]
+    .filter(Boolean)
+    .map((valor) => jidNormalizedUser(String(valor)))
+    .some((valor) => valor && identidades.has(valor))
+}
+
 async function listarGrupos(forcar = false) {
   const agora = Date.now()
   if (!forcar && cacheGrupos.atualizadoEm && agora - cacheGrupos.atualizadoEm < GRUPOS_TTL_MS) {
     return cacheGrupos.itens
   }
   const metadados = await socket.groupFetchAllParticipating()
-  const eu = socket.user && socket.user.id ? jidNormalizedUser(socket.user.id) : ''
+  const identidades = minhasIdentidades()
   const itens = Object.values(metadados || {}).map((grupo) => {
     const participantes = Array.isArray(grupo.participants) ? grupo.participants : []
-    const meuRegistro = participantes.find((p) => jidNormalizedUser(p.id || '') === eu)
+    const meuRegistro = participantes.find((p) => souEu(p, identidades))
     const souAdmin = Boolean(meuRegistro && (meuRegistro.admin === 'admin' || meuRegistro.admin === 'superadmin'))
     // Em grupos com "somente administradores" o envio e recusado pelo servidor,
-    // entao a tela precisa saber disso antes de tentar.
+    // entao a tela precisa saber disso antes de tentar. Quando nao conseguimos
+    // nos localizar na lista nao ha como saber o cargo: liberamos a tentativa e
+    // deixamos o servidor decidir, em vez de bloquear um envio talvez valido.
     const somenteAdmin = Boolean(grupo.announce)
     return {
       id: grupo.id,
       nome: String(grupo.subject || '').trim() || grupo.id,
       participantes: participantes.length,
       somente_admin: somenteAdmin,
-      posso_enviar: !somenteAdmin || souAdmin,
+      posso_enviar: !somenteAdmin || souAdmin || !meuRegistro,
     }
   })
   itens.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'))
