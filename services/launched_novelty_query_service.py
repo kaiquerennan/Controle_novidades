@@ -6,7 +6,9 @@ from typing import Any
 from services.novelty_history_service import ORIGIN_DATABASE, LaunchedNovelty
 from services.occurrence_database_service import OccurrenceDatabase
 from services.occurrence_query_service import (
+    KIND_ANY,
     LIKE_ESCAPE,
+    OCCURRENCE_KINDS,
     OCCURRENCE_VIEW,
     escape_like,
     parse_filter_date,
@@ -23,12 +25,20 @@ DEFAULT_LIMIT = 500
 _BASE_QUERY = (
     'SELECT ine.ITN_CODIGO, ine.ITN_DATA_ALTERACAO, ine.OCO_NUMERO,'
     ' ine.ITN_TITULO, ine.ITN_DESCRICAO,'
-    ' oco.SISTEMA, oco.MODULO'
+    ' oco.SISTEMA, oco.MODULO, oco.TIPO_OCORRENCIA'
     f' FROM {NOVELTY_TABLE} ine'
     f' LEFT JOIN {OCCURRENCE_VIEW} oco ON oco.NUMERO_OCORRENCIA = ine.OCO_NUMERO'
 )
 _FILTER_BY_SYSTEM = 'oco.SISTEMA = ?'
 _FILTER_BY_MODULE = 'oco.MODULO = ?'
+# O tipo vem da ocorrencia de origem, e o join com ela e LEFT: filtrar por
+# tipo descarta, de proposito, as novidades sem ocorrencia correspondente na
+# view -- delas nao se sabe se sao de mudanca ou de erro.
+_FILTER_BY_KIND = 'oco.TIPO_OCORRENCIA = ?'
+# O texto e gravado em HTML. Aqui so da para descartar o que esta nulo ou em
+# branco; o que e vazio apenas depois de tirar a marcacao (<p>&nbsp;</p>, por
+# exemplo) so aparece na conversao, entao a checagem fina fica no Python.
+_ONLY_WITH_TEXT = "(ine.ITN_DESCRICAO IS NOT NULL AND LTRIM(RTRIM(ine.ITN_DESCRICAO)) <> '')"
 
 # Clausulas sem o "AND": elas sao unidas no final, para que qualquer combinacao
 # de filtros gere uma query valida.
@@ -69,6 +79,8 @@ class LaunchedNoveltyQueryService:
         end_date: Any = None,
         system: str = '',
         module: str = '',
+        kind: str = KIND_ANY,
+        only_with_text: bool = False,
         limit: int = DEFAULT_LIMIT,
     ) -> list[LaunchedNovelty]:
         term = str(search or '').strip()
@@ -92,6 +104,12 @@ class LaunchedNoveltyQueryService:
         if modulo:
             clauses.append(_FILTER_BY_MODULE)
             params.append(modulo)
+        tipo = str(kind or '').strip().upper()
+        if tipo in OCCURRENCE_KINDS:
+            clauses.append(_FILTER_BY_KIND)
+            params.append(tipo)
+        if only_with_text:
+            clauses.append(_ONLY_WITH_TEXT)
         if term:
             pattern = f'%{escape_like(term)}%'
             if term.isdigit():
@@ -107,7 +125,12 @@ class LaunchedNoveltyQueryService:
         if clauses:
             query += ' WHERE ' + ' AND '.join(clauses)
         rows = self.database.fetch_all(query + _ORDER, params, limit=limit)
-        return [self.build_novelty(row) for row in rows]
+        novidades = [self.build_novelty(row) for row in rows]
+        if only_with_text:
+            # Segunda passada: a descricao que so tem marcacao passa pelo filtro
+            # do banco, mas vira texto vazio na tela -- e nao e "ter texto".
+            novidades = [item for item in novidades if item.has_text]
+        return novidades
 
     @staticmethod
     def build_novelty(row: dict[str, Any]) -> LaunchedNovelty:
@@ -129,6 +152,7 @@ class LaunchedNoveltyQueryService:
             occurrence_number=numero,
             system=str(row.get('SISTEMA') or '').strip(),
             module=str(row.get('MODULO') or '').strip(),
+            kind=str(row.get('TIPO_OCORRENCIA') or '').strip().upper(),
             origin=ORIGIN_DATABASE,
         )
 

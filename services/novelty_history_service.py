@@ -7,6 +7,7 @@ from pathlib import Path
 
 from models.composition import CompositionDocument
 from services.image_service import DATA_ROOT, safe_path
+from services.occurrence_query_service import OCCURRENCE_KINDS
 
 
 EXPORTS_ROOT = DATA_ROOT / 'exports'
@@ -40,10 +41,23 @@ class LaunchedNovelty:
     code: int = 0
     system: str = ''
     module: str = ''
+    # Tipo da ocorrencia de origem ('M' ou 'E'). Fica vazio nas geradas
+    # aqui: a exportacao em disco nao guarda a ocorrencia que a motivou.
+    kind: str = ''
 
     @property
     def from_database(self) -> bool:
         return self.origin == ORIGIN_DATABASE
+
+    @property
+    def kind_label(self) -> str:
+        """Mudança ou Erro; vazio quando o tipo não é conhecido."""
+        return OCCURRENCE_KINDS.get(self.kind, '')
+
+    @property
+    def has_text(self) -> bool:
+        """Tem conteúdo além do título — o que sobrou depois de tirar a marcação."""
+        return bool(self.text.strip())
 
     @property
     def public_url(self) -> str:

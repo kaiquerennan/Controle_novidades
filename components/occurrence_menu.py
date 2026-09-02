@@ -422,4 +422,4 @@ def render_occurrence_menu(
         ui.timer(0.1, reload, once=True)
 
 
-__all__ = ['render_occurrence_menu']
+__all__ = ['KIND_BADGE_COLORS', 'SEGMENTED_CSS', 'render_occurrence_menu']

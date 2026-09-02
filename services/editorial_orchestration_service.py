@@ -63,7 +63,7 @@ RETRYABLE_PROVIDER_CODES = frozenset({
     'gemini_empty_novelty_plan',
 })
 
-
+#prompt
 COMMON_FIDELITY_RULES = """Use somente fatos fornecidos na entrada.
 
 O LEITOR

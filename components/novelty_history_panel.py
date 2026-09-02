@@ -7,9 +7,15 @@ from nicegui import app as ui_app, run, ui
 
 from components.date_field import render_date_field
 from components.novelty_preview import render_novelty_preview
+from components.occurrence_menu import KIND_BADGE_COLORS, SEGMENTED_CSS
 from services.launched_novelty_query_service import LaunchedNoveltyQueryService
 from services.novelty_history_service import LaunchedNovelty, NoveltyHistoryService
-from services.occurrence_query_service import OccurrenceQueryService, parse_filter_date
+from services.occurrence_query_service import (
+    KIND_ANY,
+    KIND_FILTER_LABELS,
+    OccurrenceQueryService,
+    parse_filter_date,
+)
 
 
 ORIGIN_LABELS = {'aplicativo': 'Gerada aqui', 'cadastro': 'Publicada'}
@@ -67,7 +73,8 @@ def render_novelty_history(
         'search': '', 'aberta': None,
         'start_date': '', 'end_date': '',
         'loading': True, 'published': [], 'aviso': '', 'page': 1,
-        'system': '', 'module': '', 'catalog': {},
+        'system': '', 'module': '', 'catalog': {}, 'kind': KIND_ANY,
+        'only_with_text': False,
     }
 
     def load_published() -> list[LaunchedNovelty]:
@@ -76,6 +83,8 @@ def render_novelty_history(
             start_date=state['start_date'] or None,
             end_date=state['end_date'] or None,
             system=str(state['system']), module=str(state['module']),
+            kind=str(state['kind']),
+            only_with_text=bool(state['only_with_text']),
         )
 
     async def reload() -> None:
@@ -153,6 +162,22 @@ def render_novelty_history(
         state['module'] = novo
         await reload()
 
+    async def apply_kind(value: Any) -> None:
+        # O tipo é filtrado no banco, então trocar a opção exige nova consulta.
+        escolhido = str(value or KIND_ANY)
+        if escolhido == state['kind']:
+            return
+        state['kind'] = escolhido
+        await reload()
+
+    async def apply_only_with_text(value: Any) -> None:
+        # As publicadas são filtradas no banco, então a lista precisa ser refeita.
+        marcado = bool(value)
+        if marcado == state['only_with_text']:
+            return
+        state['only_with_text'] = marcado
+        await reload()
+
     def _detalhe(novelty: LaunchedNovelty) -> None:
         if novelty.from_database:
             _detalhe_publicada(novelty)
@@ -211,6 +236,10 @@ def render_novelty_history(
                 ui.badge(f'Ocorrência #{novelty.occurrence_number}').props(
                     'color=blue-grey outline'
                 )
+            if novelty.kind_label:
+                ui.badge(novelty.kind_label).props(
+                    f'color={KIND_BADGE_COLORS.get(novelty.kind_label, "grey")}'
+                )
         with ui.card().classes('simple-card publication w-full p-8 gap-4'):
             ui.label(novelty.display_title).classes('text-3xl font-bold leading-tight')
             if novelty.text:
@@ -232,7 +261,14 @@ def render_novelty_history(
 
     def _local_novelties() -> list[LaunchedNovelty]:
         """As geradas aqui: filtradas em memória, já que vêm do disco."""
+        # A exportação em disco não guarda a ocorrência de origem, então
+        # nenhuma delas tem tipo. Enquanto o filtro estiver em Mudança ou
+        # Erro elas ficam de fora: exibi-las contrariaria o que foi pedido.
+        if str(state['kind']) != KIND_ANY:
+            return []
         novelties = history.list_novelties(search=str(state['search']))
+        if state['only_with_text']:
+            novelties = [item for item in novelties if item.has_text]
         inicio = parse_filter_date(state['start_date'])
         fim = parse_filter_date(state['end_date'])
         if inicio is None and fim is None:
@@ -303,6 +339,10 @@ def render_novelty_history(
                             ui.badge(f'#{novelty.occurrence_number}').props(
                                 'color=blue-grey outline'
                             )
+                        if novelty.kind_label:
+                            ui.badge(novelty.kind_label).props(
+                                f'color={KIND_BADGE_COLORS.get(novelty.kind_label, "grey")}'
+                            )
                         if not novelty.from_database:
                             ui.badge(f'{novelty.image_count} imagem(ns)').props(
                                 'color=blue-grey outline'
@@ -362,6 +402,9 @@ def render_novelty_history(
         campo_fim.value = ''
         await reload()
 
+    # O menu de ocorrências injeta o mesmo estilo, mas o painel não pode
+    # depender de ter sido desenhado depois dele.
+    ui.add_head_html(SEGMENTED_CSS)
     with ui.card().classes('simple-card w-full p-5 gap-3'):
         with ui.row().classes('w-full items-center justify-between no-wrap gap-3'):
             with ui.column().classes('gap-0'):
@@ -379,31 +422,50 @@ def render_novelty_history(
                 ui.button(icon='refresh', on_click=reload).props(
                     'flat color=primary'
                 ).tooltip('Recarregar')
-        with ui.row().classes('w-full items-center gap-2 no-wrap') as linha_filtros:
-            campo_inicio = render_date_field(
-                'De', lambda valor: apply_dates('start_date', valor),
-                mark='data-inicio-novidade',
-            )
-            campo_fim = render_date_field(
-                'Até', lambda valor: apply_dates('end_date', valor),
-                mark='data-fim-novidade',
-            )
-            ui.button(icon='backspace', on_click=clear_dates).props(
-                'flat dense color=grey-7'
-            ).tooltip('Limpar as datas')
-            ui.space()
-            select_sistema = ui.select(
-                [], label='Sistema', with_input=True, clearable=True,
-                on_change=lambda event: apply_system(event.value),
-            ).props('outlined dense options-dense style="min-width: 15rem"').mark(
-                'filtro-sistema-novidade'
-            )
-            select_modulo = ui.select(
-                [], label='Módulo', with_input=True, clearable=True,
-                on_change=lambda event: apply_module(event.value),
-            ).props('outlined dense options-dense style="min-width: 17rem"').mark(
-                'filtro-modulo-novidade'
-            )
+        # Os filtros ocupam duas linhas, agrupadas para que sumam juntas
+        # quando uma novidade e aberta.
+        with ui.column().classes('w-full gap-2') as linha_filtros:
+            with ui.row().classes('w-full items-center gap-2 no-wrap'):
+                campo_inicio = render_date_field(
+                    'De', lambda valor: apply_dates('start_date', valor),
+                    mark='data-inicio-novidade',
+                )
+                campo_fim = render_date_field(
+                    'Até', lambda valor: apply_dates('end_date', valor),
+                    mark='data-fim-novidade',
+                )
+                ui.button(icon='backspace', on_click=clear_dates).props(
+                    'flat dense color=grey-7'
+                ).tooltip('Limpar as datas')
+                ui.space()
+                select_sistema = ui.select(
+                    [], label='Sistema', with_input=True, clearable=True,
+                    on_change=lambda event: apply_system(event.value),
+                ).props('outlined dense options-dense style="min-width: 15rem"').mark(
+                    'filtro-sistema-novidade'
+                )
+                select_modulo = ui.select(
+                    [], label='Módulo', with_input=True, clearable=True,
+                    on_change=lambda event: apply_module(event.value),
+                ).props('outlined dense options-dense style="min-width: 17rem"').mark(
+                    'filtro-modulo-novidade'
+                )
+            with ui.row().classes('w-full items-center gap-2 no-wrap'):
+                # Mesmo controle segmentado do menu de ocorrências.
+                ui.toggle(
+                    KIND_FILTER_LABELS, value=KIND_ANY,
+                    on_change=lambda event: apply_kind(event.value),
+                ).props(
+                    'no-caps unelevated dense rounded text-color=grey-8 '
+                    'toggle-color=primary toggle-text-color=white'
+                ).classes('emc-segmented').mark('filtro-tipo-novidade')
+                ui.space()
+                ui.switch(
+                    'Somente com texto',
+                    on_change=lambda event: apply_only_with_text(event.value),
+                ).props('dense').mark('filtro-com-texto-novidade').tooltip(
+                    'Esconde as novidades que só têm título, sem descrição.'
+                )
         novelty_list()
         # A primeira carga acontece depois que a pagina existe, para nao atrasar o render.
         ui.timer(0.1, reload, once=True)
