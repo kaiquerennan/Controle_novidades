@@ -38,7 +38,14 @@ _FILTER_BY_KIND = 'oco.TIPO_OCORRENCIA = ?'
 # O texto e gravado em HTML. Aqui so da para descartar o que esta nulo ou em
 # branco; o que e vazio apenas depois de tirar a marcacao (<p>&nbsp;</p>, por
 # exemplo) so aparece na conversao, entao a checagem fina fica no Python.
-_ONLY_WITH_TEXT = "(ine.ITN_DESCRICAO IS NOT NULL AND LTRIM(RTRIM(ine.ITN_DESCRICAO)) <> '')"
+#
+# O CAST nao e enfeite: ITN_DESCRICAO e do tipo legado `text`, que o LTRIM e o
+# RTRIM recusam ("argument data type text is invalid"). Converter para
+# NVARCHAR(MAX) e o caminho suportado para comparar o conteudo dela.
+_ONLY_WITH_TEXT = (
+    "(ine.ITN_DESCRICAO IS NOT NULL"
+    " AND LTRIM(RTRIM(CAST(ine.ITN_DESCRICAO AS NVARCHAR(MAX)))) <> '')"
+)
 
 # Clausulas sem o "AND": elas sao unidas no final, para que qualquer combinacao
 # de filtros gere uma query valida.

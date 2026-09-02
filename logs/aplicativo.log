@@ -12560,3 +12560,5 @@ Stack (most recent call last):
 2026-09-02 15:10:28,558 INFO [PROCESSAMENTO] Visualização/UI concluída em 0.00 s; total=36.30 s
 2026-09-02 15:10:28,558 INFO [PROCESSAMENTO] Interface encerrada em 36.30 s; sucesso=True
 2026-09-02 15:52:52,916 INFO [WHATSAPP] Gateway iniciado na porta 8511.
+2026-09-02 16:05:10,479 ERROR Erro ao executar a consulta no banco 191.252.197.44,1433/emcsistemas1: ('42000', '[42000] [Microsoft][ODBC Driver 11 for SQL Server][SQL Server]Argument data type text is invalid for argument 1 of rtrim function. (8116) (SQLExecDirectW)')
+2026-09-02 16:05:23,527 ERROR Erro ao executar a consulta no banco 191.252.197.44,1433/emcsistemas1: ('42000', '[42000] [Microsoft][ODBC Driver 11 for SQL Server][SQL Server]Argument data type text is invalid for argument 1 of rtrim function. (8116) (SQLExecDirectW)')
