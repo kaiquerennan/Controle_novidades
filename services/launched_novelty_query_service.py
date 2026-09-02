@@ -58,7 +58,10 @@ _SEARCH_BY_NUMBER = (
     '(ine.OCO_NUMERO = ? OR ine.ITN_TITULO LIKE ? ESCAPE ?'
     ' OR ine.ITN_DESCRICAO LIKE ? ESCAPE ?)'
 )
-_ORDER = ' ORDER BY ine.ITN_DATA_ALTERACAO DESC'
+# O SQL Server ja poe as datas nulas no fim de um DESC. O codigo desempata as
+# que ficam nesse fim: sem ele a ordem delas varia entre consultas e a paginacao
+# repete ou pula linhas.
+_ORDER = ' ORDER BY ine.ITN_DATA_ALTERACAO DESC, ine.ITN_CODIGO DESC'
 
 
 def _as_datetime(value: Any) -> datetime | None:

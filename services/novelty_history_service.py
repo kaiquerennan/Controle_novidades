@@ -127,7 +127,11 @@ class NoveltyHistoryService:
                 or term in item.text.lower()
                 or term in item.session_id.lower()
             ]
-        found.sort(key=lambda item: (item.created_at is None, item.created_at), reverse=True)
+        # Mesmo cuidado do painel: com reverse=True, marcar as sem data com True
+        # as colocaria na frente das que têm data.
+        found.sort(
+            key=lambda item: (item.created_at is not None, item.created_at), reverse=True
+        )
         return found
 
     def _read(self, folder: Path) -> LaunchedNovelty | None:

@@ -253,8 +253,10 @@ def render_novelty_history(
         """Junta as duas procedências e ordena pela data, sem data por último."""
         locais = _local_novelties()
         todas = [*state['published'], *locais]
+        # "tem data" vem antes da data de propósito: como a ordenação é
+        # invertida, marcar as sem data com True as jogaria para o topo da tela.
         todas.sort(
-            key=lambda item: (item.created_at is None, item.created_at),
+            key=lambda item: (item.created_at is not None, item.created_at),
             reverse=True,
         )
         return todas
