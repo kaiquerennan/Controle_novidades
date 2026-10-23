@@ -13,7 +13,8 @@ Limitacoes conhecidas:
 
 - se o provedor nao responder, o sistema mostra erro tecnico sanitizado;
 - o editor de imagens opera sobre coordenadas normalizadas, mas ainda depende da renderizacao de Pillow para a saida final;
-- nao foi possivel confirmar durante a analise do codigo qualquer integracao nativa com PGC, SSO ou banco remoto.
+- nao foi possivel confirmar durante a analise do codigo qualquer integracao nativa com PGC, SSO ou banco remoto;
+- cerca de um quarto das novidades de ITENS_NOVIDADES_EMC nao tem vinculo com a ocorrencia (OCO_NUMERO), entao o filtro "apenas as que ainda nao viraram novidade" nao enxerga a materia publicada sem vinculo; a conferencia por semelhanca de texto (`services/novelty_similarity_service.py`) cobre parte desse ponto cego, avisando antes do lancamento, e por ser comparacao de texto pode errar nas duas direcoes.
 
 Melhorias futuras possiveis:
 

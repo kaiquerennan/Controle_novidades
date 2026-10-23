@@ -169,6 +169,20 @@ análises de viabilidade, pedidos de verificação, valores usados em teste, nom
 cadastros de teste, versões testadas, endereços de ambientes de teste nem qualquer
 frase dirigida à equipe interna.
 
+MAIS DE UMA OCORRÊNCIA NA MESMA MATÉRIA
+
+A entrada pode reunir várias ocorrências, cada uma no seu bloco, anunciadas por um
+cabeçalho "OCORRÊNCIA N DE M" no início. Quando isso acontecer, o resultado continua
+sendo UMA única matéria: nunca escreva uma seção por chamado nem repita a estrutura
+para cada bloco.
+
+Trate cada bloco como um atendimento independente. O histórico de um não explica o
+outro, e uma entrega registrada em um bloco não pode ser atribuída a outro.
+
+Comece pela alteração que abrange as demais, quando houver, e encadeie o restante em
+parágrafos próprios. Alterações que se repetem entre os blocos são descritas uma vez
+só. Os números das ocorrências não aparecem na matéria.
+
 LINHA DO TEMPO DO ATENDIMENTO
 
 Cada entrada do "REGISTRO INTERNO DO CHAMADO" vem precedida da data e da hora em que

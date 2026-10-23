@@ -5,6 +5,10 @@ from typing import Any, Callable
 from nicegui import run, ui
 
 from components.date_field import render_date_field
+from services.novelty_similarity_service import (
+    NoveltySimilarityService,
+    SimilarNovelty,
+)
 from services.occurrence_database_service import OccurrenceDatabaseError
 from services.occurrence_dismissal_service import OccurrenceDismissalService
 from services.occurrence_query_service import (
@@ -58,10 +62,11 @@ SEGMENTED_CSS = '''
 
 
 def render_occurrence_menu(
-    on_launch: Callable[[OccurrenceSummary], None],
+    on_launch: Callable[[list[OccurrenceSummary]], None],
     *,
     query_service: OccurrenceQueryService | None = None,
     dismissal_service: OccurrenceDismissalService | None = None,
+    similarity_service: NoveltySimilarityService | None = None,
     months: int = DEFAULT_MONTHS,
 ) -> None:
     """Menu das ocorrencias de mudanca candidatas a virar novidade.
@@ -71,6 +76,10 @@ def render_occurrence_menu(
     """
     queries = query_service or OccurrenceQueryService()
     dismissals = dismissal_service or OccurrenceDismissalService()
+    # Mesma conexao da listagem: o acervo de novidades mora no mesmo banco.
+    similarity = similarity_service or NoveltySimilarityService(
+        database=queries.database
+    )
     state: dict[str, Any] = {
         'search': '',
         'kind': KIND_ANY,
@@ -84,6 +93,16 @@ def render_occurrence_menu(
         'system': '',
         'module': '',
         'catalog': {},
+        # Guardadas por numero para sobreviverem a troca de pagina e de
+        # filtro: a selecao e do usuario, nao do resultado atual.
+        'selected': {},
+    }
+    # Conferencia de materia possivelmente ja publicada, entre o clique em
+    # "Lançar novidade" e a abertura da geracao.
+    verificacao: dict[str, Any] = {
+        'occurrences': [],
+        'warnings': [],
+        'on_proceed': None,
     }
 
     def load_occurrences() -> list[OccurrenceSummary]:
@@ -183,6 +202,15 @@ def render_occurrence_menu(
         with ui.card().classes('simple-card w-full p-4 gap-2'):
             with ui.row().classes('w-full items-center justify-between no-wrap gap-3'):
                 with ui.row().classes('items-center gap-2 no-wrap'):
+                    if not state['show_dismissed']:
+                        ui.checkbox(
+                            value=occurrence.number in state['selected'],
+                            on_change=lambda event, item=occurrence: toggle_selection(
+                                item, event.value,
+                            ),
+                        ).props('dense').mark(
+                            f'selecionar-{occurrence.number}'
+                        ).tooltip('Reunir com outras em uma só novidade')
                     ui.label(f'#{occurrence.number}').classes('text-lg font-bold')
                     if occurrence.kind_label:
                         ui.badge(occurrence.kind_label).props(
@@ -205,7 +233,7 @@ def render_occurrence_menu(
                         ui.button(
                             'Lançar novidade',
                             icon='note_add',
-                            on_click=lambda _, item=occurrence: on_launch(item),
+                            on_click=lambda _, item=occurrence: request_launch([item]),
                         ).props('color=primary').mark(f'lancar-{occurrence.number}')
                         ui.button(
                             icon='delete',
@@ -335,6 +363,163 @@ def render_occurrence_menu(
         state['module'] = novo
         await reload()
 
+    def toggle_selection(occurrence: OccurrenceSummary, marcado: Any) -> None:
+        escolhido = bool(marcado)
+        # A caixa dispara o evento tambem ao ser criada ja marcada; sem esta
+        # saida, redesenhar a lista refrescaria a barra uma vez por card.
+        if escolhido == (occurrence.number in state['selected']):
+            return
+        if escolhido:
+            state['selected'][occurrence.number] = occurrence
+        else:
+            state['selected'].pop(occurrence.number, None)
+        # Só a barra é redesenhada: refazer a lista a cada clique custaria os
+        # vinte e cinco cards de novo.
+        selection_bar.refresh()
+
+    def clear_selection() -> None:
+        if not state['selected']:
+            return
+        state['selected'] = {}
+        selection_bar.refresh()
+        # Aqui a lista precisa voltar, para desmarcar as caixas visíveis.
+        occurrence_list.refresh()
+
+    async def launch_selected() -> None:
+        escolhidas = [state['selected'][numero] for numero in sorted(state['selected'])]
+        if not escolhidas:
+            return
+        # A selecao só é desfeita quando o lançamento acontece de verdade: se o
+        # aviso de matéria repetida aparecer e o usuário desistir, ela continua
+        # montada para ele ajustar.
+        await request_launch(escolhidas, on_proceed=clear_selection)
+
+    async def request_launch(
+        items: list[OccurrenceSummary],
+        *,
+        on_proceed: Callable[[], None] | None = None,
+    ) -> None:
+        """Confere se o assunto já foi publicado antes de abrir a geração.
+
+        O filtro da lista só enxerga a novidade que ficou vinculada à ocorrência,
+        e um quarto do cadastro não tem esse vínculo. A conferência por texto
+        cobre justamente esse ponto cego. Ela avisa e nada mais: quem decide se a
+        matéria já existe é quem vai escrevê-la.
+        """
+        escolhidas = [item for item in items if item is not None]
+        if not escolhidas:
+            return
+        aguarde = None
+        if not similarity.ready:
+            # A primeira conferência carrega o acervo inteiro; sem este aviso o
+            # botão pareceria travado por um instante.
+            aguarde = ui.notification(
+                'Conferindo novidades já publicadas...', spinner=True, timeout=None,
+            )
+        try:
+            avisos = await run.io_bound(similarity.find_similar, escolhidas)
+        finally:
+            if aguarde is not None:
+                aguarde.dismiss()
+        if not avisos:
+            if on_proceed is not None:
+                on_proceed()
+            on_launch(escolhidas)
+            return
+        verificacao['occurrences'] = escolhidas
+        verificacao['warnings'] = avisos
+        verificacao['on_proceed'] = on_proceed
+        similar_warning.refresh()
+        warning_dialog.open()
+
+    def confirm_launch() -> None:
+        escolhidas: list[OccurrenceSummary] = list(verificacao['occurrences'])
+        depois: Callable[[], None] | None = verificacao['on_proceed']
+        warning_dialog.close()
+        verificacao['occurrences'] = []
+        verificacao['warnings'] = []
+        verificacao['on_proceed'] = None
+        if not escolhidas:
+            return
+        if depois is not None:
+            depois()
+        on_launch(escolhidas)
+
+    @ui.refreshable
+    def similar_warning() -> None:
+        avisos: list[SimilarNovelty] = verificacao['warnings']
+        escolhidas: list[OccurrenceSummary] = verificacao['occurrences']
+        if not avisos:
+            # Primeira montagem, com o diálogo fechado: nada a mostrar ainda.
+            return
+        numeros = ', '.join(f'#{item.number}' for item in escolhidas)
+        with ui.row().classes('w-full items-start gap-3 no-wrap'):
+            ui.icon('warning_amber').classes('text-amber-600 text-4xl')
+            with ui.column().classes('gap-0'):
+                ui.label('Talvez esta novidade já tenha saído').classes(
+                    'text-xl font-bold'
+                )
+                ui.label(f'Ocorrência(s) {numeros}').classes('muted text-sm')
+        ui.label(
+            f'{len(avisos)} novidade(s) já publicada(s) falam de assunto parecido. '
+            'A lista só esconde a ocorrência quando a novidade ficou vinculada a '
+            'ela, e um quarto do cadastro não tem esse vínculo. A comparação abaixo '
+            'é pelo texto do título: confira antes de escrever de novo.'
+        ).classes('text-sm')
+        with ui.column().classes('w-full gap-2 max-h-[22rem] overflow-y-auto pr-1'):
+            for aviso in avisos:
+                _similar_card(aviso)
+        with ui.row().classes('w-full justify-end gap-2'):
+            ui.button('Não lançar', on_click=warning_dialog.close).props('flat')
+            ui.button(
+                'Lançar mesmo assim', icon='note_add', on_click=confirm_launch,
+            ).props('color=primary').mark('lancar-mesmo-assim')
+
+    def _similar_card(aviso: SimilarNovelty) -> None:
+        with ui.card().classes('simple-card w-full p-3 gap-1'):
+            with ui.row().classes('w-full items-center gap-2 no-wrap'):
+                ui.badge(f'{aviso.score_label} parecida').props('color=amber-8')
+                ui.label(f'ITN {aviso.code}').classes('text-sm font-bold')
+                ui.label(aviso.date_label).classes('muted text-sm')
+                ui.badge(aviso.link_label).props('color=blue-grey outline')
+                ui.space()
+                if aviso.public_url:
+                    ui.link('Abrir no portal', aviso.public_url, new_tab=True).classes(
+                        'text-sm'
+                    )
+            ui.label(aviso.title).classes('text-sm')
+            if aviso.terms_label:
+                ui.label(f'Termos em comum: {aviso.terms_label}').classes(
+                    'muted text-xs'
+                )
+
+    @ui.refreshable
+    def selection_bar() -> None:
+        escolhidas = state['selected']
+        if not escolhidas:
+            return
+        numeros = sorted(escolhidas)
+        rotulo = ', '.join(f'#{numero}' for numero in numeros[:8])
+        if len(numeros) > 8:
+            rotulo += f' e mais {len(numeros) - 8}'
+        with ui.row().classes(
+            'w-full items-center gap-3 no-wrap rounded-lg px-3 py-2 '
+            'bg-blue-50 border border-blue-200'
+        ):
+            ui.icon('playlist_add_check').classes('text-blue-700')
+            with ui.column().classes('gap-0'):
+                ui.label(
+                    f'{len(numeros)} ocorrência(s) selecionada(s)'
+                ).classes('text-sm font-bold text-blue-900')
+                ui.label(rotulo).classes('text-xs text-blue-800')
+            ui.space()
+            ui.button('Limpar', icon='close', on_click=clear_selection).props(
+                'flat dense color=grey-7'
+            )
+            ui.button(
+                'Lançar novidade única', icon='note_add', on_click=launch_selected,
+            ).props('color=primary').mark('lancar-selecionadas')
+
     def change_page(value: Any) -> None:
         nova = int(value or 1)
         if nova == state['page']:
@@ -350,6 +535,10 @@ def render_occurrence_menu(
 
     # Um unico dialogo reaproveitado; recriar a cada clique deixaria copias no DOM.
     pending: dict[str, OccurrenceSummary | None] = {'occurrence': None}
+    with ui.dialog() as warning_dialog, ui.card().classes(
+        'w-full max-w-2xl p-5 gap-3'
+    ):
+        similar_warning()
     with ui.dialog() as confirm_dialog, ui.card().classes('w-full max-w-lg p-5 gap-3'):
         ui.label('Não lançar novidade?').classes('text-xl font-bold')
         confirm_detail = ui.label()
@@ -417,9 +606,13 @@ def render_occurrence_menu(
             ui.switch(
                 'Ver excluídas', on_change=lambda event: toggle_dismissed(event.value),
             ).props('dense')
+        selection_bar()
         occurrence_list()
         # A primeira carga acontece depois que a pagina existe, para nao atrasar o render.
         ui.timer(0.1, reload, once=True)
+        # O acervo de novidades e carregado em segundo plano, depois da lista:
+        # assim a conferencia do primeiro lancamento ja sai instantanea.
+        ui.timer(3.0, lambda: run.io_bound(similarity.warm), once=True)
 
 
 __all__ = ['KIND_BADGE_COLORS', 'SEGMENTED_CSS', 'render_occurrence_menu']

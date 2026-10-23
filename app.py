@@ -64,6 +64,7 @@ from services.editorial_orchestration_service import (
 from services.html_export_service import build_novelty_html
 from services.plain_text_composition import apply_plain_text, composition_to_plain_text
 from components.whatsapp_panel import render_whatsapp_panel
+from components.whatsapp_suggestion_panel import render_whatsapp_suggestions
 from services.whatsapp_gateway_service import (
     WhatsAppGatewayError,
     WhatsAppGatewayService,
@@ -71,7 +72,7 @@ from services.whatsapp_gateway_service import (
 )
 from services.browser_session_service import resolve_storage_secret, session_state_path
 from services.generation_control_service import GENERATION_REGISTRY
-from services.occurrence_query_service import OccurrenceSummary
+from services.occurrence_query_service import OccurrenceSummary, combined_raw_text
 from services.providers import ProviderError, ProviderFactory
 from services.providers.exceptions import sanitize_technical_detail
 from services.screen_state_service import ScreenStateStore
@@ -335,6 +336,7 @@ def index() -> None:
     MENU_ENTRIES = (
         ('ocorrencias', 'Ocorrências de mudança', 'fact_check'),
         ('novidades', 'Novidades lançadas', 'auto_stories'),
+        ('sugestoes', 'Sugestões para o WhatsApp', 'tips_and_updates'),
         ('whatsapp', 'WhatsApp', 'chat'),
         ('configuracoes', 'Configurações', 'settings'),
     )
@@ -368,17 +370,27 @@ def index() -> None:
 
     with ui.column().classes('w-full px-6 py-5 gap-4'):
 
+        # A tela de sugestões é carregada na primeira vez que alguém a abre; o
+        # controle fica aqui para não criar um timer novo a cada ida e volta.
+        suggestions_loaded = {'feito': False}
+
         def show_view(name: str) -> None:
             """Alterna entre as áreas do menu lateral, escondendo as demais."""
             current_view['name'] = name
             occurrence_panel.set_visibility(name == 'ocorrencias')
             novelty_panel.set_visibility(name == 'novidades')
+            suggestion_panel.set_visibility(name == 'sugestoes')
             whatsapp_panel.set_visibility(name == 'whatsapp')
             settings_panel.set_visibility(name == 'configuracoes')
             for element in creation_elements:
                 element.set_visibility(name == 'criar')
             for view, item in drawer_items.items():
                 item.props(f'active={str(view == name).lower()}')
+            if name == 'sugestoes' and not suggestions_loaded['feito']:
+                # As sugestões são duas consultas pesadas: elas só rodam quando
+                # alguém abre a tela, e só na primeira vez.
+                suggestions_loaded['feito'] = True
+                ui.timer(0.1, activate_suggestions, once=True)
 
         def show_creation(visible: bool) -> None:
             show_view('criar' if visible else 'ocorrencias')
@@ -414,13 +426,20 @@ def index() -> None:
             thumbnails.refresh()
             resume_row.set_visibility(False)
 
-        def launch_from_occurrence(occurrence: OccurrenceSummary) -> None:
-            """Carrega o contexto da ocorrência no fluxo de criação já existente."""
-            texto = occurrence.as_raw_text().strip()
+        def launch_from_occurrences(occurrences: list[OccurrenceSummary]) -> None:
+            """Carrega o contexto de uma ou mais ocorrências no fluxo de criação.
+
+            Várias ocorrências viram uma única matéria: o texto bruto reúne os
+            blocos, cada um com a sua linha do tempo, e a IA escreve o conjunto.
+            """
+            escolhidas = [item for item in occurrences if item is not None]
+            if not escolhidas:
+                return
+            numeros = ', '.join(f'#{item.number}' for item in escolhidas)
+            texto = combined_raw_text(escolhidas).strip()
             if not texto:
                 ui.notify(
-                    f'A ocorrência #{occurrence.number} não tem contexto registrado.',
-                    type='warning',
+                    f'Sem contexto registrado em {numeros}.', type='warning',
                 )
                 return
             # Cada novidade começa do zero: sem imagens nem matéria da anterior.
@@ -430,8 +449,17 @@ def index() -> None:
             persist_screen_state(step='Adicionar conteúdo')
             stepper.set_value('Adicionar conteúdo')
             show_creation(True)
+            carregadas = (
+                f'Ocorrência {numeros} carregada.'
+                if len(escolhidas) == 1
+                else f'{len(escolhidas)} ocorrências ({numeros}) reunidas em uma novidade.'
+            )
+            logger.info(
+                '[PROCESSAMENTO] Contexto carregado na sessao %s; ocorrencias=%s',
+                workspace.session_id, numeros,
+            )
             ui.notify(
-                f'Ocorrência #{occurrence.number} carregada. Adicione as imagens e gere a novidade.',
+                f'{carregadas} Adicione as imagens e gere a novidade.',
                 type='positive',
             )
 
@@ -445,7 +473,7 @@ def index() -> None:
                     icon='play_arrow',
                     on_click=lambda: show_creation(True),
                 ).props('flat color=primary')
-            render_occurrence_menu(launch_from_occurrence)
+            render_occurrence_menu(launch_from_occurrences)
         # A sessão anterior fica acessível por um botão, sem roubar a tela inicial.
         # Depois de aprovada a novidade deixa de ser rascunho: ela passa a viver em
         # "Novidades lançadas" e retomá-la aqui só reabriria o que já foi lançado.
@@ -497,6 +525,25 @@ def index() -> None:
             refresh_novelty_history = render_novelty_history(
                 on_send_whatsapp=send_launched_novelty,
                 on_edit=edit_launched_novelty,
+            )
+
+        def send_suggestion(suggestion: Any) -> None:
+            # A publicada leva título e link; a que ainda não foi lançada leva o
+            # assunto, para quem quiser avisar antes de escrever a matéria.
+            open_whatsapp_dialog(
+                suggestion.title, mensagem_inicial=suggestion.whatsapp_message,
+            )
+
+        def launch_suggestion(suggestion: Any) -> None:
+            if suggestion.occurrence is None:
+                ui.notify('Esta sugestão não tem ocorrência de origem.', type='warning')
+                return
+            launch_from_occurrences([suggestion.occurrence])
+
+        with ui.column().classes('w-full gap-4') as suggestion_panel:
+            activate_suggestions = render_whatsapp_suggestions(
+                on_send=send_suggestion,
+                on_launch=launch_suggestion,
             )
 
         with ui.column().classes('w-full gap-4') as whatsapp_panel:

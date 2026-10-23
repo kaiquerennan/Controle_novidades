@@ -6,7 +6,7 @@ import json
 import re
 import time
 import unicodedata
-from typing import Any
+from typing import Any, Sequence
 
 from services.occurrence_database_service import OccurrenceDatabase
 
@@ -96,6 +96,13 @@ ADMINISTRATIVE_PATTERNS = tuple(
 )
 
 _LEADING_BULLET = re.compile(r'^[-•*–—\s]+')
+
+# Regua e separacao de paragrafo do contexto com varias ocorrencias. Escritas
+# como texto literal para o fonte da montagem ficar legivel.
+_BLOCK_RULE = '=' * 60
+_PARAGRAPH_BREAK = """
+
+"""
 
 
 def _strip_accents(value: str) -> str:
@@ -293,6 +300,45 @@ class OccurrenceSummary:
                 + '\n\n'.join(historico)
             )
         return '\n'.join(partes).strip()
+
+
+def combined_raw_text(occurrences: Sequence[OccurrenceSummary]) -> str:
+    """Contexto de varias ocorrencias reunidas em uma unica novidade.
+
+    Cada ocorrencia mantem o proprio bloco, com cabecalho numerado. Sem essa
+    separacao as linhas do tempo se misturariam e a entrega registrada em um
+    chamado poderia ser atribuida a outro.
+    """
+    blocos = [
+        (item, item.as_raw_text().strip())
+        for item in occurrences
+        if item is not None
+    ]
+    blocos = [(item, conteudo) for item, conteudo in blocos if conteudo]
+    if not blocos:
+        return ''
+    if len(blocos) == 1:
+        # Uma ocorrencia so nao ganha cabecalho: o contexto fica identico ao do
+        # lancamento individual, que ja funciona.
+        return blocos[0][1]
+
+    numeros = ', '.join(f'#{item.number}' for item, _ in blocos)
+    cabecalho = f"""ESTA NOVIDADE REUNE {len(blocos)} OCORRENCIAS: {numeros}.
+
+Cada bloco abaixo e uma ocorrencia distinta, com a sua propria linha do tempo.
+Escreva UMA unica materia cobrindo o conjunto: reuna o que as entregas tem em
+comum, trate as demais em paragrafos proprios e nao repita a mesma informacao.
+Nao misture o historico de um chamado com o de outro e nao cite os numeros das
+ocorrencias."""
+    corpo = [
+        f"""{_BLOCK_RULE}
+OCORRENCIA {indice} DE {len(blocos)}
+{_BLOCK_RULE}
+
+{conteudo}"""
+        for indice, (_, conteudo) in enumerate(blocos, start=1)
+    ]
+    return _PARAGRAPH_BREAK.join([cabecalho, *corpo])
 
 
 def escape_like(term: str) -> str:
@@ -496,6 +542,7 @@ __all__ = [
     'OccurrenceObservation',
     'OccurrenceQueryService',
     'OccurrenceSummary',
+    'combined_raw_text',
     'escape_like',
     'parse_description_sections',
     'parse_filter_date',

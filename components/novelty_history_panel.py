@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from pathlib import Path
 from typing import Any, Callable
 
-from nicegui import app as ui_app, run, ui
+from nicegui import run, ui
 
 from components.date_field import render_date_field
 from components.novelty_preview import render_novelty_preview
 from components.occurrence_menu import KIND_BADGE_COLORS, SEGMENTED_CSS
+from components.whatsapp_button import render_whatsapp_button
 from services.launched_novelty_query_service import LaunchedNoveltyQueryService
 from services.novelty_history_service import LaunchedNovelty, NoveltyHistoryService
 from services.occurrence_query_service import (
@@ -24,33 +24,6 @@ ORIGIN_COLORS = {'aplicativo': 'primary', 'cadastro': 'deep-purple'}
 # O painel e construido junto com a pagina, mesmo escondido: desenhar as
 # centenas de novidades de uma vez pesava na abertura do aplicativo inteiro.
 PAGE_SIZE = 25
-
-WHATSAPP_LOGO_PATH = Path(__file__).resolve().parents[1] / 'WhatsApp_Logo.png'
-# A rota e registrada uma vez, no import. Passar o caminho local direto para o
-# ui.image faria o NiceGUI criar uma rota nova a cada card e a cada sessao.
-WHATSAPP_LOGO_URL = (
-    ui_app.add_static_file(local_file=WHATSAPP_LOGO_PATH)
-    if WHATSAPP_LOGO_PATH.is_file()
-    else ''
-)
-
-
-def _whatsapp_button(on_click: Callable[[], Any], *, label: str = '') -> Any:
-    """Botão de envio com o logo real; cai no ícone do tema se o arquivo sumir."""
-    if not WHATSAPP_LOGO_URL:
-        if label:
-            return ui.button(label, icon='send', on_click=on_click).props(
-                'color=green'
-            )
-        return ui.button(icon='send', on_click=on_click).props('flat round color=green')
-    props = 'outline color=green no-caps' if label else 'flat round dense'
-    with ui.button(on_click=on_click).props(props) as botao:
-        ui.image(WHATSAPP_LOGO_URL).classes(
-            'w-5 h-5 mr-2' if label else 'w-7 h-7'
-        )
-        if label:
-            ui.label(label)
-    return botao
 
 
 def render_novelty_history(
@@ -192,7 +165,7 @@ def render_novelty_history(
                         on_click=lambda: on_edit(novelty),
                     ).props('outline color=primary').mark('editar-novidade')
                 if on_send_whatsapp is not None:
-                    _whatsapp_button(
+                    render_whatsapp_button(
                         lambda: on_send_whatsapp(novelty),
                         label='Enviar pelo WhatsApp',
                     ).mark('enviar-novidade')
@@ -225,7 +198,7 @@ def render_novelty_history(
         with ui.row().classes('w-full items-center justify-between no-wrap gap-3'):
             ui.button('Voltar', icon='arrow_back', on_click=voltar).props('flat')
             if on_send_whatsapp is not None:
-                _whatsapp_button(
+                render_whatsapp_button(
                     lambda: on_send_whatsapp(novelty),
                     label='Enviar pelo WhatsApp',
                 ).mark('enviar-novidade')
@@ -357,7 +330,7 @@ def render_novelty_history(
                         on_click=lambda _, item=novelty: abrir(item),
                     ).props('color=primary').mark(f'abrir-{novelty.identifier}')
                     if on_send_whatsapp is not None:
-                        _whatsapp_button(
+                        render_whatsapp_button(
                             lambda _=None, item=novelty: on_send_whatsapp(item),
                         ).mark(f'whatsapp-{novelty.identifier}').tooltip(
                             'Enviar pelo WhatsApp'

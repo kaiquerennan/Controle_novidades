@@ -2,6 +2,7 @@
 data/whatsapp_config.local.json
 data/occurrence_db.local.json
 data/occurrence_dismissed.local.json
+data/whatsapp_enviadas.local.json
 data/screen_state.json
 realizado.MD
 .claude
@@ -16,6 +17,8 @@ data/sessions/
 data/storage_secret.local
 # Sessao do WhatsApp: credenciais do aparelho vinculado
 data/whatsapp_session/
+# Estado por navegador do NiceGUI: nasce em execucao, um arquivo por visitante
+.nicegui/
 
 # Ambiente e caches
 .venv/
