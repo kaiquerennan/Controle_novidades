@@ -149,7 +149,11 @@ class GeminiProvider(AIProvider):
     ) -> NoveltyPlan:
         validated_api_key = _validate_api_key(api_key)
         model = validate_text_model(self.name, model)
-        contents: list[object] = [prompt, f'TEXTO BRUTO DA NOVIDADE:\n{raw_text}']
+        # O prompt vai como system_instruction, e nao como primeira parte do
+        # conteudo: assim ele tem prioridade de instrucao de sistema, igual ao
+        # que OpenAI e DeepSeek ja faziam, e o prefixo fica estavel entre
+        # chamadas.
+        contents: list[object] = [f'TEXTO BRUTO DA NOVIDADE:\n{raw_text}']
         for image_id, path in images:
             image_bytes = safe_path(path).read_bytes()
             image_format, _ = validate_image_bytes(image_bytes)
@@ -168,6 +172,7 @@ class GeminiProvider(AIProvider):
                 model=model,
                 contents=contents,
                 config=types.GenerateContentConfig(
+                    system_instruction=prompt,
                     response_mime_type='application/json',
                     response_json_schema=NoveltyPlan.model_json_schema(),
                     max_output_tokens=max_output_tokens,
@@ -203,8 +208,9 @@ class GeminiProvider(AIProvider):
             client = genai.Client(api_key=validated_api_key)
             response = client.models.generate_content(
                 model=model,
-                contents=[prompt, payload],
+                contents=[payload],
                 config=types.GenerateContentConfig(
+                    system_instruction=prompt,
                     response_mime_type='application/json',
                     response_json_schema=FidelityReview.model_json_schema(),
                     max_output_tokens=max_output_tokens,

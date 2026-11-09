@@ -80,6 +80,12 @@ class PlannedBlock(BaseModel):
 class NoveltyPlan(BaseModel):
     model_config = ConfigDict(extra='forbid')
 
+    # Primeiro campo de propósito. Com saída estruturada o modelo não tem onde
+    # raciocinar antes de responder, e o prompt pedia uma triagem "interna" que
+    # ele não tinha como fazer. Aqui ele escreve os fatos publicáveis antes de
+    # redigir os blocos, e o que foi gerado antes condiciona o que vem depois.
+    # Nada disso é publicado: o campo é descartado ao montar o documento.
+    triagem: list[str] = Field(default_factory=list)
     blocos: list[PlannedBlock] = Field(min_length=1)
     imagens: list[PlannedImage] = Field(default_factory=list)
 

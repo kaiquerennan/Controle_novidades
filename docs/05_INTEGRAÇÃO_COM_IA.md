@@ -22,6 +22,22 @@ O roteamento e validacao adicional passam por `services/model_routing.py`.
 
 ## Acoes que usam IA
 
+### Prompts
+
+Arquivo: `services/editorial_prompts.py`
+
+Os tres prompts do fluxo editorial (`WRITER_ORGANIZER_PROMPT`,
+`REVIEWER_PROMPT` e `LOCALIZED_CORRECTION_PROMPT`) sao montados a partir das
+mesmas secoes de regra, no fim do arquivo. Cada exigencia aparece em um lugar so
+e tem um id: `F` de fidelidade, `P` de proibicao, `E` de escrita, `S` de saida e
+`V` de verificacao. O revisor cita o id da regra violada em
+`correcoes_necessarias`, e o corretor recebe esse texto junto das mesmas regras.
+
+Para alterar uma regra, altere a secao correspondente: a mudanca vale para o
+redator, para o revisor e para o corretor de uma vez.
+
+O ZIP exportado leva o prompt do redator em `prompt_utilizado.txt`.
+
 ### Geracao da novidade
 
 Responsavel: `EditorialOrchestrator.generate()`

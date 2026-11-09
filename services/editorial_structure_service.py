@@ -108,8 +108,11 @@ def extract_editorial_units(raw_text: str) -> list[EditorialUnit]:
 
 def structured_source_prompt(raw_text: str, units: list[EditorialUnit]) -> str:
     inventory = json.dumps([unit.to_dict() for unit in units], ensure_ascii=False, indent=2)
+    # O provedor ja rotula este conteudo como TEXTO BRUTO DA NOVIDADE, e o
+    # prompt descreve os blocos por esse nome: um segundo titulo para o mesmo
+    # texto so competia com ele.
     return (
-        f'TEXTO ORIGINAL INTEGRAL:\n{raw_text}\n\n'
+        f'{raw_text}\n\n'
         'INVENTÁRIO ESTRUTURADO DETERMINÍSTICO. Preserve cada unidade e mantenha seu id:\n'
         f'{inventory}'
     )
