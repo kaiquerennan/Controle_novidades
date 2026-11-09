@@ -64,10 +64,15 @@ class WhatsAppGroup:
     participants: int = 0
     only_admins: bool = False
     can_send: bool = True
+    announcement: bool = False
 
     @property
     def summary(self) -> str:
         partes = [f'{self.participants} participante(s)'] if self.participants else []
+        if self.announcement:
+            # A comunidade e o grupo de avisos costumam ter o mesmo nome; sem
+            # esta marca as duas linhas ficavam indistinguiveis na tela.
+            partes.append('avisos da comunidade')
         if self.only_admins:
             partes.append(
                 'somente administradores enviam'
@@ -92,6 +97,16 @@ def normalize_phone(value: str, *, default_country_code: str = '55') -> str:
             'Informe um destinatario valido, com codigo do pais e DDD.'
         )
     return normalizado
+
+
+def _delivery_label(resposta: dict) -> str:
+    """Rotulo de entrega para o log.
+
+    O gateway so devolve ``confirmado`` quando o servidor do WhatsApp deu o
+    sinal dentro da espera. Em grupo o recibo pode demorar minutos, entao a
+    ausencia de confirmacao nao e falha: uma recusa viraria erro na resposta.
+    """
+    return 'confirmada' if resposta.get('confirmado') else 'sem confirmacao'
 
 
 def mask_phone(value: str) -> str:
@@ -231,8 +246,9 @@ class WhatsAppGatewayService:
         resposta = self._request('POST', '/send', {'to': numero, 'message': texto})
         identificador = str(resposta.get('id') or '')
         logger.info(
-            '[WHATSAPP] Mensagem enviada; destinatario=%s id=%s',
+            '[WHATSAPP] Mensagem enviada; destinatario=%s id=%s entrega=%s',
             mask_phone(numero), identificador or 'nao informado',
+            _delivery_label(resposta),
         )
         return identificador
 
@@ -254,6 +270,7 @@ class WhatsAppGatewayService:
                 participants=int(item.get('participantes') or 0),
                 only_admins=bool(item.get('somente_admin')),
                 can_send=bool(item.get('posso_enviar', True)),
+                announcement=bool(item.get('avisos')),
             ))
         return grupos
 
@@ -269,8 +286,9 @@ class WhatsAppGatewayService:
         )
         registro = str(resposta.get('id') or '')
         logger.info(
-            '[WHATSAPP] Mensagem enviada para grupo; grupo=%s id=%s',
+            '[WHATSAPP] Mensagem enviada para grupo; grupo=%s id=%s entrega=%s',
             identificador, registro or 'nao informado',
+            _delivery_label(resposta),
         )
         return registro
 

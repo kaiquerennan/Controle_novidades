@@ -16,7 +16,9 @@ const {
   useMultiFileAuthState,
   DisconnectReason,
   fetchLatestBaileysVersion,
+  generateMessageID,
   jidNormalizedUser,
+  proto,
 } = require('@whiskeysockets/baileys')
 
 const PORT = Number(process.env.EMC_WHATSAPP_PORT || 8511)
@@ -42,6 +44,56 @@ let encerrando = false
 // quando o usuario quiser forcar uma releitura.
 const GRUPOS_TTL_MS = 60000
 const cacheGrupos = { itens: [], atualizadoEm: 0 }
+
+// Num grupo de avisos o cargo de administrador pertence a comunidade, nao ao
+// grupo, e precisa de uma consulta propria. Como ele muda raramente, fica em
+// cache separado e mais longo: `esquecerGrupos` nao pode derrubar isso, senao
+// cada releitura da lista viraria uma consulta extra -- caminho curto para o
+// "rate-overlimit" do servidor.
+const CARGO_TTL_MS = 600000
+const cacheCargo = new Map()
+
+// O envio nao espera resposta: `relayMessage` escreve a stanza no socket e
+// resolve, e o id devolvido e sorteado localmente. Quem avisa que o servidor
+// recusou a mensagem e o ack com erro, que chega depois. Sem esperar por ele,
+// toda mensagem descartada em silencio era relatada como enviada.
+// O ack de recusa chega rapido, logo apos a stanza sair; a confirmacao de
+// entrega em grupo pode levar minutos. A espera e curta de proposito: serve
+// para pegar a recusa, nao para aguardar o recibo de todos os participantes.
+const ESPERA_ACK_MS = 3000
+const esperandoAck = new Map()
+
+function aguardarAck(id) {
+  return new Promise((resolve) => {
+    const relogio = setTimeout(() => {
+      esperandoAck.delete(id)
+      resolve({ confirmado: false, erro: '' })
+    }, ESPERA_ACK_MS)
+    esperandoAck.set(id, (resultado) => {
+      clearTimeout(relogio)
+      esperandoAck.delete(id)
+      resolve(resultado)
+    })
+  })
+}
+
+function avisarAck(id, resultado) {
+  const aviso = esperandoAck.get(id)
+  if (aviso) {
+    aviso(resultado)
+  }
+}
+
+// Envia e espera o veredito do servidor. O id e gerado aqui, e nao deixado
+// para o Baileys, para que a espera comece antes do envio: o ack de recusa
+// pode chegar no mesmo instante em que `sendMessage` resolve.
+async function entregar(jid, texto) {
+  const id = generateMessageID()
+  const espera = aguardarAck(id)
+  await socket.sendMessage(jid, { text: texto }, { messageId: id })
+  const ack = await espera
+  return { id, confirmado: ack.confirmado, erro: ack.erro }
+}
 
 function registrar(conexao, extra = {}) {
   estado.conexao = conexao
@@ -91,6 +143,38 @@ async function iniciar() {
   socket.ev.on('groups.upsert', esquecerGrupos)
   socket.ev.on('groups.update', esquecerGrupos)
   socket.ev.on('group-participants.update', esquecerGrupos)
+
+  // O status ERROR aqui e o servidor recusando a mensagem; e o unico sinal de
+  // que um envio que nao levantou excecao nao chegou a ninguem.
+  socket.ev.on('messages.update', (atualizacoes) => {
+    for (const item of atualizacoes || []) {
+      const id = item && item.key ? item.key.id : ''
+      const atualizacao = (item && item.update) || {}
+      if (!id || typeof atualizacao.status !== 'number') {
+        continue
+      }
+      if (atualizacao.status === proto.WebMessageInfo.Status.ERROR) {
+        const motivo = (atualizacao.messageStubParameters || []).join(' ')
+        avisarAck(id, {
+          confirmado: false,
+          erro: motivo || 'recusada pelo servidor, sem motivo informado',
+        })
+      } else if (atualizacao.status >= proto.WebMessageInfo.Status.SERVER_ACK) {
+        avisarAck(id, { confirmado: true, erro: '' })
+      }
+    }
+  })
+
+  // Em grupo a confirmacao nao vem como status: vem como recibo de entrega de
+  // cada participante.
+  socket.ev.on('message-receipt.update', (recibos) => {
+    for (const item of recibos || []) {
+      const id = item && item.key ? item.key.id : ''
+      if (id) {
+        avisarAck(id, { confirmado: true, erro: '' })
+      }
+    }
+  })
 
   socket.ev.on('connection.update', async (update) => {
     const { connection, lastDisconnect, qr } = update
@@ -188,6 +272,31 @@ function souEu(participante, identidades) {
     .some((valor) => valor && identidades.has(valor))
 }
 
+// Cargo na comunidade que abriga um grupo de avisos. Devolve null quando a
+// consulta falha: sem saber o cargo e melhor liberar a tentativa do que barrar
+// um envio legitimo.
+async function souAdminDaComunidade(paiJid) {
+  const guardado = cacheCargo.get(paiJid)
+  const agora = Date.now()
+  if (guardado && agora - guardado.atualizadoEm < CARGO_TTL_MS) {
+    return guardado.admin
+  }
+  try {
+    const pai = await socket.groupMetadata(paiJid)
+    const identidades = minhasIdentidades()
+    const participantes = Array.isArray(pai.participants) ? pai.participants : []
+    const meuRegistro = participantes.find((p) => souEu(p, identidades))
+    const admin = Boolean(
+      meuRegistro && (meuRegistro.admin === 'admin' || meuRegistro.admin === 'superadmin'),
+    )
+    cacheCargo.set(paiJid, { admin, atualizadoEm: agora })
+    return admin
+  } catch (erro) {
+    console.error('[whatsapp-gateway] falha ao ler a comunidade:', String(erro.message || erro))
+    return null
+  }
+}
+
 async function listarGrupos(forcar = false) {
   const agora = Date.now()
   if (!forcar && cacheGrupos.atualizadoEm && agora - cacheGrupos.atualizadoEm < GRUPOS_TTL_MS) {
@@ -195,23 +304,45 @@ async function listarGrupos(forcar = false) {
   }
   const metadados = await socket.groupFetchAllParticipating()
   const identidades = minhasIdentidades()
-  const itens = Object.values(metadados || {}).map((grupo) => {
+  const itens = []
+  for (const grupo of Object.values(metadados || {})) {
+    // A comunidade em si nao e conversa: a mensagem enviada para ela e aceita
+    // pelo socket e descartada pelo servidor, sem erro algum. Como ela aparece
+    // nesta consulta com o mesmo nome do grupo de avisos, ficava impossivel
+    // distinguir as duas na tela -- fora da lista de destinos.
+    if (grupo.isCommunity) {
+      continue
+    }
     const participantes = Array.isArray(grupo.participants) ? grupo.participants : []
     const meuRegistro = participantes.find((p) => souEu(p, identidades))
-    const souAdmin = Boolean(meuRegistro && (meuRegistro.admin === 'admin' || meuRegistro.admin === 'superadmin'))
+    let souAdmin = Boolean(
+      meuRegistro && (meuRegistro.admin === 'admin' || meuRegistro.admin === 'superadmin'),
+    )
+    const avisos = Boolean(grupo.isCommunityAnnounce)
+    // No grupo de avisos o cargo vem da comunidade: a lista local traz o
+    // administrador sem marca alguma, e so a consulta ao pai revela o cargo.
+    if (avisos && !souAdmin && grupo.linkedParent) {
+      const cargo = await souAdminDaComunidade(grupo.linkedParent)
+      if (cargo !== null) {
+        souAdmin = cargo
+      }
+    }
     // Em grupos com "somente administradores" o envio e recusado pelo servidor,
     // entao a tela precisa saber disso antes de tentar. Quando nao conseguimos
     // nos localizar na lista nao ha como saber o cargo: liberamos a tentativa e
     // deixamos o servidor decidir, em vez de bloquear um envio talvez valido.
     const somenteAdmin = Boolean(grupo.announce)
-    return {
+    itens.push({
       id: grupo.id,
       nome: String(grupo.subject || '').trim() || grupo.id,
-      participantes: participantes.length,
+      // O grupo de avisos costuma vir sem a lista de participantes, e contar
+      // essa lista dava zero: `size` e o total que o servidor informa.
+      participantes: Number(grupo.size) || participantes.length,
+      avisos,
       somente_admin: somenteAdmin,
       posso_enviar: !somenteAdmin || souAdmin || !meuRegistro,
-    }
-  })
+    })
+  }
   itens.sort((a, b) => a.nome.localeCompare(b.nome, 'pt-BR'))
   cacheGrupos.itens = itens
   cacheGrupos.atualizadoEm = agora
@@ -272,8 +403,11 @@ app.post('/send', async (req, res) => {
     // Grupo: o JID ja vem da listagem, entao nao ha o que consultar em onWhatsApp.
     try {
       const jid = comoJidGrupo(grupoId)
-      const enviado = await socket.sendMessage(jid, { text: texto })
-      return res.json({ id: enviado?.key?.id || '', para: jid })
+      const ack = await entregar(jid, texto)
+      if (ack.erro) {
+        return res.status(400).json({ erro: `O WhatsApp recusou a mensagem: ${ack.erro}` })
+      }
+      return res.json({ id: ack.id, para: jid, confirmado: ack.confirmado })
     } catch (erro) {
       return res.status(400).json({ erro: String(erro.message || erro) })
     }
@@ -284,8 +418,11 @@ app.post('/send', async (req, res) => {
     if (!existe || !existe.exists) {
       return res.status(404).json({ erro: 'Este numero nao possui WhatsApp.' })
     }
-    const enviado = await socket.sendMessage(existe.jid, { text: texto })
-    res.json({ id: enviado?.key?.id || '', para: existe.jid })
+    const ack = await entregar(existe.jid, texto)
+    if (ack.erro) {
+      return res.status(400).json({ erro: `O WhatsApp recusou a mensagem: ${ack.erro}` })
+    }
+    res.json({ id: ack.id, para: existe.jid, confirmado: ack.confirmado })
   } catch (erro) {
     res.status(400).json({ erro: String(erro.message || erro) })
   }
