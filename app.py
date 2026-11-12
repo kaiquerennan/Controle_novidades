@@ -63,8 +63,13 @@ from services.editorial_orchestration_service import (
 )
 from services.html_export_service import build_novelty_html
 from services.plain_text_composition import apply_plain_text, composition_to_plain_text
+from components.message_schedule_panel import render_message_schedules
 from components.whatsapp_panel import render_whatsapp_panel
 from components.whatsapp_suggestion_panel import render_whatsapp_suggestions
+from services.message_schedule_service import (
+    CHECK_INTERVAL_SECONDS,
+    MessageScheduleDispatcher,
+)
 from services.whatsapp_gateway_service import (
     WhatsAppGatewayError,
     WhatsAppGatewayService,
@@ -159,6 +164,15 @@ def _restored_images(values: list[dict[str, Any]]) -> list[dict[str, Any]]:
         except (KeyError, OSError, TypeError, ValueError):
             continue
     return restored
+
+# O despachante das mensagens agendadas e um timer do aplicativo, nao da pagina:
+# um timer por navegador aberto faria a mesma mensagem sair varias vezes, e com
+# nenhuma aba aberta nao sairia nenhuma. Ele so envia o que estiver ativo na tela
+# "Agendar mensagens" -- sem agendamento ativo a verificacao nao fala com o
+# gateway.
+_schedule_dispatcher = MessageScheduleDispatcher()
+ui_app.timer(CHECK_INTERVAL_SECONDS, _schedule_dispatcher.tick)
+
 
 @ui.page('/')
 def index() -> None:
@@ -337,6 +351,7 @@ def index() -> None:
         ('ocorrencias', 'Ocorrências de mudança', 'fact_check'),
         ('novidades', 'Novidades lançadas', 'auto_stories'),
         ('sugestoes', 'Sugestões para o WhatsApp', 'tips_and_updates'),
+        ('agendamentos', 'Agendar mensagens', 'schedule_send'),
         ('whatsapp', 'WhatsApp', 'chat'),
         ('configuracoes', 'Configurações', 'settings'),
     )
@@ -380,12 +395,18 @@ def index() -> None:
             occurrence_panel.set_visibility(name == 'ocorrencias')
             novelty_panel.set_visibility(name == 'novidades')
             suggestion_panel.set_visibility(name == 'sugestoes')
+            schedule_panel.set_visibility(name == 'agendamentos')
             whatsapp_panel.set_visibility(name == 'whatsapp')
             settings_panel.set_visibility(name == 'configuracoes')
             for element in creation_elements:
                 element.set_visibility(name == 'criar')
             for view, item in drawer_items.items():
                 item.props(f'active={str(view == name).lower()}')
+            if name == 'agendamentos':
+                # O despachante grava no arquivo por fora da tela: uma aba
+                # aberta desde a manhã não saberia do envio. Reler na abertura
+                # custa quatro registros de um JSON local.
+                ui.timer(0.1, refresh_schedules, once=True)
             if name == 'sugestoes' and not suggestions_loaded['feito']:
                 # As sugestões são duas consultas pesadas: elas só rodam quando
                 # alguém abre a tela, e só na primeira vez.
@@ -545,6 +566,9 @@ def index() -> None:
                 on_send=send_suggestion,
                 on_launch=launch_suggestion,
             )
+
+        with ui.column().classes('w-full gap-4') as schedule_panel:
+            refresh_schedules = render_message_schedules(gateway=whatsapp_gateway)
 
         with ui.column().classes('w-full gap-4') as whatsapp_panel:
             render_whatsapp_panel(whatsapp_gateway)

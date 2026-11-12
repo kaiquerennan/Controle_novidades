@@ -3,6 +3,7 @@ data/whatsapp_config.local.json
 data/occurrence_db.local.json
 data/occurrence_dismissed.local.json
 data/whatsapp_enviadas.local.json
+data/whatsapp_agendamentos.local.json
 data/screen_state.json
 realizado.MD
 .claude
