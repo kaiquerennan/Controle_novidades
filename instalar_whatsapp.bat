@@ -11,7 +11,7 @@ if errorlevel 1 (
   goto :error
 )
 node --version
-npm --version
+call npm --version
 echo.
 echo Instalando as dependencias do servico de WhatsApp...
 call npm install --no-fund --no-audit

@@ -137,6 +137,10 @@ class WhatsAppGatewayService:
     def dependencies_installed(self) -> bool:
         return (GATEWAY_DIR / 'node_modules').is_dir()
 
+    def has_linked_account(self) -> bool:
+        """Se já houve leitura do QR: o Baileys grava creds.json ao vincular."""
+        return (SESSION_DIR / 'creds.json').is_file()
+
     def start(self) -> None:
         """Sobe o gateway se ele nao estiver no ar."""
         if self.is_listening():
