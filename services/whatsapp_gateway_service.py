@@ -141,6 +141,19 @@ class WhatsAppGatewayService:
         """Se já houve leitura do QR: o Baileys grava creds.json ao vincular."""
         return (SESSION_DIR / 'creds.json').is_file()
 
+    def start_if_linked(self) -> bool:
+        """Sobe o gateway sem ninguém clicar, mas só para uma conta já vinculada.
+
+        Sem conta não há o que reconectar, e subir o gateway só deixaria um QR
+        esperando na tela. Devolve se o gateway ficou no ar.
+        """
+        if self.is_listening():
+            return True
+        if not self.has_linked_account() or not self.dependencies_installed():
+            return False
+        self.start()
+        return True
+
     def start(self) -> None:
         """Sobe o gateway se ele nao estiver no ar."""
         if self.is_listening():

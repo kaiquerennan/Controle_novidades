@@ -174,6 +174,20 @@ _schedule_dispatcher = MessageScheduleDispatcher()
 ui_app.timer(CHECK_INTERVAL_SECONDS, _schedule_dispatcher.tick)
 
 
+async def _start_whatsapp_on_boot() -> None:
+    # Depois de reiniciar a maquina ninguem clica em "Iniciar servico": a conta
+    # ja vinculada volta a conectar sozinha. Roda fora do laco de eventos porque
+    # a subida do gateway espera ate 40 s.
+    try:
+        if await run.io_bound(WhatsAppGatewayService().start_if_linked):
+            logger.info('[WHATSAPP] Servico iniciado junto com o aplicativo.')
+    except WhatsAppGatewayError as exc:
+        logger.warning('[WHATSAPP] Nao foi possivel iniciar ao subir: %s', exc.user_message)
+
+
+ui_app.on_startup(_start_whatsapp_on_boot)
+
+
 @ui.page('/')
 def index() -> None:
     # Cada navegador tem a propria sessao: o id fica em um cookie assinado, e o

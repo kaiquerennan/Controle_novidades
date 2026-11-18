@@ -489,24 +489,17 @@ class MessageScheduleDispatcher:
         pendentes = self.schedules.due(agora)
         if not pendentes:
             return []
-        if (
-            not self.gateway.is_listening()
-            and self.gateway.has_linked_account()
-            and self.gateway.dependencies_installed()
-        ):
-            # Depois de reiniciar a máquina ninguém clicou em "Iniciar serviço",
-            # e sem o gateway no ar a mensagem venceria em silêncio. Só sobe
-            # quando a conta já foi vinculada: sem ela não há para quem enviar.
-            # A conexão leva alguns segundos; o próximo ciclo envia.
-            try:
-                self.gateway.start()
-                logger.info('[AGENDAMENTO] Serviço do WhatsApp iniciado para enviar.')
-            except WhatsAppGatewayError as exc:
-                logger.warning(
-                    '[AGENDAMENTO] Não foi possível iniciar o WhatsApp: %s',
-                    exc.user_message,
-                )
-                return []
+        # O app já sobe o gateway ao iniciar, mas ele pode ter caído depois; sem
+        # ele no ar a mensagem venceria em silêncio. A conexão leva alguns
+        # segundos; o próximo ciclo envia.
+        try:
+            self.gateway.start_if_linked()
+        except WhatsAppGatewayError as exc:
+            logger.warning(
+                '[AGENDAMENTO] Não foi possível iniciar o WhatsApp: %s',
+                exc.user_message,
+            )
+            return []
         situacao = self.gateway.status()
         if not situacao.connected:
             # Sem conta vinculada não há como enviar, e consumir o dia aqui
