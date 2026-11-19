@@ -40,6 +40,7 @@ from components.image_editor import ImageEditor
 from components.novelty_preview import render_novelty_preview
 from components.occurrence_menu import render_occurrence_menu
 from components.novelty_history_panel import render_novelty_history
+from components.technical_notes_panel import render_technical_notes
 from services.novelty_history_service import NoveltyHistoryService
 from core.config import (
     API_KEY_ENVIRONMENTS,
@@ -372,6 +373,7 @@ def index() -> None:
     MENU_ENTRIES = (
         ('ocorrencias', 'Ocorrências de mudança', 'fact_check'),
         ('novidades', 'Novidades lançadas', 'auto_stories'),
+        ('notas_tecnicas', 'Notas técnicas', 'article'),
         ('sugestoes', 'Sugestões para o WhatsApp', 'tips_and_updates'),
         ('agendamentos', 'Agendar mensagens', 'schedule_send'),
         ('whatsapp', 'WhatsApp', 'chat'),
@@ -416,6 +418,7 @@ def index() -> None:
             current_view['name'] = name
             occurrence_panel.set_visibility(name == 'ocorrencias')
             novelty_panel.set_visibility(name == 'novidades')
+            technical_notes_panel.set_visibility(name == 'notas_tecnicas')
             suggestion_panel.set_visibility(name == 'sugestoes')
             schedule_panel.set_visibility(name == 'agendamentos')
             whatsapp_panel.set_visibility(name == 'whatsapp')
@@ -429,6 +432,10 @@ def index() -> None:
                 # aberta desde a manhã não saberia do envio. Reler na abertura
                 # custa quatro registros de um JSON local.
                 ui.timer(0.1, refresh_schedules, once=True)
+            if name == 'notas_tecnicas':
+                # O arquivo é editado à mão: relido a cada abertura, a edição
+                # aparece sem reiniciar o aplicativo.
+                refresh_technical_notes()
             if name == 'sugestoes' and not suggestions_loaded['feito']:
                 # As sugestões são duas consultas pesadas: elas só rodam quando
                 # alguém abre a tela, e só na primeira vez.
@@ -569,6 +576,9 @@ def index() -> None:
                 on_send_whatsapp=send_launched_novelty,
                 on_edit=edit_launched_novelty,
             )
+
+        with ui.column().classes('w-full gap-4') as technical_notes_panel:
+            refresh_technical_notes = render_technical_notes()
 
         def send_suggestion(suggestion: Any) -> None:
             # A publicada leva título e link; a que ainda não foi lançada leva o
