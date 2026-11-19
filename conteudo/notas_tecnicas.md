@@ -27,7 +27,7 @@ Regras:
 
 Escreva as notas abaixo desta linha, sem os 4 espaços do exemplo.
 
-## 🔴 NT 2026.005 v1.00 – NF-e (modelo 55), NFC-e (modelo 65): Reforma Tributária do Consumo – Simples Nacional (atualizações na NF-e e NFC-e)
+## TESTE - 🔴 NT 2026.005 v1.00 – NF-e (modelo 55), NFC-e (modelo 65): Reforma Tributária do Consumo – Simples Nacional (atualizações na NF-e e NFC-e)
 Data: 19/11/2026
 Link: https://www.nfe.fazenda.gov.br/portal/exibirArquivo.aspx?conteudo=HInG7WD5Sj8=
 Impacto: Afeta
