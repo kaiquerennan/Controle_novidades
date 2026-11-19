@@ -103,7 +103,14 @@ if (-not (Invoke-Git merge-base --is-ancestor HEAD "origin/$Branch").Ok) {
 # 2. Alteracao local em codigo e sinal de que alguem mexeu na producao: nao
 #    passa por cima. Ja o que o .gitignore manda ignorar (log, .pyc, estado de
 #    tela...) muda sozinho com o app rodando: e guardado e devolvido.
-$locais = @((Invoke-Git status --porcelain --untracked-files=no).Saida -split "`n" |
+#    O package-lock.json e reescrito pelo npm quando a versao dele aqui e outra;
+#    ninguem edita esse arquivo a mao, entao ele volta ao do repositorio.
+$lock = 'whatsapp_gateway/package-lock.json'
+if ((Invoke-Git status --porcelain -- $lock).Saida) {
+    Invoke-Git checkout -- $lock | Out-Null
+    Write-Log 'package-lock.json reescrito pelo npm desta maquina; voltou ao do repositorio.'
+}
+$locais =@((Invoke-Git status --porcelain --untracked-files=no).Saida -split "`n" |
     Where-Object { $_ } | ForEach-Object { $_.Substring(3).Trim('"') })
 $execucao = @($locais | Where-Object { (Invoke-Git check-ignore --no-index -q -- $_).Ok })
 $codigoLocal = @($locais | Where-Object { $_ -notin $execucao })
@@ -172,8 +179,10 @@ if ($mudados -contains 'requirements.txt') {
     }
 }
 if (@($mudados | Where-Object { $_ -in 'whatsapp_gateway/package.json', 'whatsapp_gateway/package-lock.json' }).Count -gt 0) {
+    # npm ci instala exatamente o que o package-lock.json pede e nao o reescreve
+    # (o npm install regravaria e travaria a proxima atualizacao).
     Invoke-Install 'Dependencias do WhatsApp' (Join-Path $pasta 'whatsapp_gateway') {
-        & npm.cmd install --no-fund --no-audit
+        & npm.cmd ci --no-fund --no-audit
     }
 }
 
