@@ -1,13 +1,17 @@
-# Cria a tarefa do Agendador do Windows que sobe o EMC Central de Novidades
-# sempre que a maquina liga, sem precisar de ninguem logado e sem janela de cmd.
-# Rode em um PowerShell aberto como Administrador.
+# Cria as tarefas do Agendador do Windows da maquina de producao:
+#   - "EMC Central de Novidades": sobe o app sempre que a maquina liga, sem
+#     precisar de ninguem logado e sem janela de cmd;
+#   - "EMC Atualizacao automatica": a cada 1 minuto confere o GitHub e, havendo
+#     commit novo, atualiza e reinicia o app (atualizar_producao.ps1).
+# Rode em um PowerShell aberto como Administrador. Rodar de novo substitui as duas.
 
 $ErrorActionPreference = 'Stop'
 $nome = 'EMC Central de Novidades'
+$nomeAtualizacao = 'EMC Atualizacao automatica'
 $pasta = 'C:\EMC_Novidade_Visual_IA'
 
-if (-not (Test-Path "$pasta\executar.bat")) {
-    throw "Nao encontrei $pasta\executar.bat"
+foreach ($arquivo in 'executar.bat', 'atualizar_producao.ps1') {
+    if (-not (Test-Path "$pasta\$arquivo")) { throw "Nao encontrei $pasta\$arquivo" }
 }
 
 # "< nul" faz o "pause" do executar.bat terminar sozinho em caso de erro,
@@ -27,15 +31,36 @@ $config = New-ScheduledTaskSettingsSet `
     -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable `
     -MultipleInstances IgnoreNew
 
+$acaoAtualizacao = New-ScheduledTaskAction -Execute 'powershell.exe' `
+    -Argument "-NoProfile -NonInteractive -ExecutionPolicy Bypass -WindowStyle Hidden -File `"$pasta\atualizar_producao.ps1`"" `
+    -WorkingDirectory $pasta
+
+# A cada 1 minuto, para sempre (sem RepetitionDuration o Windows repete sem fim).
+# Sem commit novo a rodada so faz um git fetch e termina em poucos segundos.
+$gatilhoAtualizacao = New-ScheduledTaskTrigger -Once -At (Get-Date).Date `
+    -RepetitionInterval (New-TimeSpan -Minutes 1)
+
+# Uma atualizacao com pip/npm leva alguns minutos; 30 e folga. Se uma rodada
+# ainda estiver em curso, a seguinte e ignorada.
+$configAtualizacao = New-ScheduledTaskSettingsSet `
+    -ExecutionTimeLimit (New-TimeSpan -Minutes 30) `
+    -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -StartWhenAvailable `
+    -MultipleInstances IgnoreNew
+
 $usuario = "$env:USERDOMAIN\$env:USERNAME"
 $cred = Get-Credential -UserName $usuario -Message "Senha do Windows de $usuario (para rodar sem ninguem logado)"
+$senha = $cred.GetNetworkCredential().Password
 
 Register-ScheduledTask -TaskName $nome -Action $acao -Trigger $gatilho -Settings $config `
-    -User $cred.UserName -Password $cred.GetNetworkCredential().Password `
-    -RunLevel Highest -Force | Out-Null
+    -User $cred.UserName -Password $senha -RunLevel Highest -Force | Out-Null
+
+Register-ScheduledTask -TaskName $nomeAtualizacao -Action $acaoAtualizacao `
+    -Trigger $gatilhoAtualizacao -Settings $configAtualizacao `
+    -User $cred.UserName -Password $senha -RunLevel Highest -Force | Out-Null
 
 Write-Host ''
-Write-Host "Tarefa '$nome' criada para o usuario $usuario."
-Write-Host 'Para iniciar agora sem reiniciar:  Start-ScheduledTask -TaskName "EMC Central de Novidades"'
-Write-Host 'Para parar:                         Stop-ScheduledTask -TaskName "EMC Central de Novidades"'
-Write-Host 'Para remover:                       Unregister-ScheduledTask -TaskName "EMC Central de Novidades"'
+Write-Host "Tarefas '$nome' e '$nomeAtualizacao' criadas para o usuario $usuario."
+Write-Host 'Para iniciar o app agora sem reiniciar:  Start-ScheduledTask -TaskName "EMC Central de Novidades"'
+Write-Host 'Para parar o app:                         Stop-ScheduledTask -TaskName "EMC Central de Novidades"'
+Write-Host 'Para pausar a atualizacao automatica:     Disable-ScheduledTask -TaskName "EMC Atualizacao automatica"'
+Write-Host "Historico das atualizacoes:               $pasta\logs\atualizacao.log"

@@ -84,6 +84,9 @@ from services.screen_state_service import ScreenStateStore
 
 APP_NAME = 'EMC Central de Novidades'
 PORT = 8510
+# Ligado pelo desenvolver.bat: recarrega o app a cada .py salvo e nao envia nada
+# sozinho, para a maquina de desenvolvimento nao duplicar as mensagens da producao.
+DEV_MODE = os.getenv('EMC_MODO_DESENVOLVIMENTO') == '1'
 LOG_DIR = safe_path(PROJECT_ROOT / 'logs')
 LOG_DIR.mkdir(parents=True, exist_ok=True)
 logging.basicConfig(
@@ -171,7 +174,6 @@ def _restored_images(values: list[dict[str, Any]]) -> list[dict[str, Any]]:
 # "Agendar mensagens" -- sem agendamento ativo a verificacao nao fala com o
 # gateway.
 _schedule_dispatcher = MessageScheduleDispatcher()
-ui_app.timer(CHECK_INTERVAL_SECONDS, _schedule_dispatcher.tick)
 
 
 async def _start_whatsapp_on_boot() -> None:
@@ -185,7 +187,13 @@ async def _start_whatsapp_on_boot() -> None:
         logger.warning('[WHATSAPP] Nao foi possivel iniciar ao subir: %s', exc.user_message)
 
 
-ui_app.on_startup(_start_whatsapp_on_boot)
+if DEV_MODE:
+    logger.warning(
+        '[DESENVOLVIMENTO] Agendamentos e WhatsApp automaticos desligados nesta maquina.'
+    )
+else:
+    ui_app.timer(CHECK_INTERVAL_SECONDS, _schedule_dispatcher.tick)
+    ui_app.on_startup(_start_whatsapp_on_boot)
 
 
 @ui.page('/')
@@ -1971,7 +1979,9 @@ def port_is_free(port: int) -> bool:
 
 
 if __name__ in {'__main__', '__mp_main__'}:
-    if not port_is_free(PORT):
+    # So o processo principal confere a porta: com a recarga ligada, o processo
+    # filho (__mp_main__) sobe com a porta ja aberta pelo pai e se recusaria a rodar.
+    if __name__ == '__main__' and not port_is_free(PORT):
         logger.error('Inicialização interrompida: porta %s ocupada.', PORT)
         raise SystemExit(f'A porta {PORT} está ocupada. Nenhum processo foi encerrado.')
     ui.run(
@@ -1979,7 +1989,7 @@ if __name__ in {'__main__', '__mp_main__'}:
     port=PORT,
     title=APP_NAME,
     favicon=PROJECT_ROOT / 'Logo_Emc.ico',
-    reload=False,
+    reload=DEV_MODE,
     show=False,
     storage_secret=resolve_storage_secret(),
 )
